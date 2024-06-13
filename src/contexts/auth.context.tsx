@@ -57,6 +57,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       gender: gender,
     });
 
+    console.log(response);
+    
     setUser(response.data.patient);
     saveTokens(response.data.token, response.data.refreshToken);
     api.defaults.headers["Authorization"] = `Bearer ${response.data.token}`;

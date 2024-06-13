@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: Dimensions.get('window').height * 0.05,
         backgroundColor: colors.blue,
-        flexDirection: 'row'   
+        flexDirection: 'row'  
     },
     incons: {
         padding: 20

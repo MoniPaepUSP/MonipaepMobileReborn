@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import{ StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native'
-import CheckBox from '@react-native-community/checkbox';
+import Checkbox from "expo-checkbox";
 
 import colors from '../styles/colors'
 import fonts from '../styles/fonts'
@@ -34,11 +34,12 @@ export function Symptom({
                 ]}
         >
             <Text style={styles.label}>{title}</Text>
-            <CheckBox style={styles.checkbox}
+            <Checkbox style={styles.checkbox}
                 value={isSelected}
                 onValueChange={handleSelected}
-                boxType= 'circle'
-                onCheckColor= {colors.green}
+                // boxType= 'circle'
+                // onCheckColor= {colors.green}
+                color={colors.green}
             />
         </View>
     )

@@ -1,26 +1,23 @@
 export function handleInputEmailBlur(
   setIsEmailFocused: React.Dispatch<React.SetStateAction<boolean>>,
-  setIsEmailFilled: React.Dispatch<React.SetStateAction<boolean>>,
-  setEmail: React.Dispatch<React.SetStateAction<string | undefined>>,
-  email: string
+  setIsEmailFilled: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   setIsEmailFocused(false);
-  setIsEmailFilled(!!email);
+}
+
+export function handleInputEmailChange(
+  text: string,
+  setIsEmailFilled: React.Dispatch<React.SetStateAction<boolean>>,
+  setEmail: React.Dispatch<React.SetStateAction<string>>
+) {
+  setIsEmailFilled(!!text);
+  setEmail(text);
 }
 
 export function handleInputEmailFocus(
   setIsEmailFocused: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   setIsEmailFocused(true);
-}
-
-export function handleInputEmailChange(
-  setIsEmailFilled: React.Dispatch<React.SetStateAction<boolean>>,
-  setEmail: React.Dispatch<React.SetStateAction<string>>,
-  value: string
-) {
-  setIsEmailFilled(!!value);
-  setEmail(value);
 }
 
 export function handleInputNameBlur(
@@ -76,7 +73,7 @@ export function handleInputCPFChange(
 export function handleInputPhoneBlur(
   setIsPhoneFocused: React.Dispatch<React.SetStateAction<boolean>>,
   setIsPhoneFilled: React.Dispatch<React.SetStateAction<boolean>>,
-  setPhone: React.Dispatch<React.SetStateAction<string | undefined>>,
+  setPhone: React.Dispatch<React.SetStateAction<string>>,
   phone: string
 ) {
   setIsPhoneFocused(false);

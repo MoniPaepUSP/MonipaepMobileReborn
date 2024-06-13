@@ -29,19 +29,16 @@ export function HeaderSimple({titleScreen}: HeaderProps){
                 </View>
             </View>
         </View>
-            
-        
-        
-            
     )
 }
 
 const styles = StyleSheet.create({
     header:{
         width: '100%',
-        height: Dimensions.get('window').height * 0.05,
         backgroundColor: colors.blue,
-        flexDirection: 'row'   
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 10   
     },
     incons: {
         paddingLeft: 5

@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import colors from "../styles/colors";
-import { Login, SignUp } from '../pages';
+import { Login, SignUp, Symtopms } from "../pages";
 
 const stackNavigator = createStackNavigator();
 
@@ -11,11 +11,12 @@ const Stack: React.FC = () => (
       cardStyle: {
         backgroundColor: colors.white,
       },
-      headerShown: false
+      headerShown: false,
     }}
   >
     <stackNavigator.Screen name="Login" component={Login} />
     <stackNavigator.Screen name="SignUp" component={SignUp} />
+    <stackNavigator.Screen name="Symptoms" component={Symtopms} />
     {/* PAGES */}
   </stackNavigator.Navigator>
 );
