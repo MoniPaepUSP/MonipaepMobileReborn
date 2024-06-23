@@ -142,16 +142,6 @@ export function Symtopms() {
             onFocus={handleInputSearchFocus}
             onChangeText={handleInputSearchChange}
           />
-          <MaterialIcons
-            name="search"
-            size={24}
-            color="gray"
-            style={[
-              styles.Icon,
-              (isSearchFocused || isSearchFilled) && { color: colors.blue },
-            ]}
-            onPress={handleSeach}
-          />
         </View>
         <View style={styles.symptomsList}>
           <FlatList
