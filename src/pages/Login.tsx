@@ -314,8 +314,6 @@ const styles = StyleSheet.create({
     color: colors.gray_dark3,
   },
   button: {
-    //marginTop: 40,
-    width: Dimensions.get("window").width * 0.9,
     padding: 20,
   },
 });

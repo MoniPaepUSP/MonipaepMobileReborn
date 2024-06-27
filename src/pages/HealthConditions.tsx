@@ -1,29 +1,48 @@
 import React, { useState, useRef } from 'react';
-import { Dimensions, StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Dimensions, StyleSheet, Text, View, ScrollView, TouchableOpacity, Modal } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { DrawerLayout } from 'react-native-gesture-handler';
 import { BlueButton, HeaderSimple, SafeAreaView } from '../components';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import ConditionCard from '../components/ConditionCard';
+import SymptomCard from '../components/SymptomCard';
 import { useNavigation } from "@react-navigation/native";
-import { Menu } from '../components/Menu';
+import Menu from '../components/Menu';
 
 interface ConditionsProps {
   condition: string;
+}
+
+interface SymptomCardProps {
+  symptom: string;
 }
 
 export function HealthConditions() {
   const navigation = useNavigation();
   const [conditions, setConditions] = useState<ConditionsProps[]>([
     { condition: 'Diabetes Tipo 2' },
-    { condition: 'Alergia a Amendoim' },
-    { condition: 'Hipertensão' }
+    { condition: 'Alergia a Amendoim' }
+  ]);
+  const [symptoms, setSymptoms] = useState<SymptomCardProps[]>([
+    { symptom: 'Febre alta e constante' },
+    { symptom: 'Dor nas articulações' }
   ]);
   const drawerRef = useRef(null);
+  const [menuVisible, setMenuVisible] = useState(false);
 
   function handleCondition() {
     navigation.navigate('ConditionInsert' as never);
+  }
+
+  // Function to open the drawer
+  function openMenu() {
+    setMenuVisible(true);
+  }
+
+  // Function to close the drawer
+  function closeMenu() {
+    setMenuVisible(false);
   }
 
   return (
@@ -36,13 +55,16 @@ export function HealthConditions() {
       <SafeAreaView accessible={true} style={styles.safeArea}>
         <HeaderSimple titleScreen="Condições e Sintomas" />
         <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-          <TouchableOpacity onPress={() => drawerRef.current.openDrawer()} style={styles.menuButton}>
-            <MaterialIcons name="menu" size={24} color="black" />
-          </TouchableOpacity>
-
           <View style={styles.container}>
             <View style={styles.bodyUp} accessible={true}>
-              <MaterialIcons style={styles.icons} name="menu" size={24} color="black" />
+              <TouchableOpacity onPress={openMenu}>
+              <MaterialIcons
+                style={styles.icons}
+                name="menu"
+                size={24}
+                color="black"
+              />
+              </TouchableOpacity>
               <View style={styles.textAPP} accessible={true}>
                 <Text style={styles.appName}>MoniPaEp</Text>
               </View>
@@ -56,15 +78,34 @@ export function HealthConditions() {
                 </View>
               ))}
             </View>
+            <View style={styles.symptomsContainer}>
+              {symptoms.map((item, index) => (
+                <View key={index} style={styles.symptom}>
+                  <View style={[styles.hr, index === symptoms.length - 1 && { marginBottom: 15 }]} />
+                  <SymptomCard symptom={item.symptom} />
+                  {index !== symptoms.length && <View style={styles.hr} />}
+                </View>
+              ))}
+            </View>
           </View>
         </ScrollView>
         <View style={styles.bottom}>
-          <BlueButton
+          <BlueButton 
             accessibilityLabel="Botão. Clique para atualizar condições de saúde"
-            title="Atualizar Condições"
+            title="Atualizar Registros"
             onPress={handleCondition}
           />
         </View>
+
+        {/* Modal for the Menu */}
+      <Modal
+        visible={menuVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={closeMenu}
+      >
+        <Menu onCloseMenu={closeMenu} />
+      </Modal>
       </SafeAreaView>
     </DrawerLayout>
   );
@@ -75,6 +116,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   condition: {
+    marginVertical: -10,
+  },
+  symptom: {
     marginVertical: -10,
   },
   scrollViewContainer: {
@@ -112,9 +156,9 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
   bottom: {
-    width: Dimensions.get('window').width,
+    width: '100%',
     position: 'absolute',
-    bottom: 20,
+    bottom: 40,
     alignItems: 'center',
   },
   menuButton: {
@@ -124,6 +168,9 @@ const styles = StyleSheet.create({
     zIndex: 100,
   },
   conditionsContainer: {
-    marginTop: Dimensions.get('window').height*0.18,
+    marginTop: Dimensions.get('window').height*0.09,
+  },
+  symptomsContainer: {
+    marginTop: 0,
   },
 });

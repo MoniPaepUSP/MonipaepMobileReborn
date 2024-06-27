@@ -9,6 +9,8 @@ import {
   View,
   FlatList,
   Alert,
+  Modal,
+  TouchableOpacity
 } from "react-native";
 import {
   GreenButton,
@@ -16,6 +18,7 @@ import {
   SafeAreaView,
   Symptom,
 } from "../components";
+import  Menu  from "../components/Menu";
 import { useAuth } from "../contexts/auth.context";
 import api from "../services/api";
 import colors from "../styles/colors";
@@ -25,7 +28,7 @@ interface SymptomsProps {
   symptom: string;
 }
 
-export function Symtopms() {
+export function Symptoms() {
   const { user, refreshToken, token } = useAuth();
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isSearchFilled, setIsSearchFilled] = useState(false);
@@ -33,22 +36,33 @@ export function Symtopms() {
   const [symptoms, setSymptoms] = useState<SymptomsProps[]>([]);
   const searchRef = useRef(null);
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
+  const [menuVisible, setMenuVisible] = useState(false);
   const navigation = useNavigation();
 
   useEffect(() => {
     async function fetchSymptoms() {
-      //console.log("search: "+search)
       const response = await api.get("/symptom", {
         params: { symptom: search },
       });
       setSymptoms(response.data.symptoms);
     }
     fetchSymptoms();
-  }, []);
+  }, [search]);
 
 //   function handleProfile() {
 //     navigation.navigate("Profile");
 //   }
+
+  // Function to open the drawer
+  function openMenu() {
+    setMenuVisible(true);
+  }
+
+  // Function to close the drawer
+  function closeMenu() {
+    setMenuVisible(false);
+  }
+
   //Functions handle for Search
   function handleInputSearchBlur() {
     setIsSearchFocused(false);
@@ -88,7 +102,7 @@ export function Symtopms() {
       });
       Alert.alert(
         "Atualização concluida",
-        `Simtomas cadastrados: ${selectedSymptoms}`,
+        `Sintomas cadastrados: ${selectedSymptoms}`,
         [
           {
             text: "Ok",
@@ -117,12 +131,14 @@ export function Symtopms() {
       <HeaderSimple titleScreen="Atualizar Sintomas" />
       <View style={styles.container}>
         <View style={styles.bodyUp} accessible={true}>
-          <MaterialIcons
-            style={styles.icons}
-            name="menu"
-            size={24}
-            color="black"
-          />
+          <TouchableOpacity onPress={openMenu}>
+            <MaterialIcons
+              style={styles.icons}
+              name="menu"
+              size={24}
+              color="black"
+            />
+          </TouchableOpacity>
           <View style={styles.textAPP} accessible={true}>
             <Text style={styles.appName}>MoniPaEp</Text>
           </View>
@@ -163,6 +179,16 @@ export function Symtopms() {
           />
         </View>
       </View>
+
+      {/* Modal for the Menu */}
+      <Modal
+        visible={menuVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={closeMenu}
+      >
+        <Menu onCloseMenu={closeMenu} />
+      </Modal>
     </SafeAreaView>
   );
 }

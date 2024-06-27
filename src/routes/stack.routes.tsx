@@ -1,26 +1,27 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import colors from "../styles/colors";
-import { Login, SignUp, Symtopms } from "../pages";
+import { Login } from "../pages/Login"; // Verifique se os caminhos e nomes estão corretos
+import { SignUp } from "../pages/SignUp";
+import { Profile } from "../pages/Profile";
 import { HealthConditions } from "../pages/HealthConditions";
+import { Symptoms } from "../pages";
 
-const stackNavigator = createStackNavigator();
+const Stack = createDrawerNavigator();
 
-const Stack: React.FC = () => (
-  <stackNavigator.Navigator
+const StackRoutes = () => (
+  <Stack.Navigator
     screenOptions={{
-      cardStyle: {
-        backgroundColor: colors.white,
-      },
-      headerShown: false,
+      headerShown: true,
     }}
   >
-    <stackNavigator.Screen name="Login" component={Login} />
-    <stackNavigator.Screen name="SignUp" component={SignUp} />
-    <stackNavigator.Screen name="Symptoms" component={Symtopms} />
-    <stackNavigator.Screen name="HealthConditions" component={HealthConditions} />
+    <Stack.Screen name="Login" component={Login} />
+    <Stack.Screen name="SignUp" component={SignUp} />
+    <Stack.Screen name="Profile" component={Profile} />
+    <Stack.Screen name="HealthConditions" component={HealthConditions} />
+    <Stack.Screen name="Symptoms" component={Symptoms} />
     {/* PAGES */}
-  </stackNavigator.Navigator>
+  </Stack.Navigator>
 );
 
-export default Stack;
+export default StackRoutes;
