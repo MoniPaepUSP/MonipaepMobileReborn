@@ -1,114 +1,156 @@
-import React from "react";
-import { StyleSheet, Image, Text, View, TouchableOpacity, Dimensions } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { MaterialCommunityIcons, Ionicons, FontAwesome5, AntDesign, Octicons } from '@expo/vector-icons';
+import colors from '../styles/colors';
 
-const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export function Menu({ onCloseMenu }) {
+interface MenuProps {
+  onCloseMenu: () => void;
+  independent?: boolean; // Propriedade para indicar se é independente
+}
+
+const Menu = ({ onCloseMenu, independent }: MenuProps) => {
   const navigation = useNavigation();
 
-  function handleConditions(){
+  function handleConditions() {
     onCloseMenu();
     navigation.navigate('HealthConditions' as never);
   }
 
-  function handleLogout(){
+  function handleProfile() {
+    onCloseMenu();
+    navigation.navigate('Profile' as never);
+  }
+
+  function handleMyAccount() {
+    onCloseMenu();
+    navigation.navigate('Symptoms' as never);
+  }
+
+  function handleFrequentQuestions() {
+    onCloseMenu();
+    navigation.navigate('FrequentQuestions' as never);
+  }
+
+  function handleMyAppointments() {
+    onCloseMenu();
+    navigation.navigate('MyAppointments' as never);
+  }
+
+  function handleConfig() {
+    onCloseMenu();
+    navigation.navigate('Config' as never);
+  }
+
+  function handleLogout() {
+    onCloseMenu();
     navigation.navigate('Login' as never);
+  }
+
+  if (independent) {
+    return (
+      <Modal visible={true} transparent={true} animationType="slide">
+        <View style={styles.menuContainer}>
+          <View style={styles.menuContent}>
+            <TouchableOpacity style={styles.menuItem} onPress={handleProfile}>
+              <MaterialCommunityIcons name="account-box-outline" size={24} color="black" />
+              <Text style={styles.menuText}>Perfil</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.menuItem} onPress={handleMyAccount}>
+              <Ionicons name="person-circle-outline" size={24} color="black" />
+              <Text style={styles.menuText}>Minha Conta</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.menuItem} onPress={handleFrequentQuestions}>
+              <Octicons name="question" size={24} color="black" />
+              <Text style={styles.menuText}>Perguntas Frequentes</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.menuItem} onPress={handleConditions}>
+              <FontAwesome5 name="history" size={24} color="black" />
+              <Text style={styles.menuText}>Histórico de Sintomas</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.menuItem} onPress={handleMyAppointments}>
+              <MaterialCommunityIcons name="calendar-heart" size={24} color="black" />
+              <Text style={styles.menuText}>Minhas Consultas</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
+              <Octicons name="gear" size={24} color="black" />
+              <Text style={styles.menuText}>Configurações</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.menuItemSair} onPress={handleLogout}>
+              <AntDesign name="logout" size={24} color="black" />
+              <Text style={styles.menuText}>Sair</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    );
   }
 
   return (
     <View style={styles.menuContainer}>
       <View style={styles.menuContent}>
-        <TouchableOpacity style={styles.menuItem} onPress={onCloseMenu}>
-          <Image
-            style={styles.menuItemImage}
-            source={{
-              uri: "https://firebasestorage.googleapis.com/v0/b/unify-v3-copy.appspot.com/o/vemm8idxb0n-I34%3A617%3B227%3A3875?alt=media&token=2ff04cc6-6bd7-402c-9d32-1824d59690c2",
-            }}
-          />
+        <TouchableOpacity style={styles.menuItem} onPress={handleProfile}>
+          <MaterialCommunityIcons name="account-box-outline" size={24} color="black" />
           <Text style={styles.menuText}>Perfil</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.menuItem} onPress={onCloseMenu}>
-          <Image
-            style={styles.menuItemImage}
-            source={{
-              uri: "https://firebasestorage.googleapis.com/v0/b/unify-v3-copy.appspot.com/o/vemm8idxb0n-I34%3A617%3B227%3A4446?alt=media&token=b6860785-00be-491b-8e99-843e5e8b47f6",
-            }}
-          />
+        <TouchableOpacity style={styles.menuItem} onPress={handleMyAccount}>
+          <Ionicons name="person-circle-outline" size={24} color="black" />
           <Text style={styles.menuText}>Minha Conta</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.menuItem} onPress={handleConditions}>
-          <Image
-            style={styles.menuItemImage}
-            source={{
-              uri: "https://firebasestorage.googleapis.com/v0/b/unify-v3-copy.appspot.com/o/vemm8idxb0n-I34%3A617%3B227%3A5493?alt=media&token=c1195ef6-8080-445b-aadd-8b65a463cf52",
-            }}
-          />
-          <Text style={styles.menuText}>Saúde e Sintomas</Text>
+        <TouchableOpacity style={styles.menuItem} onPress={handleFrequentQuestions}>
+          <Octicons name="question" size={24} color="black" />
+          <Text style={styles.menuText}>Perguntas Frequentes</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.menuItem} onPress={onCloseMenu}>
-          <Image
-            style={styles.menuItemImage}
-            source={{
-              uri: "https://firebasestorage.googleapis.com/v0/b/unify-v3-copy.appspot.com/o/vemm8idxb0n-I34%3A617%3B227%3A4992?alt=media&token=3cdd0fef-d92a-4960-a049-36d0c7b75ff7",
-            }}
-          />
+        <TouchableOpacity style={styles.menuItem} onPress={handleConditions}>
+          <FontAwesome5 name="history" size={24} color="black" />
+          <Text style={styles.menuText}>Histórico de Sintomas</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.menuItem} onPress={handleMyAppointments}>
+          <MaterialCommunityIcons name="calendar-heart" size={24} color="black" />
           <Text style={styles.menuText}>Minhas Consultas</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.menuItem} onPress={onCloseMenu}>
-          <Image
-            style={styles.menuItemImage}
-            source={{
-              uri: "https://firebasestorage.googleapis.com/v0/b/unify-v3-copy.appspot.com/o/vemm8idxb0n-I34%3A617%3B227%3A5999?alt=media&token=5d3bbe9d-e462-4c63-9763-670d3c335581",
-            }}
-          />
-          <Text style={styles.menuText}>Histórico de Doenças</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.menuItem} onPress={onCloseMenu}>
-          <Image
-            style={styles.menuItemImage}
-            source={{
-              uri: "https://firebasestorage.googleapis.com/v0/b/unify-v3-copy.appspot.com/o/vemm8idxb0n-I34%3A617%3B229%3A4?alt=media&token=7ca4500d-43bc-4eb8-bdc0-435f7a0acc38",
-            }}
-          />
+        <TouchableOpacity style={styles.menuItem} onPress={handleConfig}>
+          <Octicons name="gear" size={24} color="black" />
           <Text style={styles.menuText}>Configurações</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
-          <Image
-            style={styles.menuItemImage}
-            source={{
-              uri: "https://firebasestorage.googleapis.com/v0/b/unify-v3-copy.appspot.com/o/vemm8idxb0n-I34%3A617%3B227%3A4446?alt=media&token=b6860785-00be-491b-8e99-843e5e8b47f6",
-            }}
-          />
-          <Text style={styles.menuText}>Encerrar Sessão</Text>
+        <TouchableOpacity style={styles.menuItemSair} onPress={handleLogout}>
+          <AntDesign name="logout" size={24} color="black" />
+          <Text style={styles.menuText}>Sair</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   menuContainer: {
-    flex: 1,
+    width: '70%',
     backgroundColor: '#fff',
-    height: windowHeight,
+    marginTop: windowHeight * 0.068,
   },
   menuContent: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    paddingVertical: 90,
+    paddingVertical: 40,
     width: '100%',
   },
   menuItem: {
-    paddingVertical: 10,
+    paddingVertical: 20,
     paddingHorizontal: 20,
     flexDirection: 'row',
     alignItems: 'center',
@@ -116,14 +158,24 @@ const styles = StyleSheet.create({
   menuItemImage: {
     width: 20,
     height: 20,
-    margin:5,
+    margin: 5,
     marginRight: 10,
   },
   menuText: {
-    color: "rgba(0,0,0,1)",
+    color: 'rgba(0,0,0,1)',
     fontSize: 17,
     lineHeight: 17,
-    fontFamily: "Roboto",
-    fontWeight: "500",
+    fontFamily: 'Roboto',
+    fontWeight: '500',
+    marginLeft: 5,
+  },
+  menuItemSair: {
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: '60%',
   },
 });
+
+export default Menu;
