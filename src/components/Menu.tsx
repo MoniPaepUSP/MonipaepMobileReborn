@@ -28,6 +28,11 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
     navigation.navigate('Profile' as never);
   }
 
+  function handleMyAccountAlt() {
+    onCloseMenu();
+    navigation.navigate('ProfileAlt' as never);
+  }
+
   function handleFrequentQuestions() {
     onCloseMenu();
     navigation.navigate('FrequentQuestions' as never);
@@ -57,7 +62,7 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
               <Text style={styles.menuText}>Página Inicial</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.menuItem} onPress={handleMyAccount}>
+            <TouchableOpacity style={styles.menuItem} onPress={handleMyAccountAlt}>
               <Ionicons name="person-circle-outline" size={24} color="black" />
               <Text style={styles.menuText}>Minha Conta</Text>
             </TouchableOpacity>

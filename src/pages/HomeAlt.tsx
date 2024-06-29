@@ -4,61 +4,24 @@ import {
     Dimensions,
     StyleSheet,
     Text,
-    TextInput,
     View,
-    FlatList,
-    Alert,
     Modal,
     TouchableOpacity,
-    Image,
-    Button
 } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import { FAQ, GreenButton, HeaderSimple, PatientStatus, SafeAreaView } from '../components';
+import { FAQ, GreenButton, HeaderSimple, SafeAreaView } from '../components';
 import { ChatButton } from '../components/ChatButton';
-import Carousel from "react-native-snap-carousel";
 import { useAuth } from '../contexts/auth.context';
 import  Menu  from "../components/Menu";
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
-
-
-type CarouselCardProps = {
-    item: {
-        imgUrl: string
-    }
-    index: number
-}
-
-const carouselItems = [
-    {
-        imgUrl:
-            'https://www.gov.br/conitec/pt-br/assuntos/noticias/2024/fevereiro/pacientes-com-vasculite-ganham-protocolo-sobre-tratamento-da-doenca-no-sus/vasculite-sus_card-conitec-1.png'
-    },
-    {
-        imgUrl:
-            'https://www.conass.org.br/wp-content/uploads/2022/01/IMG000000000278418-1024x1024.jpeg'
-    },
-    {
-        imgUrl:
-            'https://www.unasus.gov.br/uploads/Lanc%CC%A7amento%20Odonto%20infecciosas_%20FEED%201_%20%281%29.jpg'
-    },
-]
-    
-function carouselCardItem({item, index}: CarouselCardProps){
-    return(
-        <View style={styles.cardCarousel} key={index}>
-            <Image style={styles.imageCarousel} source={{ uri: item.imgUrl}} />
-        </View>
-    );
-};
 
 export function Home(){ 
     const navigation = useNavigation();
     const {user, refreshToken, token, signed, signOut} = useAuth();
     const [menuVisible, setMenuVisible] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
-    const [redirected, setRedirected] = useState(false); // Estado para controlar se já foi redirecionado
+    const [redirected, setRedirected] = useState(false)
     
     const date = user?.lastUpdate;
     let dateString = '';
@@ -123,8 +86,7 @@ export function Home(){
 
     const closeModal = () => {
         setShowPopup(false);
-        // Navegue para onde desejar após fechar o pop-up, exemplo fictício:
-        // navigation.navigate('MinhaPágina');
+
     };
 
     return(
@@ -158,13 +120,6 @@ export function Home(){
                 />
                 </View>
                 <View>
-                {/* <Carousel
-                        data={carouselItems}
-                        renderItem={carouselCardItem}
-                        sliderWidth={Dimensions.get('window').width}
-                        itemWidth={Dimensions.get('window').width * 0.88}
-                        useScrollView={true}
-                    /> */}
                     <Modal
                         visible={showPopup}
                         animationType="slide"
@@ -189,28 +144,8 @@ export function Home(){
                     style={styles.bottom} 
                 >
                     <GreenButton 
-                        accessibilityLabel="Botão. Clique para ir para a página de atualizar comorbidades"
+                        accessibilityLabel="Botão. Clique para ir para a página de atualizar condições especiais ou"
                         title="Atualizar comorbidades"
-                        onPress={handleConditions}
-                    />
-                </View>
-                <View
-                    accessible={true} 
-                    style={styles.bottom} 
-                >
-                    <GreenButton 
-                        accessibilityLabel="Botão. Clique para ir para a página de atualizar condições especiais"
-                        title="Atualizar condições especiais"
-                        onPress={handleConditions}
-                    />
-                </View>
-                <View
-                    accessible={true} 
-                    style={styles.bottom} 
-                >
-                    <GreenButton 
-                        accessibilityLabel="Botão. Clique para ir para a página de atualizar sintomas"
-                        title="Atualizar sintomas"
                         onPress={handleConditions}
                     />
                 </View>
@@ -242,7 +177,6 @@ export function Home(){
                 visible={menuVisible}
                 animationType="slide"
                 transparent={true}
-                onRequestClose={closeMenu}
             >
                 <Menu onCloseMenu={closeMenu} />
             </Modal>
@@ -267,13 +201,6 @@ const styles = StyleSheet.create({
     icons:{
         padding: 20
     },
-    cardCarousel:{
-        width: Dimensions.get('window').width * 0.88
-    },
-    imageCarousel:{
-        height: 250,
-        borderRadius: 8
-    },
     modalContainer: {
         flex: 1,
         justifyContent: 'center',
@@ -290,7 +217,7 @@ const styles = StyleSheet.create({
     },
     modalText:{
         fontSize: 15,
-        fontFamily: fonts.generic, // Mantendo a fonte existente
+        fontFamily: fonts.generic,
         fontWeight: 'bold',
         textAlign: 'center',
         marginTop: 25
@@ -302,7 +229,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: Dimensions.get('window').width * 0.8,
-        marginTop: 30
     },
     buttonText:{
         fontSize: 16,
@@ -311,9 +237,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     bottom: {
-        width: Dimensions.get('window').width * 0.9,
-        paddingVertical: 10, // Espaçamento interno vertical
-        alignSelf: 'center',
+        alignItems:'center',
+        marginTop: 75
+
       },
     text:{
         fontSize: 20,
@@ -321,16 +247,7 @@ const styles = StyleSheet.create({
         fontFamily: fonts.warning,
         padding: 20
     },
-    status:{
-        fontSize: 16,
-        color: colors.black,
-        fontFamily: fonts.warning,
-        padding: 20
-    },
-    test:{
-        fontSize: 40,
-        color: colors.black,
-        fontFamily: fonts.warning,
-        padding: 20
+    faq: {
+        marginBottom: 30
     }
 })
