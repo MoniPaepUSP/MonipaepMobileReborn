@@ -2,13 +2,12 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons, Ionicons, FontAwesome5, AntDesign, Octicons } from '@expo/vector-icons';
-import colors from '../styles/colors';
 
 const windowHeight = Dimensions.get('window').height;
 
 interface MenuProps {
   onCloseMenu: () => void;
-  independent?: boolean; // Propriedade para indicar se é independente
+  independent?: boolean;
 }
 
 const Menu = ({ onCloseMenu, independent }: MenuProps) => {
@@ -19,14 +18,19 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
     navigation.navigate('HealthConditions' as never);
   }
 
-  function handleProfile() {
+  function handleHome() {
     onCloseMenu();
-    navigation.navigate('Profile' as never);
+    navigation.navigate('Home' as never);
   }
 
   function handleMyAccount() {
     onCloseMenu();
-    navigation.navigate('Symptoms' as never);
+    navigation.navigate('Profile' as never);
+  }
+
+  function handleMyAccountAlt() {
+    onCloseMenu();
+    navigation.navigate('ProfileAlt' as never);
   }
 
   function handleFrequentQuestions() {
@@ -51,15 +55,14 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
 
   if (independent) {
     return (
-      <Modal visible={true} transparent={true} animationType="slide">
         <View style={styles.menuContainer}>
           <View style={styles.menuContent}>
-            <TouchableOpacity style={styles.menuItem} onPress={handleProfile}>
-              <MaterialCommunityIcons name="account-box-outline" size={24} color="black" />
-              <Text style={styles.menuText}>Perfil</Text>
+            <TouchableOpacity style={styles.menuItem} onPress={handleHome}>
+              <MaterialCommunityIcons name="home-circle-outline" size={24} color="black" />
+              <Text style={styles.menuText}>Página Inicial</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.menuItem} onPress={handleMyAccount}>
+            <TouchableOpacity style={styles.menuItem} onPress={handleMyAccountAlt}>
               <Ionicons name="person-circle-outline" size={24} color="black" />
               <Text style={styles.menuText}>Minha Conta</Text>
             </TouchableOpacity>
@@ -90,16 +93,15 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
             </TouchableOpacity>
           </View>
         </View>
-      </Modal>
     );
   }
 
   return (
     <View style={styles.menuContainer}>
       <View style={styles.menuContent}>
-        <TouchableOpacity style={styles.menuItem} onPress={handleProfile}>
-          <MaterialCommunityIcons name="account-box-outline" size={24} color="black" />
-          <Text style={styles.menuText}>Perfil</Text>
+        <TouchableOpacity style={styles.menuItem} onPress={handleHome}>
+        <MaterialCommunityIcons name="home-circle-outline" size={24} color="black" />
+          <Text style={styles.menuText}>Home</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.menuItem} onPress={handleMyAccount}>
@@ -174,7 +176,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: '60%',
+    marginTop: '90%',
   },
 });
 

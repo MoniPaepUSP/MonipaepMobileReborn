@@ -1,14 +1,18 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, Pressable } from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
+import Checkbox from 'expo-checkbox';
+import colors from '../styles/colors';
 
 const ConditionItem = ({ description, isChecked, onPress }) => {
   return (
     <Pressable style={styles.condition} onPress={onPress}>
       <Text style={styles.conditionText}>{description}</Text>
       <View style={styles.divider} />
-      <Image
-        style={styles.radioIcon}
-        source={isChecked ? require('../assets/GreenRadio.png') : require('../assets/Radio.png')}
+      <Checkbox
+        style={styles.checkbox}
+        value={isChecked}
+        onValueChange={onPress}
+        color={colors.green}
       />
     </Pressable>
   );
@@ -29,7 +33,7 @@ const styles = StyleSheet.create({
     height: 1,
     marginHorizontal: 8,
   },
-  radioIcon: {
+  checkbox: {
     width: 16,
     height: 16,
   },
