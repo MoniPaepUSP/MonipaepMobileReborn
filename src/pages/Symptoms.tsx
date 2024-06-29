@@ -127,7 +127,7 @@ export function Symptoms() {
   }
 
   return (
-    <SafeAreaView accessible={true}>
+    <SafeAreaView accessible={true} style={styles.safeArea}>
       <HeaderSimple titleScreen="Atualizar Sintomas" />
       <View style={styles.container}>
         <View style={styles.bodyUp} accessible={true}>
@@ -171,13 +171,13 @@ export function Symptoms() {
             )}
           />
         </View>
-        <View style={styles.bottom}>
-          <GreenButton
-            accessibilityLabel="Botão. Clique para ir para a página de atualizar sintomas"
-            title="Atualizar Sintomas"
-            onPress={handleSymptom}
-          />
-        </View>
+      </View>
+      <View style={styles.bottom}>
+        <GreenButton
+          accessibilityLabel="Botão. Clique para ir para a página de atualizar sintomas"
+          title="Atualizar Sintomas"
+          onPress={handleSymptom}
+        />
       </View>
 
       {/* Modal for the Menu */}
@@ -194,7 +194,11 @@ export function Symptoms() {
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
   container: {
+    flex: 1,
     backgroundColor: colors.white,
     alignItems: "center",
     justifyContent: "center",
@@ -225,7 +229,6 @@ const styles = StyleSheet.create({
     borderColor: colors.black,
     height: 50,
     borderRadius: 100,
-
     alignItems: "center",
   },
   textSerch: {
@@ -241,11 +244,16 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width * 0.8,
     paddingTop: 20,
     justifyContent: "center",
+    flex: 1,
   },
   bottom: {
-    //marginTop: 40,
+    position: "absolute",
+    bottom: 20,
+    left: 0,
+    right: 0,
+    alignItems: "center",
+  },
+  greenButton: {
     width: Dimensions.get("window").width * 0.9,
-    paddingBottom: 20,
-    paddingTop: 30,
   },
 });

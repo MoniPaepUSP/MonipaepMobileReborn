@@ -19,9 +19,9 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
     navigation.navigate('HealthConditions' as never);
   }
 
-  function handleProfile() {
+  function handleHome() {
     onCloseMenu();
-    navigation.navigate('Profile' as never);
+    navigation.navigate('Home' as never);
   }
 
   function handleMyAccount() {
@@ -54,9 +54,9 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
       <Modal visible={true} transparent={true} animationType="slide">
         <View style={styles.menuContainer}>
           <View style={styles.menuContent}>
-            <TouchableOpacity style={styles.menuItem} onPress={handleProfile}>
-              <MaterialCommunityIcons name="account-box-outline" size={24} color="black" />
-              <Text style={styles.menuText}>Perfil</Text>
+            <TouchableOpacity style={styles.menuItem} onPress={handleHome}>
+              <MaterialCommunityIcons name="home-circle-outline" size={24} color="black" />
+              <Text style={styles.menuText}>Home</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.menuItem} onPress={handleMyAccount}>
@@ -97,9 +97,9 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
   return (
     <View style={styles.menuContainer}>
       <View style={styles.menuContent}>
-        <TouchableOpacity style={styles.menuItem} onPress={handleProfile}>
-          <MaterialCommunityIcons name="account-box-outline" size={24} color="black" />
-          <Text style={styles.menuText}>Perfil</Text>
+        <TouchableOpacity style={styles.menuItem} onPress={handleHome}>
+        <MaterialCommunityIcons name="home-circle-outline" size={24} color="black" />
+          <Text style={styles.menuText}>Home</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.menuItem} onPress={handleMyAccount}>
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: '60%',
+    marginTop: '90%',
   },
 });
 

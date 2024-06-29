@@ -46,12 +46,6 @@ export function HealthConditions() {
   }
 
   return (
-    <DrawerLayout
-      ref={drawerRef}
-      drawerWidth={(2 / 3) * Dimensions.get('window').width}
-      drawerPosition="left"
-      renderNavigationView={() => <Menu onCloseMenu={() => drawerRef.current.closeDrawer()} />}
-    >
       <SafeAreaView accessible={true} style={styles.safeArea}>
         <HeaderSimple titleScreen="Condições e Sintomas" />
         <ScrollView contentContainerStyle={styles.scrollViewContainer}>
@@ -107,7 +101,6 @@ export function HealthConditions() {
         <Menu onCloseMenu={closeMenu} />
       </Modal>
       </SafeAreaView>
-    </DrawerLayout>
   );
 }
 
