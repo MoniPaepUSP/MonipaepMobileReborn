@@ -5,12 +5,10 @@ import {
     Modal,
     StyleSheet,
     Text,
-
-
     View
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { FAQ, GreenButton, HeaderSimple, PatientStatus, SafeAreaView } from '../components';
+import { FAQ, GreenButton, HeaderSimple, SafeAreaView } from '../components';
 import { useAuth } from '../contexts/auth.context';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';

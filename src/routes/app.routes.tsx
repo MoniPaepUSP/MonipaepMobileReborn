@@ -6,6 +6,7 @@ import { Login, SignUp, Symptoms } from "../pages";
 import { Home } from "../pages/Home";
 import { ConditionInsert } from "../pages/ConditionInsert";
 import { Profile } from "../pages/Profile";
+import { MyAppointments } from "../pages/MyAppointments";
 
 const AppStack = createStackNavigator();
 
@@ -25,6 +26,7 @@ const AppRoutes = () => (
     <AppStack.Screen name="Symptoms" component={Symptoms} />
     <AppStack.Screen name="ConditionInsert" component={ConditionInsert} />
     <AppStack.Screen name="Profile" component={Profile} />
+    <AppStack.Screen name="MyAppointments" component={MyAppointments} />
   </AppStack.Navigator>
 );
 

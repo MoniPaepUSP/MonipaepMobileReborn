@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons, Ionicons, FontAwesome5, AntDesign, Octicons } from '@expo/vector-icons';
-import colors from '../styles/colors';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -51,12 +50,11 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
 
   if (independent) {
     return (
-      <Modal visible={true} transparent={true} animationType="slide">
         <View style={styles.menuContainer}>
           <View style={styles.menuContent}>
             <TouchableOpacity style={styles.menuItem} onPress={handleHome}>
               <MaterialCommunityIcons name="home-circle-outline" size={24} color="black" />
-              <Text style={styles.menuText}>Home</Text>
+              <Text style={styles.menuText}>Página Inicial</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.menuItem} onPress={handleMyAccount}>
@@ -90,7 +88,6 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
             </TouchableOpacity>
           </View>
         </View>
-      </Modal>
     );
   }
 
