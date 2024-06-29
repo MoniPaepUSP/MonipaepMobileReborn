@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 2,
-        borderColor: colors.green
+        borderColor: colors.green,
+        marginTop: 20
     },
     text:{
         fontSize: 16,

@@ -93,6 +93,7 @@ export function Symptoms() {
       setSelectedSymptoms([...selectedSymptoms, title]);
     }
   }
+  
 
   async function handleSymptom() {
     try {

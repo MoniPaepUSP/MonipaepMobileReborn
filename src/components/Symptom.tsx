@@ -21,7 +21,6 @@ export function Symptom({
     function handleSelected(){
         setIsSelected(!isSelected);
         parentHandleSelection(title)
-        ///console.log("selected Const: "+isSelected)
     }
     return(
         <View

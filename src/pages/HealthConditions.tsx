@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Dimensions, StyleSheet, Text, View, ScrollView, TouchableOpacity, Modal } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { DrawerLayout } from 'react-native-gesture-handler';
 import { BlueButton, HeaderSimple, SafeAreaView } from '../components';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';

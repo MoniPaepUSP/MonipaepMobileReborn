@@ -8,7 +8,7 @@ const windowHeight = Dimensions.get('window').height;
 
 interface MenuProps {
   onCloseMenu: () => void;
-  independent?: boolean; // Propriedade para indicar se é independente
+  independent?: boolean;
 }
 
 const Menu = ({ onCloseMenu, independent }: MenuProps) => {
@@ -26,7 +26,7 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
 
   function handleMyAccount() {
     onCloseMenu();
-    navigation.navigate('Symptoms' as never);
+    navigation.navigate('Profile' as never);
   }
 
   function handleFrequentQuestions() {

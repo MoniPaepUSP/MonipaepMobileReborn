@@ -1,6 +1,6 @@
 // components/CustomSelect.tsx
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Dimensions } from 'react-native';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import { Picker } from '@react-native-picker/picker';
@@ -33,8 +33,9 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ label, selectedValue, onVal
 
 const styles = StyleSheet.create({
   container: {
-    width: '90%',
     marginTop: 20,
+    width: Dimensions.get('window').width*0.88,
+    marginBottom: 10, // Margem inferior para separação visual
   },
   label: {
     fontFamily: fonts.generic,

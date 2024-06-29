@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.6,
         shadowRadius: 3, 
         elevation: 6, 
+        marginRight: Dimensions.get('window').width*0.1
       },
       text: {
         fontSize: 10,

@@ -9,7 +9,7 @@ import {
     TouchableOpacity,
 } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import { FAQ, GreenButton, HeaderSimple, PatientStatus, SafeAreaView } from '../components';
+import { FAQ, GreenButton, HeaderSimple, SafeAreaView } from '../components';
 import { ChatButton } from '../components/ChatButton';
 import { useAuth } from '../contexts/auth.context';
 import  Menu  from "../components/Menu";
@@ -86,8 +86,7 @@ export function Home(){
 
     const closeModal = () => {
         setShowPopup(false);
-        // Navegue para onde desejar após fechar o pop-up, exemplo fictício:
-        // navigation.navigate('MinhaPágina');
+
     };
 
     return(
@@ -145,28 +144,8 @@ export function Home(){
                     style={styles.bottom} 
                 >
                     <GreenButton 
-                        accessibilityLabel="Botão. Clique para ir para a página de atualizar comorbidades"
+                        accessibilityLabel="Botão. Clique para ir para a página de atualizar condições especiais ou"
                         title="Atualizar comorbidades"
-                        onPress={handleConditions}
-                    />
-                </View>
-                <View
-                    accessible={true} 
-                    style={styles.bottom} 
-                >
-                    <GreenButton 
-                        accessibilityLabel="Botão. Clique para ir para a página de atualizar condições especiais"
-                        title="Atualizar condições especiais"
-                        onPress={handleConditions}
-                    />
-                </View>
-                <View
-                    accessible={true} 
-                    style={styles.bottom} 
-                >
-                    <GreenButton 
-                        accessibilityLabel="Botão. Clique para ir para a página de atualizar sintomas"
-                        title="Atualizar sintomas"
                         onPress={handleConditions}
                     />
                 </View>
@@ -198,7 +177,6 @@ export function Home(){
                 visible={menuVisible}
                 animationType="slide"
                 transparent={true}
-                onRequestClose={closeMenu}
             >
                 <Menu onCloseMenu={closeMenu} />
             </Modal>
@@ -223,13 +201,6 @@ const styles = StyleSheet.create({
     icons:{
         padding: 20
     },
-    cardCarousel:{
-        width: Dimensions.get('window').width * 0.88
-    },
-    imageCarousel:{
-        height: 250,
-        borderRadius: 8
-    },
     modalContainer: {
         flex: 1,
         justifyContent: 'center',
@@ -246,7 +217,7 @@ const styles = StyleSheet.create({
     },
     modalText:{
         fontSize: 15,
-        fontFamily: fonts.generic, // Mantendo a fonte existente
+        fontFamily: fonts.generic,
         fontWeight: 'bold',
         textAlign: 'center',
         marginTop: 25
@@ -258,7 +229,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: Dimensions.get('window').width * 0.8,
-        marginTop: 30
     },
     buttonText:{
         fontSize: 16,
@@ -267,11 +237,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     bottom: {
-        display:'flex',
-        flexDirection:'column',
-        justifyContent: 'center',
         alignItems:'center',
-        marginTop:55
+        marginTop: 75
+
       },
     text:{
         fontSize: 20,
@@ -279,10 +247,7 @@ const styles = StyleSheet.create({
         fontFamily: fonts.warning,
         padding: 20
     },
-    test:{
-        fontSize: 40,
-        color: colors.black,
-        fontFamily: fonts.warning,
-        padding: 20
+    faq: {
+        marginBottom: 30
     }
 })

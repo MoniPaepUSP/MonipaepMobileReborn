@@ -224,27 +224,13 @@ export function SignUp() {
 
     //Submit data to database
 
-    try {
-
-      const response = await register(
-        email,
-        name,
-        cpfRef.current.getRawValue(),
-        phoneRef.current.getRawValue(),
-        workAddress,
-        homeAddress,
-        neighborhood,
-        houseNumber,
-        isHealthPlanSelected,
-        dateRef.current.getRawValue(),
-        password,
-        isAllowMessageSelected,
-        gender
-      );
+    try { 
       
+      const response = register(email, name, cpf, phone, workAddress, homeAddress, neighborhood, houseNumber, isHealthPlanSelected, date, password, isAllowMessageSelected, gender)
       commonSucessAlert(signUpSuccessMessage, () => {});
 
       return response;
+      
     } catch (error) {      
       
       commonErrorAlert(signUpFailureMessage, () => {});
@@ -260,7 +246,6 @@ export function SignUp() {
         <HeaderWithOutMenu titleScreen="Cadastro" />
         <KeyboardAvoidingView
           style={styles.container}
-          //behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
         >
           <View style={styles.container}>
             <View style={styles.warning}>
