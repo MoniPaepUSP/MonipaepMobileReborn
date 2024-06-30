@@ -1,139 +1,130 @@
-import { MaterialIcons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import {
-    Dimensions, Image,
-    Modal,
-    StyleSheet,
-    Text,
-    View
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { FAQ, GreenButton, HeaderSimple, SafeAreaView } from '../components';
-import { useAuth } from '../contexts/auth.context';
+import { View, Text, TextInput, Switch, StyleSheet, Dimensions, TouchableOpacity, Modal, ScrollView } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import { GreenButton, HeaderSimple, SafeAreaView } from '../components';
+import Menu from '../components/Menu';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
-import Menu from '../components/Menu';
+import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { SimpleLineIcons } from '@expo/vector-icons';
 
-
-export function Profile(){
-    const navigation = useNavigation();
-    const {user, refreshToken, token, signed, signOut} = useAuth()
+export function Profile() {
+    const [cpf, setCpf] = useState('');
+    const [dob, setDob] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [cep, setCep] = useState('');
+    const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+    const [locationEnabled, setLocationEnabled] = useState(false);
     const [menuVisible, setMenuVisible] = useState(false);
 
-    const closeMenu = () => {
-        setMenuVisible(false);
+    const toggleNotifications = () => {
+        setNotificationsEnabled(!notificationsEnabled);
     };
 
-    const openMenu = () => {
+    const toggleLocation = () => {
+        setLocationEnabled(!locationEnabled);
+    };
+
+    // Function to open the drawer
+    function openMenu() {
         setMenuVisible(true);
-    };
-
-    
-    const patientImg = require("../assets/profile.png")
-    const date = user?.lastUpdate;
-    let dateString = '';
-    let days = 0;
-    
-    if (typeof date === 'string') {
-        dateString = date;
-        const difference = Math.abs(Date.now() - Date.parse(dateString));
-        days = Math.round(difference / (1000 * 3600 * 24));
-    } else if (date instanceof Date) {
-        dateString = date.toISOString();
-        const difference = Math.abs(Date.now() - date.getTime());
-        days = Math.round(difference / (1000 * 3600 * 24));
-    }
-    
-
-    async function Data(){
-        //const patientId = await getUser()
-        //const token = await getAccessToken()
-        //const refreshToken = await getRefreshToken()
-        /*
-        console.log("Exibindo UseContext")
-        console.log(user)
-        console.log(token)
-        console.log(refreshToken)
-        console.log("Signed: "+signed)
-        */
-
-        //navigation.navigate('Symptoms')
     }
 
-    function handleConfig(){
-        //navigation.navigate('Config')
+    // Function to close the drawer
+    function closeMenu() {
+        setMenuVisible(false);
     }
 
-    function handleInsertions(){
-        navigation.navigate('ConditionInsert' as never)
+    function handleEdit(){
+        
     }
 
-    return(
-        <SafeAreaView  
-            accessible={true}
-            accessibilityLabel="Página de perfil"
-        >
-            <HeaderSimple
-                titleScreen= {`Bem vindo(a) ${user?.name.split(' ')[0]}`}
-            />
-            <View
-                style={styles.container}
-                accessible={true} 
-            >
-                <MaterialIcons 
-                    style={styles.icons} 
-                    accessible={true} accessibilityLabel="Menu" 
-                    name="menu" size={24} 
-                    color="black"
-                    onPress={openMenu} 
-                />
-                <View
-                    style={styles.bodyUp}
-                    accessible={true} 
-                >
-                <View
-                    style={styles.bodyUp}
-                    accessible={true} 
-                >
-                    
-                    <Image
-                        accessible={true} 
-                        accessibilityLabel = "Imagem. Foto do usuário" 
-                        source={patientImg}
-                        style = {styles.image}
+    return (
+        <SafeAreaView accessible={true} style={styles.safeArea}>
+            <HeaderSimple titleScreen="Minha Conta" />
+            <View style={styles.bodyUp} accessible={true}>
+                <TouchableOpacity onPress={openMenu}>
+                    <MaterialIcons
+                        style={styles.menu}
+                        name="menu"
+                        size={24}
+                        color="black"
                     />
-                
+                </TouchableOpacity>
+            </View>
+            <View style={styles.textAPP} accessible={true}>
+                <Text style={styles.appName}>MoniPaEp</Text>
+            </View>
+            <View style={styles.bodyMid} accessible={true}>
+                <View style={styles.fieldContainer}>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.label}>CPF</Text>
+                        <Text style={styles.textValue}>{cpf}</Text>
+                        <MaterialIcons style={styles.icons} name="person-outline" size={24} color="black" />
+                    </View>
                 </View>
-                
+                <View style={styles.fieldContainer}>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.label}>Data de Nascimento</Text>
+                        <Text style={styles.textValue}>{dob}</Text>
+                        <MaterialCommunityIcons style={styles.icons} name="calendar-blank-outline" size={24} color="black" />
+                    </View>
                 </View>
-
-                <View
-                    accessible={true} 
-                    style={styles.bottom} 
-                >
-
-                    <Text
-                        accessible={true}
-                        allowFontScaling= {true}
-                        style={styles.text}
-                    >
-                        Você está há {days} dias sem atualizar os seus sintomas!
-                    </Text>
-                    <GreenButton
-                        
-                        accessibilityLabel="Botão. Clique para ir para a página de atualizar sintomas"
-                        title="Atualizar Condiões ou Sintomas"
-                        onPress={handleInsertions}
-                    />
-
-                    <FAQ
-                        accessible={true}
-                        accessibilityLabel="Botão. Clique para ir para a página de perguntas frequentes"
-                        title = "Perguntas Frequentes"
-                        onPress={signOut}
-                    />
+                <View style={styles.fieldContainer}>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.label}>Celular</Text>
+                        <Text style={styles.textValue}>{phone}</Text>
+                        <MaterialCommunityIcons style={styles.icons} name="phone-outline" size={24} color="black" />
+                    </View>
+                </View>
+                <View style={styles.fieldContainer}>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.label}>Email</Text>
+                        <Text style={styles.textValue}>{email}</Text>
+                        <MaterialCommunityIcons style={styles.icons} name="email-outline" size={24} color="black" />
+                    </View>
+                </View>
+                <View style={styles.fieldContainer}>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.label}>CEP</Text>
+                        <Text style={styles.textValue}>{cep}</Text>
+                        <MaterialIcons style={styles.icons} name="person-pin-circle" size={24} color="black" />
+                    </View>
                 </View>
             </View>
+            <View
+                accessible={true} 
+                style={styles.bottom} 
+            >
+                <View style={styles.permissionContainer}>
+                    <Text style={styles.permissionLabel}>Permitir Notificações</Text>
+                    <Switch
+                        trackColor={{ false: colors.gray_light1, true: colors.green }}
+                        thumbColor={notificationsEnabled ? colors.white : colors.gray_light1}
+                        ios_backgroundColor={colors.gray_light1}
+                        onValueChange={toggleNotifications}
+                        value={notificationsEnabled}
+                    />
+                </View>
+                <View style={styles.permissionContainer}>
+                    <Text style={styles.permissionLabel}>Permitir Localização</Text>
+                    <Switch
+                        trackColor={{ false: colors.gray_light1, true: colors.green }}
+                        thumbColor={locationEnabled ? colors.white : colors.gray_light1}
+                        ios_backgroundColor={colors.gray_light1}
+                        onValueChange={toggleLocation}
+                        value={locationEnabled}
+                    />
+                </View>
+                <GreenButton 
+                    accessibilityLabel="Botão. Clique para alterar dados"
+                    title="Alterar Dados"
+                    onPress={handleEdit}
+                />
+            </View>
+            {/* Modal for the Menu */}
             <Modal
                 visible={menuVisible}
                 animationType="slide"
@@ -142,44 +133,104 @@ export function Profile(){
             >
                 <Menu onCloseMenu={closeMenu} />
             </Modal>
-
         </SafeAreaView>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
-    container:{
-        
-    },
-    bodyUp:{
-        alignItems: 'center',
-    },
-    icons:{
-        padding: 20
-    },
-    image:{
-        width: Dimensions.get('window').height * 0.30,
-        height: Dimensions.get('window').height * 0.30,
-        borderRadius: (Dimensions.get('window').height * 0.30)/2
-    },
-    bottom:{
-        //marginTop: 40,
-        width: Dimensions.get('window').width * 0.9,
-        padding: 20,
-           
-    },
-    text:{
-        fontSize: 20,
-        color: colors.black,
-        fontFamily: fonts.warning,
-        padding: 20,
-        marginBottom: 30
-    },
-
-    test:{
-        fontSize: 40,
-        color: colors.black,
-        fontFamily: fonts.warning,
-        padding: 20
-    },
-})
+  safeArea: {
+    flex: 1,
+  },
+  condition: {
+    marginVertical: -10,
+  },
+  symptom: {
+    marginVertical: -10,
+  },
+  container: {
+    backgroundColor: colors.white,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    flex: 1,
+  },
+  bodyUp: {
+    width: '100%',
+    justifyContent: 'center',
+    paddingBottom: 15,
+  },
+  menu: {
+    padding: 20,
+  },
+  appName: {
+    fontWeight: 'bold',
+    fontFamily: fonts.appName,
+    fontSize: 32,
+    color: colors.blue,
+  },
+  textAPP: {
+    alignItems: 'center',
+  },
+  bottom: {
+    width: '100%',
+    position: 'absolute',
+    bottom: 40,
+    alignItems: 'center',
+    marginVertical: -20
+  },
+  menuButton: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    zIndex: 100,
+  },
+  bodyMid:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 50
+  },
+  fieldContainer: {
+    flexDirection: 'row', // ou 'column' dependendo da disposição desejada
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20, // Espaçamento horizontal para o contêiner
+    marginBottom: 20, // Espaçamento inferior para separar os campos
+  },
+  textContainer: {
+    flex: 1, // Ocupa todo o espaço restante no contêiner
+    flexDirection: 'row', // ou 'column' dependendo da disposição desejada
+    height: 53, // Altura do campo de texto
+    borderWidth: 2,
+    borderColor: colors.gray_dark1,
+    borderRadius: 8,
+    paddingHorizontal: 10, // Espaçamento interno horizontal para o texto
+    justifyContent: 'center', // Centraliza verticalmente o texto
+  },
+  label: {
+    fontSize: 11,
+    fontFamily: fonts.generic,
+    marginRight: 10, // Espaçamento direito entre o rótulo e o campo
+    flex: 1, // Permite que o rótulo ocupe o espaço disponível
+    alignSelf: 'center', // Centraliza verticalmente dentro do contêiner
+    color: colors.blue_dark1
+  },
+  textValue: {
+    fontSize: 16,
+    fontFamily: fonts.generic,
+    color: '#333', // Cor do texto
+  },
+  icons:{
+    alignSelf: 'center',
+  },
+  permissionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginHorizontal: 30,
+    width: Dimensions.get('window').width * 0.88
+  },
+  permissionLabel: {
+    fontSize: 15,
+  },
+});

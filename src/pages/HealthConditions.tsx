@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
   },
   appName: {
     fontFamily: fonts.appName,
+    fontWeight: 'bold',
     fontSize: 32,
     color: colors.blue,
   },

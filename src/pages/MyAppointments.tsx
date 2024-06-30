@@ -123,16 +123,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   bodyUp: {
-    width: "100%",
-    height: Dimensions.get("window").height * 0.15,
-    justifyContent: "center",
+    width: '100%',
+    justifyContent: 'center',
     paddingBottom: 15,
   },
   icons: {
-    padding: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 20
   },
   appName: {
     fontFamily: fonts.appName,
+    fontWeight: 'bold',
     fontSize: 32,
     color: colors.blue,
   },
