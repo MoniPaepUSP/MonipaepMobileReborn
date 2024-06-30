@@ -4,6 +4,8 @@ import { HealthConditions } from "../pages/HealthConditions"; // Verifique se o 
 import colors from "../styles/colors";
 import { Login, SignUp, Symptoms } from "../pages";
 import { Profile } from "../pages/Profile";
+import { FrequentQuestions } from "../pages/FrequentQuestions";
+import { CloseByUnits } from "../pages/CloseByUnits";
 
 const AppStack = createStackNavigator();
 
@@ -21,6 +23,8 @@ const AppRoutes = () => (
     <AppStack.Screen name="SignUp" component={SignUp} />
     <AppStack.Screen name="Profile" component={Profile} />
     <AppStack.Screen name="Symptoms" component={Symptoms} />
+    <AppStack.Screen name="FrequentQuestions" component={FrequentQuestions} />
+    <AppStack.Screen name="CloseByUnits" component={CloseByUnits} />
   </AppStack.Navigator>
 );
 
