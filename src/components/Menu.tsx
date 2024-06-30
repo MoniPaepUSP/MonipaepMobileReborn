@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons, Ionicons, FontAwesome5, AntDesign, Octicons } from '@expo/vector-icons';
-import colors from '../styles/colors';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -59,37 +58,37 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
         <View style={styles.menuContainer}>
           <View style={styles.menuContent}>
             <TouchableOpacity style={styles.menuItem} onPress={handleHome}>
-                <MaterialCommunityIcons name="home-circle-outline" size={24} color={colors.green_dark} />
+              <MaterialCommunityIcons name="home-circle-outline" size={24} color="black" />
               <Text style={styles.menuText}>Página Inicial</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.menuItem} onPress={handleMyAccountAlt}>
-                <Ionicons name="person-circle-outline" size={24} color={colors.green_dark} />
+              <Ionicons name="person-circle-outline" size={24} color="black" />
               <Text style={styles.menuText}>Minha Conta</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.menuItem} onPress={handleFrequentQuestions}>
-                <Octicons name="question" size={24} color={colors.green_dark} />
+              <Octicons name="question" size={24} color="black" />
               <Text style={styles.menuText}>Perguntas Frequentes</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.menuItem} onPress={handleConditions}>
-                <FontAwesome5 name="history" size={24} color={colors.green_dark} />
+              <FontAwesome5 name="history" size={24} color="black" />
               <Text style={styles.menuText}>Histórico de Sintomas</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.menuItem} onPress={handleMyAppointments}>
-                <MaterialCommunityIcons name="calendar-heart" size={24} color={colors.green_dark} />
+              <MaterialCommunityIcons name="calendar-heart" size={24} color="black" />
               <Text style={styles.menuText}>Minhas Consultas</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
-                <Octicons name="gear" size={24} color={colors.green_dark} />
+              <Octicons name="gear" size={24} color="black" />
               <Text style={styles.menuText}>Configurações</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.menuItemSair} onPress={handleLogout}>
-                <AntDesign name="logout" size={24} color={colors.green_dark} />
+              <AntDesign name="logout" size={24} color="black" />
               <Text style={styles.menuText}>Sair</Text>
             </TouchableOpacity>
           </View>
@@ -101,37 +100,37 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
     <View style={styles.menuContainer}>
       <View style={styles.menuContent}>
         <TouchableOpacity style={styles.menuItem} onPress={handleHome}>
-          <MaterialCommunityIcons name="home-circle-outline" size={24} color={colors.green_dark} />
+        <MaterialCommunityIcons name="home-circle-outline" size={24} color="black" />
           <Text style={styles.menuText}>Home</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.menuItem} onPress={handleMyAccount}>
-            <Ionicons name="person-circle-outline" size={24} color={colors.green_dark} />
+          <Ionicons name="person-circle-outline" size={24} color="black" />
           <Text style={styles.menuText}>Minha Conta</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.menuItem} onPress={handleFrequentQuestions}>
-            <Octicons name="question" size={24} color={colors.green_dark} />
+          <Octicons name="question" size={24} color="black" />
           <Text style={styles.menuText}>Perguntas Frequentes</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.menuItem} onPress={handleConditions}>
-            <FontAwesome5 name="history" size={24} color={colors.green_dark} />
+          <FontAwesome5 name="history" size={24} color="black" />
           <Text style={styles.menuText}>Histórico de Sintomas</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.menuItem} onPress={handleMyAppointments}>
-            <MaterialCommunityIcons name="calendar-heart" size={24} color={colors.green_dark} />
+          <MaterialCommunityIcons name="calendar-heart" size={24} color="black" />
           <Text style={styles.menuText}>Minhas Consultas</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.menuItem} onPress={handleConfig}>
-            <Octicons name="gear" size={24} color={colors.green_dark} />
+          <Octicons name="gear" size={24} color="black" />
           <Text style={styles.menuText}>Configurações</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.menuItemSair} onPress={handleLogout}>
-            <AntDesign name="logout" size={24} color={colors.green_dark} />
+          <AntDesign name="logout" size={24} color="black" />
           <Text style={styles.menuText}>Sair</Text>
         </TouchableOpacity>
       </View>

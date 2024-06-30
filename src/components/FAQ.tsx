@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 2,
         borderColor: colors.green,
-        marginTop: 20
+        margin: 15
     },
     text:{
         fontSize: 16,
