@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { MaterialCommunityIcons, Ionicons, FontAwesome5, AntDesign, Octicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Ionicons, FontAwesome5, FontAwesome6,  AntDesign, Octicons } from '@expo/vector-icons';
 import colors from '../styles/colors';
 
 const windowHeight = Dimensions.get('window').height;
@@ -32,6 +32,11 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
   function handleFrequentQuestions() {
     onCloseMenu();
     navigation.navigate('FrequentQuestions' as never);
+  }
+
+  function handleCloseByUnits() {
+    onCloseMenu();
+    navigation.navigate('CloseByUnits' as never);
   }
 
   function handleMyAppointments() {
@@ -67,6 +72,11 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
             <TouchableOpacity style={styles.menuItem} onPress={handleFrequentQuestions}>
               <Octicons name="question" size={24} color="black" />
               <Text style={styles.menuText}>Perguntas Frequentes</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.menuItem} onPress={handleCloseByUnits}>
+              <FontAwesome6 name="map-location-dot" size={24} color="black" />
+              <Text style={styles.menuText}>Unidades Próximas</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.menuItem} onPress={handleConditions}>
@@ -110,6 +120,11 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
         <TouchableOpacity style={styles.menuItem} onPress={handleFrequentQuestions}>
           <Octicons name="question" size={24} color="black" />
           <Text style={styles.menuText}>Perguntas Frequentes</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.menuItem} onPress={handleCloseByUnits}>
+          <FontAwesome6 name="map-location-dot" size={24} color="black" />
+          <Text style={styles.menuText}>Unidades Próximas</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.menuItem} onPress={handleConditions}>
