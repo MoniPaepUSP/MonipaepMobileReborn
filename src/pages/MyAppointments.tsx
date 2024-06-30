@@ -37,7 +37,7 @@ export function MyAppointments() {
   }
 
   const handleHome = () => {
-    navigation.navigate("Home" as never);
+    navigation.navigate("AppointmentRegister" as never);
   }
 
   const handleAppointmentChange = (appointment) => {
