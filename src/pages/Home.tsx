@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
     },
     bottom: {
         width: Dimensions.get('window').width * 0.9,
-        paddingVertical: 10, // Espaçamento interno vertical
+        paddingVertical: 10,
         alignSelf: 'center',
       },
     text:{

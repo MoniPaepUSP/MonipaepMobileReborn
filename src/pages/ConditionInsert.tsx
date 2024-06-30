@@ -8,6 +8,7 @@ import CustomSelect from '../components/CustomSelect';
 import ConditionItem from '../components/ConditionItem';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
+import PopupComponent from '../components/Popup';
 
 export function ConditionInsert() {
     const navigation = useNavigation();
@@ -22,9 +23,10 @@ export function ConditionInsert() {
         { id: 6, type: "Condição Especial", description: "Deficiência visual", isChecked: false },
     ]);
     const [menuVisible, setMenuVisible] = useState(false);
+    const [popupVisible, setPopupVisible] = useState(false);
 
     function handleHistory(){
-        navigation.navigate('HealthConditions' as never)
+        navigation.navigate('HealthConditions' as never);
     }
 
     const openMenu = () => {
@@ -33,6 +35,14 @@ export function ConditionInsert() {
 
     const closeMenu = () => {
         setMenuVisible(false);
+    };
+
+    const openPopup = () => {
+        setPopupVisible(true);
+    };
+
+    const closePopup = () => {
+        setPopupVisible(false);
     };
 
     let placeholderText = "Digite um sintoma";
@@ -87,36 +97,36 @@ export function ConditionInsert() {
         });
     };
 
-    async function handleConditionUpdate() {
-        try {
-            const selectedConditions = records.filter(record => record.isChecked);
-            const selectedDescriptions = selectedConditions.map(condition => condition.description).join(', ');
+    // async function handleConditionUpdate() {
+    //     try {
+    //         const selectedConditions = records.filter(record => record.isChecked);
+    //         const selectedDescriptions = selectedConditions.map(condition => condition.description).join(', ');
 
-            Alert.alert(
-                "Atualização concluída",
-                `Condições cadastradas: ${selectedDescriptions}`,
-                [
-                    {
-                        text: "Ok",
-                        onPress: () => {handleHistory},
-                    },
-                ]
-            );
-            console.log("Condições submetidas");
-        } catch (error) {
-            Alert.alert(
-                "Erro na atualização de condições",
-                `${error.message}`,
-                [
-                    {
-                        text: "Ok",
-                        onPress: () => {},
-                    },
-                ]
-            );
-            console.log(error.message);
-        }
-    };
+    //         Alert.alert(
+    //             "Atualização concluída",
+    //             `Condições cadastradas: ${selectedDescriptions}`,
+    //             [
+    //                 {
+    //                     text: "Ok",
+    //                     onPress: () => {handleHistory},
+    //                 },
+    //             ]
+    //         );
+    //         console.log("Condições submetidas");
+    //     } catch (error) {
+    //         Alert.alert(
+    //             "Erro na atualização de condições",
+    //             `${error.message}`,
+    //             [
+    //                 {
+    //                     text: "Ok",
+    //                     onPress: () => {},
+    //                 },
+    //             ]
+    //         );
+    //         console.log(error.message);
+    //     }
+    // };
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -174,7 +184,8 @@ export function ConditionInsert() {
                     onPress={() => {
                         handleSearchOrAddRecord();
                         printCheckedRecords();
-                        handleConditionUpdate();
+                        //handleConditionUpdate();
+                        openPopup();
                     }}
                 />
             </View>
@@ -185,6 +196,16 @@ export function ConditionInsert() {
                 onRequestClose={closeMenu}
             >
                 <Menu onCloseMenu={closeMenu} />
+            </Modal>
+            <Modal
+                visible={popupVisible}
+                animationType="slide"
+                transparent={true}
+                onRequestClose={closePopup}
+            >
+                <View style={styles.popupContainer}>
+                    <PopupComponent onNavigate={closePopup} />
+                </View>
             </Modal>
         </SafeAreaView>
     );
@@ -255,6 +276,11 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         marginBottom: 10,
     },
+    popupContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });
 
 export default ConditionInsert;
