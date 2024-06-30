@@ -33,13 +33,13 @@ export function Login() {
   //Seting useState and useRef to CPF
   const [isCPFFocused, setIsCPFFocused] = useState(false);
   const [isCPFFilled, setIsCPFFilled] = useState(false);
-  const [cpf, setCPF] = useState<string>("49471488885");
+  const [cpf, setCPF] = useState<string>();
   const cpfRef = useRef(null);
 
   //Seting useState and useRef to Password
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [isPasswordFilled, setIsPasswordFilled] = useState(false);
-  const [password, setPassword] = useState<string>("Davi2706@");
+  const [password, setPassword] = useState<string>("");
   const passwordRef = useRef(null);
 
 
