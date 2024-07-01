@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Switch, StyleSheet, Dimensions, TouchableOpacity, Modal, ScrollView } from 'react-native';
+import { View, Text, TextInput, Switch, StyleSheet, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { GreenButton, HeaderSimple, SafeAreaView } from '../components';
 import Menu from '../components/Menu';
@@ -8,12 +8,19 @@ import fonts from '../styles/fonts';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import Modal from 'react-native-modal';
+import { useAuth } from '../contexts/auth.context';
 
 export function Profile() {
+    
+
     const [cpf, setCpf] = useState('');
     const [dob, setDob] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
+    const [address, setAddress] = useState('');
+    const [number, setNumber] = useState('');
+    const [neighborhood, setNeighborhood] = useState('');
     const [cep, setCep] = useState('');
     const [notificationsEnabled, setNotificationsEnabled] = useState(false);
     const [locationEnabled, setLocationEnabled] = useState(false);
@@ -41,8 +48,33 @@ export function Profile() {
         
     }
 
+    useState(() => {
+      const {user, refreshToken, token, signed, signOut} = useAuth();
+
+      const date = user.birthdate
+      const date_str = user.birthdate.toString();
+      console.log(date,date_str)
+
+
+      const userDate = new Date(user.birthdate.toString())
+      const day = String(userDate.getDate()).padStart(2, '0'); // Ensure two digits
+      const month = String(userDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+      const year = userDate.getFullYear();
+
+      setCpf(user.CPF)
+
+      setDob(`${day}/${month}/${year}`)
+      setPhone(user.phone)
+      setEmail(user.email)
+      setAddress(user.homeAddress)
+      setNeighborhood(user.neighborhood)
+      setNumber(String(user.houseNumber))
+      setCep(user.neighborhood)  
+    })
+
     return (
         <SafeAreaView accessible={true} style={styles.safeArea}>
+          <ScrollView>
             <HeaderSimple titleScreen="Minha Conta" />
             <View style={styles.bodyUp} accessible={true}>
                 <TouchableOpacity onPress={openMenu}>
@@ -89,7 +121,21 @@ export function Profile() {
                 <View style={styles.fieldContainer}>
                     <View style={styles.textContainer}>
                         <Text style={styles.label}>CEP</Text>
-                        <Text style={styles.textValue}>{cep}</Text>
+                        <Text style={styles.textValue}>{address}</Text>
+                        <MaterialIcons style={styles.icons} name="person-pin-circle" size={24} color="black" />
+                    </View>
+                </View>
+                <View style={styles.fieldContainer}>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.label}>Número</Text>
+                        <Text style={styles.textValue}>{number}</Text>
+                        <MaterialIcons style={styles.icons} name="person-pin-circle" size={24} color="black" />
+                    </View>
+                </View>
+                <View style={styles.fieldContainer}>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.label}>Bairro</Text>
+                        <Text style={styles.textValue}>{neighborhood}</Text>
                         <MaterialIcons style={styles.icons} name="person-pin-circle" size={24} color="black" />
                     </View>
                 </View>
@@ -124,15 +170,19 @@ export function Profile() {
                     onPress={handleEdit}
                 />
             </View>
-            {/* Modal for the Menu */}
-            <Modal
-                visible={menuVisible}
-                animationType="slide"
-                transparent={true}
-                onRequestClose={closeMenu}
-            >
-                <Menu onCloseMenu={closeMenu} />
-            </Modal>
+            <View>
+                <Modal
+                    isVisible={menuVisible}
+                    animationIn="slideInLeft"
+                    animationOut="slideOutLeft"
+                    onBackdropPress={closeMenu}
+                    backdropOpacity={0.3}
+                    style={styles.modalLeft}
+                >
+                    <Menu onCloseMenu={closeMenu} />
+                </Modal>
+            </View>
+            </ScrollView>
         </SafeAreaView>
     );
 }
@@ -173,8 +223,9 @@ const styles = StyleSheet.create({
   },
   bottom: {
     width: '100%',
-    position: 'absolute',
-    bottom: 40,
+    // position: 'absolute',
+    // bottom: 40,
+    marginBottom : 20,
     alignItems: 'center',
     marginVertical: -20
   },
@@ -218,6 +269,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: fonts.generic,
     color: '#333', // Cor do texto
+    marginRight : 10,
+    alignSelf: 'center', // Centraliza verticalmente dentro do contêiner
   },
   icons:{
     alignSelf: 'center',
@@ -233,4 +286,8 @@ const styles = StyleSheet.create({
   permissionLabel: {
     fontSize: 15,
   },
+  modalLeft: {
+    justifyContent: 'flex-start',
+    margin: 0,
+},
 });

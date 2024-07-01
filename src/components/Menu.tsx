@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { MaterialCommunityIcons, Ionicons, FontAwesome5, AntDesign, Octicons } from '@expo/vector-icons';
+import colors from '../styles/colors';
+import { MaterialCommunityIcons, Ionicons, FontAwesome6, AntDesign, Octicons, MaterialIcons } from '@expo/vector-icons';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -38,6 +39,11 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
     navigation.navigate('FrequentQuestions' as never);
   }
 
+  function handleCloseByUnits() {
+    onCloseMenu();
+    navigation.navigate('CloseByUnits' as never);
+  }
+
   function handleMyAppointments() {
     onCloseMenu();
     navigation.navigate('MyAppointments' as never);
@@ -72,8 +78,13 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
               <Text style={styles.menuText}>Perguntas Frequentes</Text>
             </TouchableOpacity>
 
+            <TouchableOpacity style={styles.menuItem} onPress={handleCloseByUnits}>
+              <FontAwesome6 name="map-location-dot" size={24} color="black" />
+              <Text style={styles.menuText}>Unidades Próximas</Text>
+            </TouchableOpacity>
+
             <TouchableOpacity style={styles.menuItem} onPress={handleConditions}>
-              <FontAwesome5 name="history" size={24} color="black" />
+              <MaterialIcons name="list-alt" size={24} color="black" />
               <Text style={styles.menuText}>Histórico de Sintomas</Text>
             </TouchableOpacity>
 
@@ -100,7 +111,11 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
     <View style={styles.menuContainer}>
       <View style={styles.menuContent}>
         <TouchableOpacity style={styles.menuItem} onPress={handleHome}>
-        <MaterialCommunityIcons name="home-circle-outline" size={24} color="black" />
+          <MaterialCommunityIcons
+            name="home-circle-outline"
+            size={24}
+            color="black"
+          />
           <Text style={styles.menuText}>Home</Text>
         </TouchableOpacity>
 
@@ -109,18 +124,33 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
           <Text style={styles.menuText}>Minha Conta</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.menuItem} onPress={handleFrequentQuestions}>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={handleFrequentQuestions}
+        >
           <Octicons name="question" size={24} color="black" />
           <Text style={styles.menuText}>Perguntas Frequentes</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity style={styles.menuItem} onPress={handleCloseByUnits}>
+          <FontAwesome6 name="map-location-dot" size={24} color="black" />
+          <Text style={styles.menuText}>Unidades Próximas</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity style={styles.menuItem} onPress={handleConditions}>
-          <FontAwesome5 name="history" size={24} color="black" />
+        <MaterialIcons name="list-alt" size={24} color="black" />
           <Text style={styles.menuText}>Histórico de Sintomas</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.menuItem} onPress={handleMyAppointments}>
-          <MaterialCommunityIcons name="calendar-heart" size={24} color="black" />
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={handleMyAppointments}
+        >
+          <MaterialCommunityIcons
+            name="calendar-heart"
+            size={24}
+            color="black"
+          />
           <Text style={styles.menuText}>Minhas Consultas</Text>
         </TouchableOpacity>
 
@@ -172,11 +202,11 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   menuItemSair: {
-    paddingVertical: 20,
-    paddingHorizontal: 20,
+    marginTop: '70%',
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: '90%',
+    margin: 20
   },
 });
 
