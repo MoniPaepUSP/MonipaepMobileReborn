@@ -8,8 +8,11 @@ import fonts from '../styles/fonts';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import { useAuth } from '../contexts/auth.context';
 
 export function Profile() {
+    const {user, refreshToken, token, signed, signOut} = useAuth();
+
     const [cpf, setCpf] = useState('');
     const [dob, setDob] = useState('');
     const [phone, setPhone] = useState('');
@@ -40,6 +43,14 @@ export function Profile() {
     function handleEdit(){
         
     }
+
+    useState(() => {
+      setCpf(user.CPF)
+      setDob(user.birthdate.toString())
+      setPhone(user.phone)
+      setEmail(user.email)
+      setCep(user.neighborhood)  
+    })
 
     return (
         <SafeAreaView accessible={true} style={styles.safeArea}>
