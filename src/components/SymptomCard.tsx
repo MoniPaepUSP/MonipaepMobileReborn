@@ -6,7 +6,7 @@ interface SymptomCardProps {
     symptom: string;
 }
 
-const ConditionCard: React.FC<SymptomCardProps> = ({ symptom }) => {
+const SymptomCard: React.FC<SymptomCardProps> = ({ symptom }) => {
     const currentDate = new Date();
     const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
 
@@ -44,4 +44,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ConditionCard;
+export default SymptomCard;

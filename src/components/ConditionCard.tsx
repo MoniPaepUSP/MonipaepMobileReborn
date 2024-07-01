@@ -15,6 +15,7 @@ const ConditionCard: React.FC<ConditionCardProps> = ({ condition }) => {
             <Text style={styles.dateText}>Enviado em {formattedDate}</Text>
             <Text style={styles.conditionText}>
                 <Text>Condição: </Text> {condition}
+                
             </Text>
         </View>
     );
