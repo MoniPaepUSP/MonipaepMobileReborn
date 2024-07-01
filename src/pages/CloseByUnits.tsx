@@ -29,9 +29,8 @@ export function CloseByUnits(): JSX.Element {
       <SafeAreaView  
         style={styles.safeArea}
         accessible={true}
-        accessibilityLabel="Página de Perguntas Frequentas"
-      >
-        <HeaderSimple titleScreen="Perguntas Frequentes" />
+        accessibilityLabel="Página de Unidades Próximas">
+        <HeaderSimple titleScreen="Unidades Próximas" />
         <ScrollView contentContainerStyle={styles.scrollViewContainer}>
           <View
             style={styles.container}

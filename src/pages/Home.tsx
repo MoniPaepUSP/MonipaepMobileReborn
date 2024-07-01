@@ -148,22 +148,22 @@ export function Home() {
                 />
                 <Modal
                     isVisible={showPopup}
-                    animationIn="slideInLeft"
-                    animationOut="slideOutRight"
+                    animationIn="slideInUp"
                     onBackdropPress={closeModal}
                     backdropOpacity={0.3}
-                    style={styles.modalLeft}
                 >
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalText}>
-                            Atualize os seus registros antes de obter um encaminhamento!
-                        </Text>
-                        <TouchableOpacity style={styles.button}
-                            accessibilityLabel="Botão para fechar o pop up"
-                            onPress={closeModal}
-                        >
-                            <Text style={styles.buttonText}>OK</Text>
-                        </TouchableOpacity>
+                    <View style={styles.modalContainer}>
+                        <View style={styles.modalContent}>
+                            <Text style={styles.modalText}>
+                                Atualize os seus registros antes de obter um encaminhamento!
+                            </Text>
+                            <TouchableOpacity  style={styles.button}
+                                accessibilityLabel="Botão para fechar o pop up"
+                                onPress={closeModal}
+                            >
+                                <Text style={styles.buttonText}>OK</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </Modal>
             </View>
@@ -235,16 +235,16 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').height * 0.5,
         resizeMode: 'contain',
     },
-    modalLeft: {
-        justifyContent: 'flex-start',
-        margin: 0,
+    modalContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     modalContent: {
         backgroundColor: 'white',
         padding: 30,
         borderRadius: 10,
         width: Dimensions.get('window').width * 0.88,
-        alignItems: 'flex-start',
+        alignItems: 'center',
     },
     modalText: {
         fontSize: 15,
@@ -252,6 +252,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         marginTop: 25,
+    },
+    modalLeft: {
+        justifyContent: 'flex-start',
+        margin: 0,
     },
     button: {
         backgroundColor: colors.green,

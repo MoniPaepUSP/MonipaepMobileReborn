@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../styles/colors';
-import { MaterialCommunityIcons, Ionicons, FontAwesome6, AntDesign, Octicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Ionicons, FontAwesome6, AntDesign, Octicons, MaterialIcons } from '@expo/vector-icons';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -84,7 +84,7 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.menuItem} onPress={handleConditions}>
-              <FontAwesome6 name="history" size={24} color="black" />
+              <MaterialIcons name="list-alt" size={24} color="black" />
               <Text style={styles.menuText}>Histórico de Sintomas</Text>
             </TouchableOpacity>
 
@@ -138,7 +138,7 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.menuItem} onPress={handleConditions}>
-          <FontAwesome6 name="history" size={24} color="black" />
+        <MaterialIcons name="list-alt" size={24} color="black" />
           <Text style={styles.menuText}>Histórico de Sintomas</Text>
         </TouchableOpacity>
 
@@ -202,11 +202,11 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   menuItemSair: {
-    paddingVertical: 20,
-    paddingHorizontal: 20,
+    marginTop: '70%',
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: '90%',
+    margin: 20
   },
 });
 
