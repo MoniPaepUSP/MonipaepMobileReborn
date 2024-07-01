@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dimensions, StyleSheet, Text, View, ScrollView, TouchableOpacity, TextInput, Modal, Alert } from 'react-native';
+import { Dimensions, StyleSheet, Text, View, ScrollView, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { BlueButton, HeaderSimple, SafeAreaView } from '../components';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
@@ -8,6 +8,7 @@ import CustomSelect from '../components/CustomSelect';
 import ConditionItem from '../components/ConditionItem';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
+import Modal from 'react-native-modal';
 
 export function ConditionInsert() {
     const navigation = useNavigation();
@@ -178,14 +179,18 @@ export function ConditionInsert() {
                     }}
                 />
             </View>
-            <Modal
-                visible={menuVisible}
-                animationType="slide"
-                transparent={true}
-                onRequestClose={closeMenu}
-            >
-                <Menu onCloseMenu={closeMenu} />
-            </Modal>
+            <View>
+                <Modal
+                    isVisible={menuVisible}
+                    animationIn="slideInLeft"
+                    animationOut="slideOutLeft"
+                    onBackdropPress={closeMenu}
+                    backdropOpacity={0.3}
+                    style={styles.modalLeft}
+                >
+                    <Menu onCloseMenu={closeMenu} />
+                </Modal>
+            </View>
         </SafeAreaView>
     );
 }
@@ -254,6 +259,10 @@ const styles = StyleSheet.create({
         borderBottomColor: colors.gray_light2,
         borderBottomWidth: 1,
         marginBottom: 10,
+    },
+    modalLeft: {
+        justifyContent: 'flex-start',
+        margin: 0,
     },
 });
 

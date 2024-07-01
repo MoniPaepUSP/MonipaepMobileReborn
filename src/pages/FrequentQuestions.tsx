@@ -1,6 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import React, { useRef, useState } from 'react';
-import { Dimensions, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { DrawerLayout } from 'react-native-gesture-handler';
 import { HeaderSimple, SafeAreaView } from "../components";
 import FrequentQuestionsComponent from '../components/FrequentQuestionsComponent';
@@ -8,6 +8,7 @@ import Menu from '../components/Menu';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import NewQuestionModal from '../components/NewQuestionModal';
+import Modal from 'react-native-modal';
 
 export function FrequentQuestions(): JSX.Element {
   const drawerRef = useRef(null);
@@ -29,12 +30,6 @@ export function FrequentQuestions(): JSX.Element {
 
 
   return (
-    <DrawerLayout
-      ref={drawerRef}
-      drawerWidth={(2 / 3) * Dimensions.get('window').width}
-      drawerPosition="left"
-      renderNavigationView={() => <Menu onCloseMenu={() => drawerRef.current.closeDrawer()} />}
-    >
     <SafeAreaView  
       accessible={true}
       accessibilityLabel="Página de Perguntas Frequentas"
@@ -64,17 +59,20 @@ export function FrequentQuestions(): JSX.Element {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <Modal
-        visible={menuVisible}
-        animationType="slide"
-        transparent={true}
-        onRequestClose={closeMenu}
-      >
-        <Menu onCloseMenu={closeMenu} />
-      </Modal>
+      <View>
+                <Modal
+                    isVisible={menuVisible}
+                    animationIn="slideInLeft"
+                    animationOut="slideOutLeft"
+                    onBackdropPress={closeMenu}
+                    backdropOpacity={0.3}
+                    style={styles.modalLeft}
+                >
+                    <Menu onCloseMenu={closeMenu} />
+                </Modal>
+            </View>
       {openNewQuestionDialog && <NewQuestionModal visible={openNewQuestionDialog} onClose={handleCloseNewQuestionDialog} />}
     </SafeAreaView>
-    </DrawerLayout>
   )
 }
 
@@ -152,4 +150,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  modalLeft: {
+    justifyContent: 'flex-start',
+    margin: 0,
+},
 });

@@ -316,4 +316,8 @@ const styles = StyleSheet.create({
   button: {
     padding: 20,
   },
+  modalLeft: {
+    justifyContent: 'flex-start',
+    margin: 0,
+},
 });

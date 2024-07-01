@@ -9,6 +9,7 @@ import { Profile } from "../pages/Profile";
 import { FrequentQuestions } from "../pages/FrequentQuestions";
 import { CloseByUnits } from "../pages/CloseByUnits";
 import { MyAppointments } from "../pages/MyAppointments";
+import { AppointmentRegister } from "../pages/AppointmentRegister";
 
 const AppStack = createStackNavigator();
 
@@ -31,6 +32,7 @@ const AppRoutes = () => (
     <AppStack.Screen name="ConditionInsert" component={ConditionInsert} />
     <AppStack.Screen name="Profile" component={Profile} />
     <AppStack.Screen name="MyAppointments" component={MyAppointments} />
+    <AppStack.Screen name="AppointmentRegister" component={AppointmentRegister} />
   </AppStack.Navigator>
 );
 
