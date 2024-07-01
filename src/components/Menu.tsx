@@ -84,7 +84,7 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.menuItem} onPress={handleConditions}>
-              <FontAwesome5 name="history" size={24} color="black" />
+              <FontAwesome6 name="history" size={24} color="black" />
               <Text style={styles.menuText}>Histórico de Sintomas</Text>
             </TouchableOpacity>
 
@@ -111,7 +111,11 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
     <View style={styles.menuContainer}>
       <View style={styles.menuContent}>
         <TouchableOpacity style={styles.menuItem} onPress={handleHome}>
-        <MaterialCommunityIcons name="home-circle-outline" size={24} color="black" />
+          <MaterialCommunityIcons
+            name="home-circle-outline"
+            size={24}
+            color="black"
+          />
           <Text style={styles.menuText}>Home</Text>
         </TouchableOpacity>
 
@@ -120,7 +124,10 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
           <Text style={styles.menuText}>Minha Conta</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.menuItem} onPress={handleFrequentQuestions}>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={handleFrequentQuestions}
+        >
           <Octicons name="question" size={24} color="black" />
           <Text style={styles.menuText}>Perguntas Frequentes</Text>
         </TouchableOpacity>
@@ -131,12 +138,19 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.menuItem} onPress={handleConditions}>
-          <FontAwesome5 name="history" size={24} color="black" />
+          <FontAwesome6 name="history" size={24} color="black" />
           <Text style={styles.menuText}>Histórico de Sintomas</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.menuItem} onPress={handleMyAppointments}>
-          <MaterialCommunityIcons name="calendar-heart" size={24} color="black" />
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={handleMyAppointments}
+        >
+          <MaterialCommunityIcons
+            name="calendar-heart"
+            size={24}
+            color="black"
+          />
           <Text style={styles.menuText}>Minhas Consultas</Text>
         </TouchableOpacity>
 

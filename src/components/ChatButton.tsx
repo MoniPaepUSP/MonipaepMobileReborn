@@ -22,27 +22,30 @@ export function ChatButton({ title, ...rest }: ChatButtonProps) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#FFFFFF', 
-        height: 40,
-        borderRadius: 5,
-        borderColor: colors.blue,
-        borderWidth: 2, 
-        justifyContent: "center", 
-        paddingHorizontal: 5,
-        width: 180,
-        marginTop: 10,
-        shadowColor: '#000', 
-        shadowOffset: { width: 0, height: 2 }, 
-        shadowOpacity: 0.6,
-        shadowRadius: 3, 
-        elevation: 6, 
-        marginRight: Dimensions.get('window').width*0.05
-      },
-      text: {
-        fontSize: 10,
-        color: '#000000', 
-        fontFamily: fonts.generic, 
-        fontWeight: 'bold',
-      },      
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    alignContent: "center",
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    height: 40,
+    borderRadius: 5,
+    borderColor: colors.blue,
+    borderWidth: 2,
+    justifyContent: "center",
+    width: 180,
+    // marginTop: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.6,
+    shadowRadius: 3,
+    elevation: 6,
+  },
+  text: {
+    fontSize: 12,
+    color: "#000000",
+    fontFamily: fonts.generic,
+    fontWeight: "bold",
+    textTransform: "uppercase",
+  },
 });

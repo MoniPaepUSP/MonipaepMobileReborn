@@ -126,12 +126,12 @@ export function Home(){
                 style={styles.top}
                 accessible={true} 
             >
-                <TouchableOpacity onPress={openMenu}>
+                <TouchableOpacity onPress={openMenu} style={styles.styleMenu}>
                     <MaterialIcons style={styles.icons} name="menu" size={24} color="black" />
                 </TouchableOpacity>
                 <ChatButton 
                     accessibilityLabel="Botão. Clique para visualizar mensagens do médico"
-                    title="Mensagens do médico"
+                    title="Notificações"
                     onPress={Data}
                 />
             </View>
@@ -214,7 +214,11 @@ const styles = StyleSheet.create({
     top: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 10,
+        padding: 12,
+        marginTop: 10
+    },
+    styleMenu: {
+        alignSelf: 'center'
     },
     icons: {
         padding: 10,
