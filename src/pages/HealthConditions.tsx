@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Dimensions, StyleSheet, Text, View, ScrollView, TouchableOpacity, Modal } from 'react-native';
+import { Dimensions, StyleSheet, Text, View, ScrollView, TouchableOpacity, } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { BlueButton, HeaderSimple, SafeAreaView } from '../components';
 import colors from '../styles/colors';
@@ -8,6 +8,7 @@ import ConditionCard from '../components/ConditionCard';
 import SymptomCard from '../components/SymptomCard';
 import { useNavigation } from "@react-navigation/native";
 import Menu from '../components/Menu';
+import Modal from 'react-native-modal';
 
 interface ConditionsProps {
   condition: string;
@@ -89,16 +90,18 @@ export function HealthConditions() {
             onPress={handleCondition}
           />
         </View>
-
-        {/* Modal for the Menu */}
-      <Modal
-        visible={menuVisible}
-        animationType="slide"
-        transparent={true}
-        onRequestClose={closeMenu}
-      >
-        <Menu onCloseMenu={closeMenu} />
-      </Modal>
+        <View>
+                <Modal
+                    isVisible={menuVisible}
+                    animationIn="slideInLeft"
+                    animationOut="slideOutLeft"
+                    onBackdropPress={closeMenu}
+                    backdropOpacity={0.3}
+                    style={styles.modalLeft}
+                >
+                    <Menu onCloseMenu={closeMenu} />
+                </Modal>
+            </View>
       </SafeAreaView>
   );
 }
@@ -166,4 +169,8 @@ const styles = StyleSheet.create({
   symptomsContainer: {
     marginTop: 0,
   },
+  modalLeft: {
+    justifyContent: 'flex-start',
+    margin: 0,
+},
 });

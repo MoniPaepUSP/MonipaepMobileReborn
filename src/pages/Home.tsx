@@ -8,20 +8,19 @@ import {
     FlatList,
     TouchableOpacity,
     Image,
-    Modal,
 } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { GreenButton, HeaderSimple, FAQ, SafeAreaView } from '../components';
 import { ChatButton } from '../components/ChatButton';
 import { useAuth } from '../contexts/auth.context';
-import  Menu  from "../components/Menu";
+import Menu from "../components/Menu";
+import Modal from 'react-native-modal';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
-    
 
-export function Home(){ 
+export function Home() {
     const navigation = useNavigation();
-    const {user, refreshToken, token, signed, signOut} = useAuth();
+    const { user, refreshToken, token, signed, signOut } = useAuth();
     const [menuVisible, setMenuVisible] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
     const [redirected, setRedirected] = useState(false)
@@ -36,22 +35,22 @@ export function Home(){
 
     useEffect(() => {
         const interval = setInterval(() => {
-          setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
         }, 3000); // Trocar imagem a cada 3 segundos
-    
+
         return () => clearInterval(interval); // Limpa o intervalo quando o componente é desmontado
     }, []);
 
     useEffect(() => {
         if (flatListRef.current) {
-          flatListRef.current.scrollToIndex({ index: currentIndex, animated: true });
+            flatListRef.current.scrollToIndex({ index: currentIndex, animated: true });
         }
     }, [currentIndex]); // Executa quando currentIndex muda
-    
+
     const date = user?.lastUpdate;
     let dateString = '';
     let days = 0;
-    
+
     if (typeof date === 'string') {
         dateString = date;
         const difference = Math.abs(Date.now() - Date.parse(dateString));
@@ -62,7 +61,7 @@ export function Home(){
         days = Math.round(difference / (1000 * 3600 * 24));
     }
 
-    async function Data(){
+    async function Data() {
         //const patientId = await getUser()
         //const token = await getAccessToken()
         //const refreshToken = await getRefreshToken()
@@ -77,14 +76,14 @@ export function Home(){
         //navigation.navigate('Symptoms')
     }
 
-    function handleConfig(){
+    function handleConfig() {
         //navigation.navigate('Config')
     }
 
     function handleConditions() {
         navigation.navigate('HealthConditions' as never);
     }
-    
+
     function handleFrequentQuestions() {
         navigation.navigate('FrequentQuestions' as never);
     }
@@ -115,8 +114,8 @@ export function Home(){
         // navigation.navigate('MinhaPágina');
     };
 
-    return(
-        <SafeAreaView  
+    return (
+        <SafeAreaView
             accessible={true}
             accessibilityLabel="Página de perfil"
             style={styles.container}
@@ -124,12 +123,12 @@ export function Home(){
             <HeaderSimple titleScreen={`Bem vindo(a) ${user?.name.split(' ')[0]}`} />
             <View
                 style={styles.top}
-                accessible={true} 
+                accessible={true}
             >
                 <TouchableOpacity onPress={openMenu} style={styles.styleMenu}>
                     <MaterialIcons style={styles.icons} name="menu" size={24} color="black" />
                 </TouchableOpacity>
-                <ChatButton 
+                <ChatButton
                     accessibilityLabel="Botão. Clique para visualizar mensagens do médico"
                     title="Notificações"
                     onPress={Data}
@@ -148,56 +147,58 @@ export function Home(){
                     showsHorizontalScrollIndicator={false}
                 />
                 <Modal
-                    visible={showPopup}
-                    animationType="slide"
-                    transparent={true}
-                    onRequestClose={() => setShowPopup(false)}
+                    isVisible={showPopup}
+                    animationIn="slideInLeft"
+                    animationOut="slideOutRight"
+                    onBackdropPress={closeModal}
+                    backdropOpacity={0.3}
+                    style={styles.modalLeft}
                 >
-                    <View style={styles.modalContainer}>
-                        <View style={styles.modalContent}>
-                            <Text style={styles.modalText}>
-                                Atualize os seus registros antes de obter um encaminhamento!
-                            </Text>
-                            <TouchableOpacity  style={styles.button}
-                                accessibilityLabel="Botão para fechar o pop up"
-                                onPress={closeModal}
-                            >
-                                <Text style={styles.buttonText}>OK</Text>
-                            </TouchableOpacity>
-                        </View>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalText}>
+                            Atualize os seus registros antes de obter um encaminhamento!
+                        </Text>
+                        <TouchableOpacity style={styles.button}
+                            accessibilityLabel="Botão para fechar o pop up"
+                            onPress={closeModal}
+                        >
+                            <Text style={styles.buttonText}>OK</Text>
+                        </TouchableOpacity>
                     </View>
                 </Modal>
             </View>
             <View
-                accessible={true} 
-                style={styles.bottom} 
+                accessible={true}
+                style={styles.bottom}
             >
-                <GreenButton 
+                <GreenButton
                     accessibilityLabel="Botão. Clique para ir para a página de atualizar condições"
                     title="Atualizar condições"
                     onPress={handleConditions}
                 />
-            
-                <GreenButton 
+
+                <GreenButton
                     accessibilityLabel="Botão. Clique para ir para a página de encaminhamento"
                     title="Obter encaminhamento"
                     onPress={handleButtonClick}
                 />
-            
+
                 <FAQ
                     accessible={true}
                     accessibilityLabel="Botão. Clique para ir para a página de perguntas frequentes"
-                    title = "Perguntas Frequentes"
+                    title="Perguntas Frequentes"
                     onPress={handleFrequentQuestions}
                 />
             </View>
             <View>
                 {/* Modal for the Menu */}
                 <Modal
-                    visible={menuVisible}
-                    animationType="slide"
-                    transparent={true}
-                    onRequestClose={closeMenu}
+                    isVisible={menuVisible}
+                    animationIn="slideInLeft"
+                    animationOut="slideOutLeft"
+                    onBackdropPress={closeMenu}
+                    backdropOpacity={0.3}
+                    style={styles.modalLeft}
                 >
                     <Menu onCloseMenu={closeMenu} />
                 </Modal>
@@ -234,18 +235,16 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').height * 0.5,
         resizeMode: 'contain',
     },
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    modalLeft: {
+        justifyContent: 'flex-start',
+        margin: 0,
     },
     modalContent: {
         backgroundColor: 'white',
         padding: 30,
         borderRadius: 10,
         width: Dimensions.get('window').width * 0.88,
-        alignItems: 'center',
+        alignItems: 'flex-start',
     },
     modalText: {
         fontSize: 15,

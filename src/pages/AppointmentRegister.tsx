@@ -1,12 +1,12 @@
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
+import Modal from 'react-native-modal';
 import {
   Dimensions,
   StyleSheet,
   Text,
   View,
-  Modal,
   TouchableOpacity,
   ScrollView,
   TextInput,
@@ -146,14 +146,18 @@ export function AppointmentRegister() {
           </View>
         </View>
       </ScrollView>
-      <Modal
-        visible={menuVisible}
-        animationType="slide"
-        transparent={true}
-        onRequestClose={closeMenu}
-      >
-        <Menu onCloseMenu={closeMenu} />
-      </Modal>
+      <View>
+                <Modal
+                    isVisible={menuVisible}
+                    animationIn="slideInLeft"
+                    animationOut="slideOutLeft"
+                    onBackdropPress={closeMenu}
+                    backdropOpacity={0.3}
+                    style={styles.modalLeft}
+                >
+                    <Menu onCloseMenu={closeMenu} />
+                </Modal>
+            </View>
     </SafeAreaView>
   );
 }
@@ -227,4 +231,8 @@ const styles = StyleSheet.create({
     right: 0,
     alignItems: "center",
   },
+  modalLeft: {
+    justifyContent: 'flex-start',
+    margin: 0,
+},
 });

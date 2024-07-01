@@ -2,12 +2,12 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useRef, useState } from "react";
+import Modal from 'react-native-modal';
 import {
   Dimensions,
   StyleSheet,
   Text,
   View,
-  Modal,
   TouchableOpacity,
   ScrollView,
   Alert, // Importar ScrollView
@@ -36,8 +36,8 @@ export function MyAppointments() {
     setMenuVisible(false);
   }
 
-  const handleHome = () => {
-    navigation.navigate("Home" as never);
+  const handleAppointmentRegister = () => {
+    navigation.navigate("AppointmentRegister" as never);
   }
 
   const handleAppointmentChange = (appointment) => {
@@ -98,17 +98,21 @@ export function MyAppointments() {
         <GreenButton
           accessibilityLabel="Botão de Cadastrar Consulta. Pressione para cadastrar uma nova consulta"
           title="Cadastrar Consulta"
-          onPress={handleHome}
+          onPress={handleAppointmentRegister}
         />
       </View>
-      <Modal
-        visible={menuVisible}
-        animationType="slide"
-        transparent={true}
-        onRequestClose={closeMenu}
-      >
-        <Menu onCloseMenu={closeMenu} />
-      </Modal>
+      <View>
+                <Modal
+                    isVisible={menuVisible}
+                    animationIn="slideInLeft"
+                    animationOut="slideOutLeft"
+                    onBackdropPress={closeMenu}
+                    backdropOpacity={0.3}
+                    style={styles.modalLeft}
+                >
+                    <Menu onCloseMenu={closeMenu} />
+                </Modal>
+            </View>
     </SafeAreaView>
   );
 }
@@ -159,4 +163,8 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     marginVertical: 5,
   },
+  modalLeft: {
+    justifyContent: 'flex-start',
+    margin: 0,
+},
 });

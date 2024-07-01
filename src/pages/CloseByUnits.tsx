@@ -1,12 +1,13 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import React, { useRef, useState } from 'react';
-import { Dimensions, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { DrawerLayout } from 'react-native-gesture-handler';
 import { HeaderSimple, SafeAreaView } from "../components";
 import CloseByUnitsComponent from '../components/CloseByUnitsComponent';
 import Menu from '../components/Menu';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
+import Modal from 'react-native-modal';
 
 export function CloseByUnits(): JSX.Element {
   const drawerRef = useRef(null);
@@ -54,14 +55,18 @@ export function CloseByUnits(): JSX.Element {
             </View>
           </View>
         </ScrollView>
-        <Modal
-          visible={menuVisible}
-          animationType="slide"
-          transparent={true}
-          onRequestClose={closeMenu}
-        >
-          <Menu onCloseMenu={closeMenu} />
-        </Modal>
+        <View>
+                <Modal
+                    isVisible={menuVisible}
+                    animationIn="slideInLeft"
+                    animationOut="slideOutLeft"
+                    onBackdropPress={closeMenu}
+                    backdropOpacity={0.3}
+                    style={styles.modalLeft}
+                >
+                    <Menu onCloseMenu={closeMenu} />
+                </Modal>
+            </View>
       </SafeAreaView>
     </DrawerLayout>
   )
@@ -130,4 +135,8 @@ const styles = StyleSheet.create({
   symptomsContainer: {
     marginTop: 0,
   },
+  modalLeft: {
+    justifyContent: 'flex-start',
+    margin: 0,
+},
 });

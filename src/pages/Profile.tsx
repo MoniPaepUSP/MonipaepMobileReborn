@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Switch, StyleSheet, Dimensions, TouchableOpacity, Modal, ScrollView } from 'react-native';
+import { View, Text, TextInput, Switch, StyleSheet, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { GreenButton, HeaderSimple, SafeAreaView } from '../components';
 import Menu from '../components/Menu';
@@ -8,6 +8,7 @@ import fonts from '../styles/fonts';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import Modal from 'react-native-modal';
 
 export function Profile() {
     const [cpf, setCpf] = useState('');
@@ -124,15 +125,18 @@ export function Profile() {
                     onPress={handleEdit}
                 />
             </View>
-            {/* Modal for the Menu */}
-            <Modal
-                visible={menuVisible}
-                animationType="slide"
-                transparent={true}
-                onRequestClose={closeMenu}
-            >
-                <Menu onCloseMenu={closeMenu} />
-            </Modal>
+            <View>
+                <Modal
+                    isVisible={menuVisible}
+                    animationIn="slideInLeft"
+                    animationOut="slideOutLeft"
+                    onBackdropPress={closeMenu}
+                    backdropOpacity={0.3}
+                    style={styles.modalLeft}
+                >
+                    <Menu onCloseMenu={closeMenu} />
+                </Modal>
+            </View>
         </SafeAreaView>
     );
 }
@@ -233,4 +237,8 @@ const styles = StyleSheet.create({
   permissionLabel: {
     fontSize: 15,
   },
+  modalLeft: {
+    justifyContent: 'flex-start',
+    margin: 0,
+},
 });
