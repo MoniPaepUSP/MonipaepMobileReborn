@@ -11,7 +11,7 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { useAuth } from '../contexts/auth.context';
 
 export function Profile() {
-    const {user, refreshToken, token, signed, signOut} = useAuth();
+    
 
     const [cpf, setCpf] = useState('');
     const [dob, setDob] = useState('');
@@ -45,8 +45,21 @@ export function Profile() {
     }
 
     useState(() => {
+      const {user, refreshToken, token, signed, signOut} = useAuth();
+
+      const date = user.birthdate
+      const date_str = user.birthdate.toString();
+      console.log(date,date_str)
+
+
+      const userDate = new Date(user.birthdate.toString())
+      const day = String(userDate.getDate()).padStart(2, '0'); // Ensure two digits
+      const month = String(userDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+      const year = userDate.getFullYear();
+
       setCpf(user.CPF)
-      setDob(user.birthdate.toString())
+
+      setDob(`${day}/${month}/${year}`)
       setPhone(user.phone)
       setEmail(user.email)
       setCep(user.neighborhood)  
@@ -229,6 +242,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: fonts.generic,
     color: '#333', // Cor do texto
+    marginRight : 10,
+    alignSelf: 'center', // Centraliza verticalmente dentro do contêiner
   },
   icons:{
     alignSelf: 'center',
