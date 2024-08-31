@@ -9,38 +9,30 @@ import SymptomCard from '../components/SymptomCard';
 import { useNavigation } from "@react-navigation/native";
 import Menu from '../components/Menu';
 import Modal from 'react-native-modal';
+import { IConditionsProps, ISymptomCardProps } from '../interfaces/conditions.interface';
 
-interface ConditionsProps {
-  condition: string;
-}
-
-interface SymptomCardProps {
-  symptom: string;
-}
 
 export function HealthConditions() {
   const navigation = useNavigation();
-  const [conditions, setConditions] = useState<ConditionsProps[]>([
-    { condition: 'Diabetes Tipo 2' },
-    { condition: 'Alergia a Amendoim' }
+  const [conditions, setConditions] = useState<IConditionsProps[]>([
+    { condition: "Diabetes Tipo 2" },
+    { condition: "Alergia a Amendoim" },
   ]);
-  const [symptoms, setSymptoms] = useState<SymptomCardProps[]>([
-    { symptom: 'Febre alta e constante' },
-    { symptom: 'Dor nas articulações' }
+  const [symptoms, setSymptoms] = useState<ISymptomCardProps[]>([
+    { symptom: "Febre alta e constante" },
+    { symptom: "Dor nas articulações" },
   ]);
   const drawerRef = useRef(null);
   const [menuVisible, setMenuVisible] = useState(false);
 
   function handleCondition() {
-    navigation.navigate('ConditionInsert' as never);
+    navigation.navigate('ConditionInsertPage' as never);
   }
 
-  // Function to open the drawer
   function openMenu() {
     setMenuVisible(true);
   }
 
-  // Function to close the drawer
   function closeMenu() {
     setMenuVisible(false);
   }

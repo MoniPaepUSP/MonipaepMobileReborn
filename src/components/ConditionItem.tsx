@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Pressable } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import colors from '../styles/colors';
 
-const ConditionItem = ({ description, isChecked, onPress }) => {
+const ConditionItem = ({ description, onPress, isChecked }) => {
   return (
     <Pressable style={styles.condition} onPress={onPress}>
       <Text style={styles.conditionText}>{description}</Text>
@@ -21,11 +21,12 @@ const ConditionItem = ({ description, isChecked, onPress }) => {
 const styles = StyleSheet.create({
   condition: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
+    justifyContent: 'space-between',
+    alignContent: 'space-between',
+    paddingHorizontal: 22
+    // width: '100%'
   },
   conditionText: {
-    flex: 1,
     fontWeight: '500',
   },
   divider: {
@@ -36,6 +37,7 @@ const styles = StyleSheet.create({
   checkbox: {
     width: 16,
     height: 16,
+    alignSelf: 'center',
   },
 });
 

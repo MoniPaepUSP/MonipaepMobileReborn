@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "99feffff-d246-4455-a819-f1245da6e99a"
+      }
+    },
+    "android": {
+      "package": "com.davimoreira27.monipaepmobilereborn"
+    }
+  }
+}

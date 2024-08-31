@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dimensions, StyleSheet, Text, View, ScrollView, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { Dimensions, StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { BlueButton, HeaderSimple, SafeAreaView } from '../components';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
@@ -9,11 +9,14 @@ import ConditionItem from '../components/ConditionItem';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import Modal from 'react-native-modal';
+import { InsertCondition } from '../components/InsertCondition';
 
-export function ConditionInsert() {
+export function ConditionInsertPage() {
     const navigation = useNavigation();
-    const [selectedOption, setSelectedOption] = useState("Sintoma");
+    const [selectedOption, setSelectedOption] = useState("symptom");
+    const [newFetch, setNewFetch] = useState<number>(1);
     const [searchTerm, setSearchTerm] = useState("");
+    // Banco de dados
     const [records, setRecords] = useState([
         { id: 1, type: "Sintoma", description: "Dor de cabeça", isChecked: false },
         { id: 2, type: "Sintoma", description: "Febre", isChecked: false },
@@ -34,29 +37,6 @@ export function ConditionInsert() {
 
     const closeMenu = () => {
         setMenuVisible(false);
-    };
-
-    let placeholderText = "Digite um sintoma";
-
-    if (selectedOption === "Comorbidade") {
-        placeholderText = "Digite uma comorbidade";
-    } else if (selectedOption === "Condição Especial") {
-        placeholderText = "Digite uma condição especial";
-    }
-
-    const filteredRecords = records.filter(record => {
-        if (selectedOption === "Todos") {
-            return record.description.toLowerCase().includes(searchTerm.toLowerCase());
-        } else {
-            return record.type === selectedOption && record.description.toLowerCase().includes(searchTerm.toLowerCase());
-        }
-    });
-
-    const handleConditionPress = (id) => {
-        const updatedRecords = records.map((record) =>
-            record.id === id ? { ...record, isChecked: !record.isChecked } : record
-        );
-        setRecords(updatedRecords);
     };
 
     const handleSearchOrAddRecord = () => {
@@ -82,7 +62,7 @@ export function ConditionInsert() {
 
     const printCheckedRecords = () => {
         const currentDate = new Date().toLocaleDateString();
-        const checkedRecords = records.filter(record => record.isChecked);
+        const checkedRecords = records.filter(record => record.isChecked === true);
         checkedRecords.forEach(record => {
             console.log('Novo registro em:', currentDate, record);
         });
@@ -92,6 +72,7 @@ export function ConditionInsert() {
         try {
             const selectedConditions = records.filter(record => record.isChecked);
             const selectedDescriptions = selectedConditions.map(condition => condition.description).join(', ');
+            setNewFetch(newFetch + 1);
 
             Alert.alert(
                 "Atualização concluída",
@@ -120,78 +101,58 @@ export function ConditionInsert() {
     };
 
     return (
-        <SafeAreaView style={styles.safeArea}>
-            <HeaderSimple titleScreen="Condições e Sintomas" />
-            <ScrollView contentContainerStyle={styles.scrollViewContainer} onTouchStart={closeMenu}>
-                <TouchableOpacity onPress={openMenu} style={styles.menuButton}>
-                    <MaterialIcons name="menu" size={24} color="black" />
-                </TouchableOpacity>
-                <View style={styles.container}>
-                    <View style={styles.logoContainer}>
-                        <View style={styles.textAPP}>
-                            <Text style={styles.appName}>MoniPaEp</Text>
-                        </View>
-                        <CustomSelect
-                            label=""
-                            selectedValue={selectedOption}
-                            onValueChange={(itemValue) => setSelectedOption(itemValue)}
-                            items={[
-                                { label: "Todos", value: "Todos" },
-                                { label: "Sintoma", value: "Sintoma" },
-                                { label: "Comorbidade", value: "Comorbidade" },
-                                { label: "Condição Especial", value: "Condição Especial" },
-                            ]}
-                        />
-                        <View style={styles.searchContainer}>
-                            <TextInput
-                                style={styles.searchInput}
-                                placeholder={placeholderText}
-                                placeholderTextColor={colors.gray_dark3}
-                                value={searchTerm}
-                                onChangeText={text => setSearchTerm(text)}
-                                onSubmitEditing={handleSearchOrAddRecord}
-                                returnKeyType="search"
-                            />
-                        </View>
-                    </View>
-                    <View style={styles.optionsContainer}>
-                        {filteredRecords.map((record, index) => (
-                            <React.Fragment key={record.id}>
-                                <ConditionItem
-                                    description={record.description}
-                                    isChecked={record.isChecked}
-                                    onPress={() => handleConditionPress(record.id)}
-                                />
-                                {index !== filteredRecords.length - 1 && <View style={styles.hr} />}
-                            </React.Fragment>
-                        ))}
-                    </View>
-                </View>
-            </ScrollView>
-            <View style={styles.bottom}>
-                <BlueButton
-                    accessibilityLabel="Atualizar condições de saúde"
-                    title="Atualizar Condições"
-                    onPress={() => {
-                        handleSearchOrAddRecord();
-                        printCheckedRecords();
-                        handleConditionUpdate();
-                    }}
-                />
+      <SafeAreaView style={styles.safeArea}>
+        <HeaderSimple titleScreen="Condições e Sintomas" />
+        <ScrollView
+          contentContainerStyle={styles.scrollViewContainer}
+          onTouchStart={closeMenu}
+        >
+          <TouchableOpacity onPress={openMenu} style={styles.menuButton}>
+            <MaterialIcons name="menu" size={24} color="black" />
+          </TouchableOpacity>
+          <View style={styles.container}>
+            <View style={styles.logoContainer}>
+              <View style={styles.textAPP}>
+                <Text style={styles.appName}>MoniPaEp</Text>
+              </View>
+              <CustomSelect
+                label=""
+                selectedValue={selectedOption}
+                onValueChange={(itemValue) => {setNewFetch(newFetch + 1), setSelectedOption(itemValue)}}
+                items={[
+                  { label: "Sintoma", value: "symptom" },
+                  { label: "Comorbidade", value: "comorbity" },
+                  { label: "Condição Especial", value: "specialCondition" },
+                ]}
+              />
+              <InsertCondition newFetch={newFetch} selectedItem={selectedOption} />
             </View>
-            <View>
-                <Modal
-                    isVisible={menuVisible}
-                    animationIn="slideInLeft"
-                    animationOut="slideOutLeft"
-                    onBackdropPress={closeMenu}
-                    backdropOpacity={0.3}
-                    style={styles.modalLeft}
-                >
-                    <Menu onCloseMenu={closeMenu} />
-                </Modal>
-            </View>
-        </SafeAreaView>
+          </View>
+        </ScrollView>
+        <View style={styles.bottom}>
+          <BlueButton
+            accessibilityLabel="Atualizar condições de saúde"
+            title="Atualizar Condições"
+            onPress={() => {
+              handleSearchOrAddRecord();
+              printCheckedRecords();
+              handleConditionUpdate();
+            }}
+          />
+        </View>
+        <View>
+          <Modal
+            isVisible={menuVisible}
+            animationIn="slideInLeft"
+            animationOut="slideOutLeft"
+            onBackdropPress={closeMenu}
+            backdropOpacity={0.3}
+            style={styles.modalLeft}
+          >
+            <Menu onCloseMenu={closeMenu} />
+          </Modal>
+        </View>
+      </SafeAreaView>
     );
 }
 
@@ -266,4 +227,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ConditionInsert;
+export default ConditionInsertPage;

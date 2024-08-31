@@ -4,7 +4,7 @@ import { HealthConditions } from "../pages/HealthConditions";
 import colors from "../styles/colors";
 import { Login, SignUp, Symptoms } from "../pages";
 import { Home } from "../pages/Home";
-import { ConditionInsert } from "../pages/ConditionInsert";
+import { ConditionInsertPage } from "../pages/ConditionInsertPage";
 import { Profile } from "../pages/Profile";
 import { FrequentQuestions } from "../pages/FrequentQuestions";
 import { CloseByUnits } from "../pages/CloseByUnits";
@@ -29,7 +29,7 @@ const AppRoutes = () => (
     <AppStack.Screen name="Symptoms" component={Symptoms} />
     <AppStack.Screen name="FrequentQuestions" component={FrequentQuestions} />
     <AppStack.Screen name="CloseByUnits" component={CloseByUnits} />
-    <AppStack.Screen name="ConditionInsert" component={ConditionInsert} />
+    <AppStack.Screen name="ConditionInsertPage" component={ConditionInsertPage} />
     <AppStack.Screen name="Profile" component={Profile} />
     <AppStack.Screen name="MyAppointments" component={MyAppointments} />
     <AppStack.Screen name="AppointmentRegister" component={AppointmentRegister} />

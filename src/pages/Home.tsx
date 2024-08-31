@@ -88,12 +88,10 @@ export function Home() {
         navigation.navigate('FrequentQuestions' as never);
     }
 
-    // Function to open the drawer
     function openMenu() {
         setMenuVisible(true);
     }
 
-    // Function to close the drawer
     function closeMenu() {
         setMenuVisible(false);
     }

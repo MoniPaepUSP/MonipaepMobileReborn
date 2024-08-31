@@ -226,7 +226,7 @@ export function SignUp() {
 
     try { 
       
-      const response = register(email, name, cpf, phone, workAddress, homeAddress, neighborhood, houseNumber, isHealthPlanSelected, date, password, isAllowMessageSelected, gender)
+      const response = await register(email, name, cpf, phone, workAddress, homeAddress, neighborhood, houseNumber, isHealthPlanSelected, date, password, isAllowMessageSelected, gender)
       commonSucessAlert(signUpSuccessMessage, () => {});
 
       return response;
