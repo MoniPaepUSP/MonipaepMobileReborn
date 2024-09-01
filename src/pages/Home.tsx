@@ -63,18 +63,7 @@ export function Home() {
     }
 
     async function Data() {
-        //const patientId = await getUser()
-        //const token = await getAccessToken()
-        //const refreshToken = await getRefreshToken()
-        /*
-        console.log("Exibindo UseContext")
-        console.log(user)
-        console.log(token)
-        console.log(refreshToken)
-        console.log("Signed: "+signed)
-        */
-
-        //navigation.navigate('Symptoms')
+        navigation.navigate("Notification" as never);
     }
 
     function handleConfig() {

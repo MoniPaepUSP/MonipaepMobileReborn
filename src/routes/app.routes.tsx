@@ -10,6 +10,7 @@ import { FrequentQuestions } from "../pages/FrequentQuestions";
 import { CloseByUnits } from "../pages/CloseByUnits";
 import { MyAppointments } from "../pages/MyAppointments";
 import { AppointmentRegister } from "../pages/AppointmentRegister";
+import { NotificationPage } from "../pages/NoticationPage";
 
 const AppStack = createStackNavigator();
 
@@ -29,9 +30,13 @@ const AppRoutes = () => (
     {/* <AppStack.Screen name="Symptoms" component={Symptoms} /> */}
     <AppStack.Screen name="FrequentQuestions" component={FrequentQuestions} />
     <AppStack.Screen name="CloseByUnits" component={CloseByUnits} />
-    <AppStack.Screen name="ConditionInsertPage" component={ConditionInsertPage} />
+    <AppStack.Screen
+      name="ConditionInsertPage"
+      component={ConditionInsertPage}
+    />
     <AppStack.Screen name="Profile" component={Profile} />
     <AppStack.Screen name="MyAppointments" component={MyAppointments} />
+    <AppStack.Screen name="Notification" component={NotificationPage} />
     {/* <AppStack.Screen name="AppointmentRegister" component={AppointmentRegister} /> */}
   </AppStack.Navigator>
 );
