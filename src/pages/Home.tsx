@@ -17,6 +17,7 @@ import Menu from "../components/Menu";
 import Modal from 'react-native-modal';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
+import { GenericInformationModal } from '../components/GenericInformationModal';
 
 export function Home() {
     const navigation = useNavigation();
@@ -144,26 +145,7 @@ export function Home() {
                     pagingEnabled
                     showsHorizontalScrollIndicator={false}
                 />
-                <Modal
-                    isVisible={showPopup}
-                    animationIn="slideInUp"
-                    onBackdropPress={closeModal}
-                    backdropOpacity={0.3}
-                >
-                    <View style={styles.modalContainer}>
-                        <View style={styles.modalContent}>
-                            <Text style={styles.modalText}>
-                                Atualize os seus registros antes de obter um encaminhamento!
-                            </Text>
-                            <TouchableOpacity  style={styles.button}
-                                accessibilityLabel="Botão para fechar o pop up"
-                                onPress={closeModal}
-                            >
-                                <Text style={styles.buttonText}>OK</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
+                <GenericInformationModal description={"Teste"}/>
             </View>
             <View
                 accessible={true}
