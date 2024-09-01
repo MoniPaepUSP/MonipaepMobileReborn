@@ -127,7 +127,7 @@ export function Home() {
                     <MaterialIcons style={styles.icons} name="menu" size={24} color="black" />
                 </TouchableOpacity>
                 <ChatButton
-                    accessibilityLabel="Botão. Clique para visualizar mensagens do médico"
+                    accessibilityLabel="Botão. Clique para visualizar as notificações"
                     title="Notificações"
                     onPress={Data}
                 />

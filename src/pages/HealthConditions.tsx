@@ -10,6 +10,8 @@ import { useNavigation } from "@react-navigation/native";
 import Menu from '../components/Menu';
 import Modal from 'react-native-modal';
 import { IConditionsProps, ISymptomCardProps } from '../interfaces/conditions.interface';
+import InternalPageDefault from '../components/MenuHandlerComponent';
+import MenuHandlerComponent from '../components/MenuHandlerComponent';
 
 
 export function HealthConditions() {
@@ -21,20 +23,11 @@ export function HealthConditions() {
   const [symptoms, setSymptoms] = useState<ISymptomCardProps[]>([
     { symptom: "Febre alta e constante" },
     { symptom: "Dor nas articulações" },
+    { symptom: "Dor nas articulações" },
   ]);
-  const drawerRef = useRef(null);
-  const [menuVisible, setMenuVisible] = useState(false);
-
+  
   function handleCondition() {
     navigation.navigate('ConditionInsertPage' as never);
-  }
-
-  function openMenu() {
-    setMenuVisible(true);
-  }
-
-  function closeMenu() {
-    setMenuVisible(false);
   }
 
   return (
@@ -42,19 +35,7 @@ export function HealthConditions() {
         <HeaderSimple titleScreen="Condições e Sintomas" />
         <ScrollView contentContainerStyle={styles.scrollViewContainer}>
           <View style={styles.container}>
-            <View style={styles.bodyUp} accessible={true}>
-              <TouchableOpacity onPress={openMenu}>
-              <MaterialIcons
-                style={styles.icons}
-                name="menu"
-                size={24}
-                color="black"
-              />
-              </TouchableOpacity>
-              <View style={styles.textAPP} accessible={true}>
-                <Text style={styles.appName}>MoniPaEp</Text>
-              </View>
-            </View>
+            <MenuHandlerComponent/>
             <View style={styles.conditionsContainer}>
               {conditions.map((item, index) => (
                 <View key={index} style={styles.condition}>
@@ -82,18 +63,6 @@ export function HealthConditions() {
             onPress={handleCondition}
           />
         </View>
-        <View>
-                <Modal
-                    isVisible={menuVisible}
-                    animationIn="slideInLeft"
-                    animationOut="slideOutLeft"
-                    onBackdropPress={closeMenu}
-                    backdropOpacity={0.3}
-                    style={styles.modalLeft}
-                >
-                    <Menu onCloseMenu={closeMenu} />
-                </Modal>
-            </View>
       </SafeAreaView>
   );
 }

@@ -26,13 +26,13 @@ const AppRoutes = () => (
     <AppStack.Screen name="HealthConditions" component={HealthConditions} />
     <AppStack.Screen name="Login" component={Login} />
     <AppStack.Screen name="SignUp" component={SignUp} />
-    <AppStack.Screen name="Symptoms" component={Symptoms} />
+    {/* <AppStack.Screen name="Symptoms" component={Symptoms} /> */}
     <AppStack.Screen name="FrequentQuestions" component={FrequentQuestions} />
     <AppStack.Screen name="CloseByUnits" component={CloseByUnits} />
     <AppStack.Screen name="ConditionInsertPage" component={ConditionInsertPage} />
     <AppStack.Screen name="Profile" component={Profile} />
     <AppStack.Screen name="MyAppointments" component={MyAppointments} />
-    <AppStack.Screen name="AppointmentRegister" component={AppointmentRegister} />
+    {/* <AppStack.Screen name="AppointmentRegister" component={AppointmentRegister} /> */}
   </AppStack.Navigator>
 );
 

@@ -9,6 +9,7 @@ import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import NewQuestionModal from '../components/NewQuestionModal';
 import Modal from 'react-native-modal';
+import MenuHandlerComponent from '../components/MenuHandlerComponent';
 
 export function FrequentQuestions(): JSX.Element {
   const drawerRef = useRef(null);
@@ -40,37 +41,13 @@ export function FrequentQuestions(): JSX.Element {
           style={styles.container}
           accessible={true} 
         >
-          <View style={styles.bodyUp} accessible={true}>
-              <TouchableOpacity onPress={openMenu}>
-                <MaterialIcons
-                  style={styles.icons}
-                  name="menu"
-                  size={24}
-                  color="black"
-                />
-              </TouchableOpacity>
-              <View style={styles.textAPP} accessible={true}>
-                <Text style={styles.appName}>MoniPaEp</Text>
-              </View>
-            </View>
+          <MenuHandlerComponent/>
           <FrequentQuestionsComponent />
           <TouchableOpacity style={styles.button} onPress={handleOpenNewQuestionDialog}>
             <Text style={styles.buttonText}>Enviar uma pergunta</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <View>
-                <Modal
-                    isVisible={menuVisible}
-                    animationIn="slideInLeft"
-                    animationOut="slideOutLeft"
-                    onBackdropPress={closeMenu}
-                    backdropOpacity={0.3}
-                    style={styles.modalLeft}
-                >
-                    <Menu onCloseMenu={closeMenu} />
-                </Modal>
-            </View>
       {openNewQuestionDialog && <NewQuestionModal visible={openNewQuestionDialog} onClose={handleCloseNewQuestionDialog} />}
     </SafeAreaView>
   )

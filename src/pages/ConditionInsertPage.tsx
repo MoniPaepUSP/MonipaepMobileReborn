@@ -10,6 +10,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import Modal from 'react-native-modal';
 import { InsertCondition } from '../components/InsertCondition';
+import MenuHandlerComponent from '../components/MenuHandlerComponent';
 
 export function ConditionInsertPage() {
     const navigation = useNavigation();
@@ -25,19 +26,10 @@ export function ConditionInsertPage() {
         { id: 5, type: "Condição Especial", description: "Gravidez", isChecked: false },
         { id: 6, type: "Condição Especial", description: "Deficiência visual", isChecked: false },
     ]);
-    const [menuVisible, setMenuVisible] = useState(false);
-
+    
     function handleHistory(){
         navigation.navigate('HealthConditions' as never)
     }
-
-    const openMenu = () => {
-        setMenuVisible(true);
-    };
-
-    const closeMenu = () => {
-        setMenuVisible(false);
-    };
 
     const handleSearchOrAddRecord = () => {
         const existingRecord = records.find(record =>
@@ -105,16 +97,10 @@ export function ConditionInsertPage() {
         <HeaderSimple titleScreen="Condições e Sintomas" />
         <ScrollView
           contentContainerStyle={styles.scrollViewContainer}
-          onTouchStart={closeMenu}
         >
-          <TouchableOpacity onPress={openMenu} style={styles.menuButton}>
-            <MaterialIcons name="menu" size={24} color="black" />
-          </TouchableOpacity>
+          <MenuHandlerComponent/>
           <View style={styles.container}>
             <View style={styles.logoContainer}>
-              <View style={styles.textAPP}>
-                <Text style={styles.appName}>MoniPaEp</Text>
-              </View>
               <CustomSelect
                 label=""
                 selectedValue={selectedOption}
@@ -139,18 +125,6 @@ export function ConditionInsertPage() {
               handleConditionUpdate();
             }}
           />
-        </View>
-        <View>
-          <Modal
-            isVisible={menuVisible}
-            animationIn="slideInLeft"
-            animationOut="slideOutLeft"
-            onBackdropPress={closeMenu}
-            backdropOpacity={0.3}
-            style={styles.modalLeft}
-          >
-            <Menu onCloseMenu={closeMenu} />
-          </Modal>
         </View>
       </SafeAreaView>
     );
