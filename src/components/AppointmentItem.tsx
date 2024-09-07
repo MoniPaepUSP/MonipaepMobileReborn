@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import colors from "../styles/colors";
 import fonts from "../styles/fonts";
+import CancelAppointmentModal from "./modals/CancelAppointmentModal";
 
 const AppointmentItem = ({ appointment, onPress }) => {
+
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  const handleOpenCancelAppointmentModal = () => {
+    setIsVisible(true);
+  }
+
+  const handleCloseCancelAppointmentModal = () => {
+    setIsVisible(false);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.infos}>Próxima Consulta</Text>
@@ -27,10 +39,18 @@ const AppointmentItem = ({ appointment, onPress }) => {
       </View>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => onPress(appointment)}
+        onPress={handleOpenCancelAppointmentModal}
       >
-        <Text style={styles.buttonText}>Alterar</Text>
+        <Text style={styles.buttonText}>Cancelar</Text>
       </TouchableOpacity>
+      {isVisible && (
+        <CancelAppointmentModal
+        appointmentDate={appointment.dateConsulta}
+        appointmentId="ID QUE EU DEVERIA TER RECEBIDO DO HOOK"
+        visible={isVisible}
+        onClose={handleCloseCancelAppointmentModal}
+        />
+      )}
     </View>
   );
 };

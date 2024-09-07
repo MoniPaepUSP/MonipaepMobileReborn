@@ -1,16 +1,12 @@
-import React, { useState, useRef } from 'react';
-import { Dimensions, StyleSheet, Text, View, ScrollView, TouchableOpacity, } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import { Dimensions, StyleSheet, View, ScrollView } from 'react-native';
 import { BlueButton, HeaderSimple, SafeAreaView } from '../components';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import ConditionCard from '../components/ConditionCard';
 import SymptomCard from '../components/SymptomCard';
 import { useNavigation } from "@react-navigation/native";
-import Menu from '../components/Menu';
-import Modal from 'react-native-modal';
 import { IConditionsProps, ISymptomCardProps } from '../interfaces/conditions.interface';
-import InternalPageDefault from '../components/MenuHandlerComponent';
 import MenuHandlerComponent from '../components/MenuHandlerComponent';
 
 

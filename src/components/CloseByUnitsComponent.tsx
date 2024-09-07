@@ -5,6 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Accordion } from './Accordion';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import colors from '../styles/colors';
+import MapView from "react-native-maps";
 
 type HospitalData = {
   name: string;
@@ -143,35 +144,85 @@ export default function CloseByUnitsComponent(): JSX.Element {
 
   return (
     <View style={styles.container}>
-      <View style={[styles.mapContainer, isFullList && styles.hidden, isFullMap && styles.fullScreen]}>
-        <Image source={require('../assets/CloseByUnits.png')} style={styles.map} />
+      <View
+        style={[
+          styles.mapContainer,
+          isFullList && styles.hidden,
+          isFullMap && styles.fullScreen,
+        ]}
+      >
+        {/* <Image source={require('../assets/CloseByUnits.png')} style={styles.map} /> */}
+
         <TouchableOpacity style={floatingButtonStyle} onPress={toggleMap}>
           <AntDesign name={isFullMap ? "up" : "down"} size={24} color="white" />
         </TouchableOpacity>
       </View>
-      <View style={[styles.listContainer, isFullMap && styles.hidden, isFullList && styles.fullScreen]}>
+      <View
+        style={[
+          styles.listContainer,
+          isFullMap && styles.hidden,
+          isFullList && styles.fullScreen,
+        ]}
+      >
+        <MapView/>
         <ScrollView contentContainerStyle={styles.list}>
-          {
-            closeByUnits.map((unit, index): JSX.Element => {
-              const { data, type, distance } = unit;
-              const { name } = data;
-              const icon = type === UnitType.HOSPITAL ?  <MaterialIcons name="local-hospital" size={24} color={colors.red} /> : <MaterialIcons name="local-hospital" size={24} color={colors.blue} />
-              const hospitalAddress = formatHospitalAddress(data);
+          {closeByUnits.map((unit, index): JSX.Element => {
+            const { data, type, distance } = unit;
+            const { name } = data;
+            const icon =
+              type === UnitType.HOSPITAL ? (
+                <MaterialIcons
+                  name="local-hospital"
+                  size={24}
+                  color={colors.red}
+                />
+              ) : (
+                <MaterialIcons
+                  name="local-hospital"
+                  size={24}
+                  color={colors.blue}
+                />
+              );
+            const hospitalAddress = formatHospitalAddress(data);
 
-              return (
-                <Accordion key={index} title={name} icon={icon} backgroundColor={colors.white}>
-                  <View>
-                    <Text style={{ fontWeight: 'bold', fontSize: 12, backgroundColor: '#fff', paddingLeft: 8, paddingRight: 8 }}>A {distance} metros de você</Text>
-                    <Text style={styles.listItem}>{hospitalAddress}</Text>
-                  </View>
-                </Accordion>
-              )
-            })
-          }
+            return (
+              <Accordion
+                key={index}
+                title={name}
+                icon={icon}
+                backgroundColor={colors.white}
+              >
+                <View>
+                  <Text
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: 12,
+                      backgroundColor: "#fff",
+                      paddingLeft: 8,
+                      paddingRight: 8,
+                    }}
+                  >
+                    A {distance} metros de você
+                  </Text>
+                  <Text style={styles.listItem}>{hospitalAddress}</Text>
+                </View>
+              </Accordion>
+            );
+          })}
         </ScrollView>
-        <View style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "center", paddingBottom: 20}}>
+        <View
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            paddingBottom: 20,
+          }}
+        >
           <TouchableOpacity style={styles.button} onPress={toggleList}>
-            <Text style={styles.buttonText}>{isFullList ? "Voltar ao mapa" : "Ver lista completa"}</Text>
+            <Text style={styles.buttonText}>
+              {isFullList ? "Voltar ao mapa" : "Ver lista completa"}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -182,61 +233,61 @@ export default function CloseByUnitsComponent(): JSX.Element {
 const styles = StyleSheet.create({
   container: {
     height: "100%",
-    width: '100%',
+    width: "100%",
   },
   mapContainer: {
-    flex: 0.50,
+    flex: 0.5,
   },
   map: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
   },
   listContainer: {
-    flex: 0.50,
-    position: 'relative',
+    flex: 0.5,
+    position: "relative",
     backgroundColor: colors.blue,
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   list: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     padding: 10,
-    width: Dimensions.get('window').width * 0.95,
+    width: Dimensions.get("window").width * 0.95,
     maxWidth: 600,
-    gap: 12
+    gap: 12,
   },
   listItem: {
     fontSize: 14,
     paddingBottom: 10,
     paddingLeft: 8,
     paddingRight: 8,
-    backgroundColor: '#fff',
-    width: '100%',
+    backgroundColor: "#fff",
+    width: "100%",
   },
   hidden: {
-    display: 'none',
+    display: "none",
   },
   fullScreen: {
     flex: 1,
   },
   openListFloatingButton: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 12,
     right: 12,
-    backgroundColor: 'black',
+    backgroundColor: "black",
     padding: 12,
     borderRadius: 30,
   },
   closeListFloatingButton: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 12,
     right: 12,
-    backgroundColor: 'black',
+    backgroundColor: "black",
     padding: 10,
     borderRadius: 30,
   },
@@ -248,7 +299,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
   },
 });

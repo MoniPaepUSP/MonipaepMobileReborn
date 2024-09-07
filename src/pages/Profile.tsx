@@ -2,26 +2,23 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   Switch,
   StyleSheet,
   Dimensions,
-  TouchableOpacity,
   ScrollView,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { GreenButton, HeaderSimple, SafeAreaView } from "../components";
-import Menu from "../components/Menu";
 import colors from "../styles/colors";
 import fonts from "../styles/fonts";
-import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { SimpleLineIcons } from "@expo/vector-icons";
-import Modal from "react-native-modal";
 import { useAuth } from "../contexts/auth.context";
 import MenuHandlerComponent from "../components/MenuHandlerComponent";
+import { useNavigation } from "@react-navigation/native";
 
 export function Profile() {
+  const navigation = useNavigation();
+
   const [cpf, setCpf] = useState("");
   const [dob, setDob] = useState("");
   const [phone, setPhone] = useState("");
@@ -32,7 +29,6 @@ export function Profile() {
   const [cep, setCep] = useState("");
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [locationEnabled, setLocationEnabled] = useState(false);
-  const [menuVisible, setMenuVisible] = useState(false);
 
   const toggleNotifications = () => {
     setNotificationsEnabled(!notificationsEnabled);
@@ -42,24 +38,13 @@ export function Profile() {
     setLocationEnabled(!locationEnabled);
   };
 
-  // Function to open the drawer
-  function openMenu() {
-    setMenuVisible(true);
+  const navigateEditPage = () => {
+    navigation.navigate("EditInfoPage" as never);
+    return;
   }
-
-  // Function to close the drawer
-  function closeMenu() {
-    setMenuVisible(false);
-  }
-
-  function handleEdit() {}
 
   useState(() => {
-    const { user, refreshToken, token, signed, signOut } = useAuth();
-
-    const date = user.birthdate;
-    const date_str = user.birthdate.toString();
-    console.log(date, date_str);
+    const { user } = useAuth();
 
     const userDate = new Date(user.birthdate.toString());
     const day = String(userDate.getDate()).padStart(2, "0"); // Ensure two digits
@@ -169,32 +154,10 @@ export function Profile() {
           </View>
         </View>
         <View accessible={true} style={styles.bottom}>
-          <View style={styles.permissionContainer}>
-            <Text style={styles.permissionLabel}>Permitir Notificações</Text>
-            <Switch
-              trackColor={{ false: colors.gray_light1, true: colors.green }}
-              thumbColor={
-                notificationsEnabled ? colors.white : colors.gray_light1
-              }
-              ios_backgroundColor={colors.gray_light1}
-              onValueChange={toggleNotifications}
-              value={notificationsEnabled}
-            />
-          </View>
-          <View style={styles.permissionContainer}>
-            <Text style={styles.permissionLabel}>Permitir Localização</Text>
-            <Switch
-              trackColor={{ false: colors.gray_light1, true: colors.green }}
-              thumbColor={locationEnabled ? colors.white : colors.gray_light1}
-              ios_backgroundColor={colors.gray_light1}
-              onValueChange={toggleLocation}
-              value={locationEnabled}
-            />
-          </View>
           <GreenButton
             accessibilityLabel="Botão. Clique para alterar dados"
-            title="Alterar Dados"
-            onPress={handleEdit}
+            title="Editar Informações"
+            onPress={navigateEditPage}
           />
         </View>
       </ScrollView>

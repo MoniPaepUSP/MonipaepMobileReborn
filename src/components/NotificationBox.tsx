@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import colors from "../styles/colors";
+import SucessModal from "./modals/SucessModal";
 
 interface NotificationBoxProps {
   title?: string;
@@ -15,9 +16,15 @@ export function NotificationBox({
   wasRead,
   date
 }: NotificationBoxProps) {
+
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
   return (
     <View style={[styles.container, !wasRead && styles.unreadContainer]}>
-      <TouchableOpacity style={styles.columnRow}>
+      <TouchableOpacity
+        style={styles.columnRow}
+        onPress={() => setOpenModal(true)}
+      >
         <View style={styles.textColumn}>
           <Text style={styles.title}>{title || "Notificação"}</Text>
           <Text numberOfLines={3} ellipsizeMode="tail">
@@ -30,6 +37,14 @@ export function NotificationBox({
           </Text>
         </View>
       </TouchableOpacity>
+      <SucessModal
+        text="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Distinctio
+            fugiat ratione voluptas debitis voluptatum explicabo aperiam ex?
+            Unde, nemo rem!"
+        sucessText="Estou ciente"
+        onClose={() => setOpenModal(false)}
+        visible={openModal}
+      ></SucessModal>
     </View>
   );
 }

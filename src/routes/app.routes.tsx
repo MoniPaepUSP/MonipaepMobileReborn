@@ -11,6 +11,7 @@ import { CloseByUnits } from "../pages/CloseByUnits";
 import { MyAppointments } from "../pages/MyAppointments";
 import { AppointmentRegister } from "../pages/AppointmentRegister";
 import { NotificationPage } from "../pages/NoticationPage";
+import { EditProfileInfoPage } from "../pages/EditProfileInfoPage";
 
 const AppStack = createStackNavigator();
 
@@ -37,6 +38,7 @@ const AppRoutes = () => (
     <AppStack.Screen name="Profile" component={Profile} />
     <AppStack.Screen name="MyAppointments" component={MyAppointments} />
     <AppStack.Screen name="Notification" component={NotificationPage} />
+    <AppStack.Screen name="EditInfoPage" component={EditProfileInfoPage} />
     {/* <AppStack.Screen name="AppointmentRegister" component={AppointmentRegister} /> */}
   </AppStack.Navigator>
 );

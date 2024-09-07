@@ -14,6 +14,7 @@ import MenuHandlerComponent from '../components/MenuHandlerComponent';
 
 export function ConditionInsertPage() {
     const navigation = useNavigation();
+    // TODO: The default should be received by props
     const [selectedOption, setSelectedOption] = useState("symptom");
     const [newFetch, setNewFetch] = useState<number>(1);
     const [searchTerm, setSearchTerm] = useState("");
@@ -95,12 +96,10 @@ export function ConditionInsertPage() {
     return (
       <SafeAreaView style={styles.safeArea}>
         <HeaderSimple titleScreen="Condições e Sintomas" />
-        <ScrollView
-          contentContainerStyle={styles.scrollViewContainer}
-        >
+        <ScrollView>
           <MenuHandlerComponent/>
           <View style={styles.container}>
-            <View style={styles.logoContainer}>
+            <View style={styles.contentContainer}>
               <CustomSelect
                 label=""
                 selectedValue={selectedOption}
@@ -131,74 +130,39 @@ export function ConditionInsertPage() {
 }
 
 const styles = StyleSheet.create({
-    safeArea: {
-        flex: 1,
-    },
-    scrollViewContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    container: {
-        backgroundColor: colors.white,
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        flex: 1,
-    },
-    logoContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    textAPP: {
-        marginTop: '15%',
-        alignItems: 'center',
-    },
-    appName: {
-        fontFamily: fonts.appName,
-        fontSize: 32,
-        color: colors.blue,
-    },
-    menuButton: {
-        position: 'absolute',
-        top: 30,
-        left: 20,
-        zIndex: 100,
-    },
-    searchContainer: {
-        width: '90%',
-        marginTop: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-        position: 'relative',
-    },
-    searchInput: {
-        flex: 1,
-        borderWidth: 1,
-        borderColor: colors.gray_light2,
-        borderRadius: 5,
-        paddingVertical: 8,
-        paddingHorizontal: 12,
-        marginRight: 10,
-    },
-    optionsContainer: {
-        width: '90%',
-        marginTop: 20,
-    },
-    bottom: {
-        width: Dimensions.get('window').width,
-        position: 'absolute',
-        bottom: 20,
-        alignItems: 'center',
-    },
-    hr: {
-        borderBottomColor: colors.gray_light2,
-        borderBottomWidth: 1,
-        marginBottom: 10,
-    },
-    modalLeft: {
-        justifyContent: 'flex-start',
-        margin: 0,
-    },
+  safeArea: {
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: colors.white,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10
+  },
+  bottom: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  searchContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  optionsContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 20,
+    gap: 10,
+  },
 });
 
 export default ConditionInsertPage;

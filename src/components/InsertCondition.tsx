@@ -29,7 +29,7 @@ export function InsertCondition({ selectedItem, newFetch }) {
   >([]);
   const [selectedConditions, setSelectedConditions] = useState([]);
 
-  // Make hook for conditions and comorbities
+  // TODO: Make a solution for it do not runs the hook if its not the selected item, that is what causes de 404 error notification.
   const { symptoms: searchSymptoms } = useSearchSymptom(searchTerm);
   const { comorbities: searchComorbity } = useSearchComorbity(searchTerm);
   const { specialConditions: searchSpecialConditions } =
@@ -83,7 +83,7 @@ export function InsertCondition({ selectedItem, newFetch }) {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}
@@ -95,12 +95,15 @@ export function InsertCondition({ selectedItem, newFetch }) {
           returnKeyType="search"
         />
       </View>
-
+      <Text style={styles.tooltip}>
+        Pressione sobre a condição para ver mais detalhes
+      </Text>
       <View style={styles.optionsContainer}>
         {filteredConditions.map((symptom, index) => (
           <React.Fragment key={index}>
             <ConditionItem
-              description={symptom.symptom}
+              condition={symptom.symptom}
+              description="Lorem Ipsum AAAAAAAAAAAAAAAAAA"
               isChecked={selectedConditions.includes(symptom.symptom)}
               onPress={() => handleConditionPress(symptom.symptom)}
             />
@@ -115,25 +118,35 @@ export function InsertCondition({ selectedItem, newFetch }) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 15,
+    width: '100%',
+    alignItems: 'center'
+  },
   searchContainer: {
-    width: "100%",
-    marginTop: 20,
     flexDirection: "row",
     alignItems: "center",
     position: "relative",
-    paddingHorizontal: 22,
   },
   searchInput: {
-    flex: 1,
     borderWidth: 1,
     borderColor: colors.gray_light2,
     borderRadius: 5,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    // marginRight: 10,
+    padding: 15,
+    width: '90%'
+  },
+
+  tooltip: {
+    width: "100%",
+    marginTop: 5,
+    flexDirection: "row",
+    alignItems: "center",
+    position: "relative",
   },
   optionsContainer: {
-    marginTop: 40,
+    marginTop: 20,
   },
   hr: {
     borderBottomColor: colors.gray_light2,

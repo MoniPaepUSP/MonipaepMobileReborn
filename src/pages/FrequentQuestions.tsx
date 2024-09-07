@@ -12,14 +12,6 @@ import Modal from 'react-native-modal';
 import MenuHandlerComponent from '../components/MenuHandlerComponent';
 
 export function FrequentQuestions(): JSX.Element {
-  const drawerRef = useRef(null);
-  const [menuVisible, setMenuVisible] = useState(false);
-  function openMenu(): void {
-    setMenuVisible(true);
-  }
-  function closeMenu(): void {
-    setMenuVisible(false);
-  }
 
   const [openNewQuestionDialog, setOpenNewQuestionDialog] = useState(false);
   const handleOpenNewQuestionDialog = (): void => {
