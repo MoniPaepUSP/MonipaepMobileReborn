@@ -31,7 +31,8 @@
     "react-native-shadow-2": "^7.1.0",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-text-input-mask": "^3.2.0",
-    "react-native-web": "~0.19.6"
+    "react-native-web": "~0.19.6",
+    "expo-location": "~17.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",

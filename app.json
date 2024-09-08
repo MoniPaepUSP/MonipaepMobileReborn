@@ -3,10 +3,24 @@
     "extra": {
       "eas": {
         "projectId": "99feffff-d246-4455-a819-f1245da6e99a"
-      }
+      },
+      "plugins": [
+        [
+          "expo-location",
+          {
+            "locationAlwaysAndWhenInUsePermission": "Permitir que o Monipaep use a sua localização?"
+          }
+        ]
+      ]
     },
     "android": {
-      "package": "com.davimoreira27.monipaepmobilereborn"
+      "package": "com.davimoreira27.monipaepmobilereborn",
+      "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"],
+      "config": {
+        "googleMaps": {
+          "apiKey": ""
+        }
+      }
     }
   }
 }
