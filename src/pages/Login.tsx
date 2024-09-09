@@ -23,6 +23,7 @@ import * as loginHandlers from "../handlers/login.handler";
 import { commonErrorAlert, commonSucessAlert } from "../messages/common.messages";
 import * as loginMessages from '../messages/login.messages';
 import { useNavigation } from "@react-navigation/native";
+import ForgotPasswordCpfModal from "../components/modals/ForgotPasswordCpfModal";
 
 export function Login() {
   //Seting function singIn with use Context
@@ -42,6 +43,12 @@ export function Login() {
   const [isPasswordFilled, setIsPasswordFilled] = useState(false);
   const [password, setPassword] = useState<string>("");
   const passwordRef = useRef(null);
+  
+  const [visible, setVisible] = useState<boolean>(false);
+
+  const handleForgotPasswordModal = () => {
+    setVisible(true)
+  }
 
 
   async function Check() {
@@ -212,6 +219,7 @@ export function Login() {
                 <TouchableOpacity
                   accessible={true}
                   accessibilityLabel="Botão. Clique caso tenha esquecido a senha"
+                  onPress={handleForgotPasswordModal}
                 >
                   <Text style={styles.textLink}>Esqueceu sua senha?</Text>
                 </TouchableOpacity>
@@ -237,6 +245,7 @@ export function Login() {
             </View>
           </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
+        <ForgotPasswordCpfModal visible={visible} onClose={() => setVisible(false)}/>
       </SafeAreaView>
     );
 }

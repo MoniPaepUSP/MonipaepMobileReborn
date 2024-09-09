@@ -11,7 +11,6 @@ import { View } from "react-native";
 import { Switch } from "react-native-paper";
 import { TextInputMask } from "react-native-masked-text";
 import { DefaultTheme } from "react-native-paper";
-import { GenericInformationModal } from "../components/GenericInformationModal";
 import SucessModal from "../components/modals/SucessModal";
 
 export function EditProfileInfoPage() {
