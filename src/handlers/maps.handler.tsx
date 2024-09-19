@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
-const appid = "";
-const apiKey = "";
+const appid = process.env.EXPO_PUBLIC_HERE_APP_ID;
+const apiKey = process.env.EXPO_PUBLIC_HERE_API_KEY;
 
 // TODO: improve this shit code
 

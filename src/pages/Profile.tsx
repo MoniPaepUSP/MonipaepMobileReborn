@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -18,6 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 
 export function Profile() {
   const navigation = useNavigation();
+  const { user } = useAuth();
 
   const [cpf, setCpf] = useState("");
   const [dob, setDob] = useState("");
@@ -43,16 +44,13 @@ export function Profile() {
     return;
   }
 
-  useState(() => {
-    const { user } = useAuth();
-
+  useEffect(() => {
     const userDate = new Date(user.birthdate.toString());
-    const day = String(userDate.getDate()).padStart(2, "0"); // Ensure two digits
-    const month = String(userDate.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(userDate.getDate()).padStart(2, "0"); 
+    const month = String(userDate.getMonth() + 1).padStart(2, "0");
     const year = userDate.getFullYear();
 
     setCpf(user.CPF);
-
     setDob(`${day}/${month}/${year}`);
     setPhone(user.phone);
     setEmail(user.email);
@@ -60,7 +58,7 @@ export function Profile() {
     setNeighborhood(user.neighborhood);
     setNumber(String(user.houseNumber));
     setCep(user.neighborhood);
-  });
+  }, [user]);
 
   return (
     <SafeAreaView accessible={true} style={styles.safeArea}>
