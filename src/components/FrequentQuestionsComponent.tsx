@@ -157,7 +157,7 @@ export default function FrequentQuestionsComponent(): JSX.Element {
         const { topic } = faq;
 
         return (
-          <List.Accordion title={topic} titleStyle={styles.topicTitle} style={styles.topicContainer}>
+          <List.Accordion title={topic} titleStyle={styles.topicTitle} style={styles.topicContainer} key={index}>
             {faq.questions.map((q, i) => {
               const { answer, question } = q;
               return (
@@ -165,6 +165,7 @@ export default function FrequentQuestionsComponent(): JSX.Element {
                   title={question}
                   titleStyle={styles.questionTitle}
                   style={styles.questionContainer}
+                  key={i}
                 >
                   <List.Item
                     title={answer}
