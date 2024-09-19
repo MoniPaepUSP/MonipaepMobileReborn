@@ -1,129 +1,127 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import React, { useState } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { Accordion } from './Accordion';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import colors from '../styles/colors';
+import { MaterialIcons } from "@expo/vector-icons";
+import React, { useEffect, useState } from "react";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Dimensions,
+} from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { Accordion } from "./Accordion";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import colors from "../styles/colors";
+import MapView, { Marker } from "react-native-maps";
+import * as Location from "expo-location";
+import { List } from "react-native-paper";
+import { getAddressFromCoordinates } from "../handlers/maps.handler";
 
-type HospitalData = {
-  name: string;
-  cep: string
-  address: string;
-  addressNumber: string;
-  neighbourhood: string;
-  city: string;
-  state: string;
+interface Points {
+  latitude: number;
+  longitude: number;
+}
+
+interface RegionPoints {
+  latitude: number;
+  longitude: number;
+  latitudeDelta: number;
+  longitudeDelta: number;
 }
 
 enum UnitType {
   UBS = "UBS",
   HOSPITAL = "HOSPITAL",
-  POSTO_SAUDE="POSTO SAUDE"
+  POSTO_SAUDE = "POSTO SAUDE",
 }
 
-type HospitalUnit ={
+interface HealthLocation {
+  name: string;
+  coords: Points;
   type: UnitType;
-  data: HospitalData;
-  distance: number;
 }
 
-const hospitalUnimed: HospitalUnit = {
-  type: UnitType.HOSPITAL,
-  distance: 200,
-  data: {
+const healthLocations: HealthLocation[] = [
+  {
+    type: UnitType.HOSPITAL,
+    coords: {
+      latitude: -22.0172,
+      longitude: -47.8867,
+    },
     name: "Hospital Unimed",
-    cep: "13561-003",
-    address: "Av. Dr. Carlos Botelho",
-    addressNumber: "1055",
-    neighbourhood: "Centro",
-    city: "São Carlos",
-    state: "SP"
   },
-}
-
-const ubsCentral: HospitalUnit = {
-  type: UnitType.UBS,
-  distance: 150,
-  data: {
+  {
+    type: UnitType.UBS,
+    coords: {
+      latitude: -22.0145,
+      longitude: -47.8933,
+    },
     name: "UBS Central",
-    cep: "13560-110",
-    address: "R. Conde do Pinhal",
-    addressNumber: "2000",
-    neighbourhood: "Centro",
-    city: "São Carlos",
-    state: "SP"
   },
-}
-
-const hospitalSaoCarlos: HospitalUnit = {
-  type: UnitType.HOSPITAL,
-  distance: 500,
-  data: {
+  {
+    type: UnitType.HOSPITAL,
+    coords: {
+      latitude: -22.0211,
+      longitude: -47.8803,
+    },
     name: "Hospital São Carlos",
-    cep: "13560-230",
-    address: "R. Vinte e Oito de Setembro",
-    addressNumber: "700",
-    neighbourhood: "Centro",
-    city: "São Carlos",
-    state: "SP"
   },
-}
-
-const ubsVilaIsabel: HospitalUnit = {
-  type: UnitType.UBS,
-  distance: 300,
-  data: {
+  {
+    type: UnitType.UBS,
+    coords: {
+      latitude: -22.0388,
+      longitude: -47.8592,
+    },
     name: "UBS Vila Isabel",
-    cep: "13566-410",
-    address: "R. Américo Brasiliense",
-    addressNumber: "1700",
-    neighbourhood: "Vila Isabel",
-    city: "São Carlos",
-    state: "SP"
   },
-}
-
-const hospitalNossaSenhora: HospitalUnit = {
-  type: UnitType.HOSPITAL,
-  distance: 750,
-  data: {
+  {
+    type: UnitType.HOSPITAL,
+    coords: {
+      latitude: -22.0244,
+      longitude: -47.8832,
+    },
     name: "Hospital Nossa Senhora Aparecida",
-    cep: "13567-320",
-    address: "R. Quinze de Novembro",
-    addressNumber: "300",
-    neighbourhood: "Centro",
-    city: "São Carlos",
-    state: "SP"
   },
-}
-
-const ubsSantaFelicia: HospitalUnit = {
-  type: UnitType.UBS,
-  distance: 1000,
-  data: {
+  {
+    type: UnitType.UBS,
+    coords: {
+      latitude: -22.0467,
+      longitude: -47.8511,
+    },
     name: "UBS Santa Felícia",
-    cep: "13566-140",
-    address: "R. José Benetti",
-    addressNumber: "800",
-    neighbourhood: "Santa Felícia",
-    city: "São Carlos",
-    state: "SP"
   },
-}
-
-const closeByUnits = [
-  hospitalUnimed,
-  ubsCentral,
-  hospitalSaoCarlos,
-  ubsVilaIsabel,
-  hospitalNossaSenhora,
-  ubsSantaFelicia
 ];
 
 export default function CloseByUnitsComponent(): JSX.Element {
   const [isFullList, setIsFullList] = useState(false);
   const [isFullMap, setIsFullMap] = useState(false);
+
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [addressFromCoordinates, setAddressFromCoordinates] = useState({});
+
+  const mapRef = React.createRef<MapView>();
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permssão para acessar localização negada");
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
+
+  let locationContent = "Waiting..";
+  if (errorMsg) {
+    locationContent = errorMsg;
+  }
+
+  if (location) {
+    locationContent = JSON.stringify(location);
+  }
 
   const toggleList = (): void => {
     setIsFullList(!isFullList);
@@ -135,43 +133,204 @@ export default function CloseByUnitsComponent(): JSX.Element {
     setIsFullList(false);
   };
 
-  function formatHospitalAddress(hospital: HospitalData): string {
+  const handleRegionChange = (coords: Points) => {
+    setRegion(
+      getRegionForCoordinates([
+        {
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+        },
+      ])
+    );
+  };
+
+  function formatHospitalAddress(hospital): string {
     return `${hospital.address}, ${hospital.addressNumber} - ${hospital.neighbourhood}, ${hospital.city} - ${hospital.state}, ${hospital.cep}`;
   }
 
-  const floatingButtonStyle = isFullMap ? styles.openListFloatingButton : styles.closeListFloatingButton
+  /* 
+  Given an array of coordinates coords this function returns the region (lat, lng and deltas) to contain those coordinates.
+  Source: https://github.com/react-native-maps/react-native-maps/issues/505#issuecomment-243423775
+  Docs: https://github.com/react-native-maps/react-native-maps/blob/master/docs/mapview.md
+  */
+  function getRegionForCoordinates(points: Points[]): RegionPoints {
+    // points should be an array of { latitude: X, longitude: Y }
+    let minX, maxX, minY, maxY;
+
+    // init first point
+    ((point) => {
+      minX = point.latitude;
+      maxX = point.latitude;
+      minY = point.longitude;
+      maxY = point.longitude;
+    })(points[0]);
+
+    // calculate rect
+    points.map((point) => {
+      minX = Math.min(minX, point.latitude);
+      maxX = Math.max(maxX, point.latitude);
+      minY = Math.min(minY, point.longitude);
+      maxY = Math.max(maxY, point.longitude);
+    });
+
+    const midX = (minX + maxX) / 2;
+    const midY = (minY + maxY) / 2;
+    const deltaX = maxX - minX;
+    const deltaY = maxY - minY;
+    /*
+  A better explanation of the concept of Lat and Long Delta can be found here
+  https://stackoverflow.com/questions/36685372/how-to-zoom-in-out-in-react-native-map/36688156#36688156
+  */
+    return {
+      latitude: midX,
+      longitude: midY,
+      latitudeDelta: deltaX,
+      longitudeDelta: deltaY,
+    };
+  }
+
+  // Fórmula de Haversine
+  function getDistanceBetweenTwoPoints(
+    coords1: Points,
+    coords2: Points
+  ): string {
+    const R = 6371; // Raio da Terra em quilômetros
+    const lat1 = (coords1.latitude * Math.PI) / 180;
+    const lon1 = (coords1.longitude * Math.PI) / 180;
+    const lat2 = (coords2.latitude * Math.PI) / 180;
+    const lon2 = (coords2.longitude * Math.PI) / 180;
+
+    const dLat = lat2 - lat1;
+    const dLon = lon2 - lon1;
+
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c;
+
+    return distance.toFixed(2);
+  }
+
+  const floatingButtonStyle = isFullMap
+    ? styles.openListFloatingButton
+    : styles.closeListFloatingButton;
+
+  // Initial value is the area with all the locations provided by the API
+  const [region, setRegion] = useState<RegionPoints>(
+    getRegionForCoordinates(
+      healthLocations.map((location) => ({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      }))
+    )
+  );
+
+useEffect(() => {
+  const fetchAddresses = async () => {
+    const addresses = {};
+    for (const location of healthLocations) {
+      const address = await getAddressFromCoordinates(location.coords);
+      addresses[location.name] = address;
+    }
+    setAddressFromCoordinates(addresses);
+  };
+  fetchAddresses();
+}, []);
+
+  useEffect(() => {
+    if (region) {
+      // latitudeDelta and longitudeDelta represents in this case the zoom size
+      mapRef.current.animateToRegion(
+        { ...region, latitudeDelta: 0.02, longitudeDelta: 0.02 },
+        500
+      );
+    }
+  }, [region]);
 
   return (
     <View style={styles.container}>
-      <View style={[styles.mapContainer, isFullList && styles.hidden, isFullMap && styles.fullScreen]}>
-        <Image source={require('../assets/CloseByUnits.png')} style={styles.map} />
+      <View
+        style={[
+          styles.mapContainer,
+          isFullList && styles.hidden,
+          isFullMap && styles.fullScreen,
+        ]}
+      >
+        <MapView
+          ref={mapRef}
+          initialRegion={region}
+          style={styles.map}
+          showsUserLocation={true}
+        >
+          {healthLocations.map((location, index): JSX.Element => {
+            return (
+              <Marker
+                key={index}
+                coordinate={{
+                  latitude: location.coords.latitude,
+                  longitude: location.coords.longitude,
+                }}
+                title={location.name}
+              />
+            );
+          })}
+        </MapView>
         <TouchableOpacity style={floatingButtonStyle} onPress={toggleMap}>
           <AntDesign name={isFullMap ? "up" : "down"} size={24} color="white" />
         </TouchableOpacity>
       </View>
-      <View style={[styles.listContainer, isFullMap && styles.hidden, isFullList && styles.fullScreen]}>
+      <View
+        style={[
+          styles.listContainer,
+          isFullMap && styles.hidden,
+          isFullList && styles.fullScreen,
+        ]}
+      >
         <ScrollView contentContainerStyle={styles.list}>
-          {
-            closeByUnits.map((unit, index): JSX.Element => {
-              const { data, type, distance } = unit;
-              const { name } = data;
-              const icon = type === UnitType.HOSPITAL ?  <MaterialIcons name="local-hospital" size={24} color={colors.red} /> : <MaterialIcons name="local-hospital" size={24} color={colors.blue} />
-              const hospitalAddress = formatHospitalAddress(data);
-
-              return (
-                <Accordion key={index} title={name} icon={icon} backgroundColor={colors.white}>
-                  <View>
-                    <Text style={{ fontWeight: 'bold', fontSize: 12, backgroundColor: '#fff', paddingLeft: 8, paddingRight: 8 }}>A {distance} metros de você</Text>
-                    <Text style={styles.listItem}>{hospitalAddress}</Text>
-                  </View>
-                </Accordion>
-              )
-            })
-          }
+          {healthLocations.map((locations, index): JSX.Element => {
+            const { name, coords, type } = locations;
+            return (
+              <View style={styles.card} key={index}>
+                <TouchableOpacity onPress={() => handleRegionChange(coords)}>
+                  <Text style={styles.cardTitle}>{name}</Text>
+                  <Text style={styles.cardText}>Tipo: {type}</Text>
+                  <Text style={styles.cardText}>
+                    Endereço: {addressFromCoordinates[name]}
+                  </Text>
+                  <Text style={[styles.cardText, styles.distance]}>
+                    {location
+                      ? getDistanceBetweenTwoPoints(
+                          {
+                            latitude: coords.latitude,
+                            longitude: coords.longitude,
+                          },
+                          {
+                            latitude: location.coords.latitude,
+                            longitude: location.coords.longitude,
+                          }
+                        )
+                      : "Calculando distância..."}{" "}
+                    KM
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            );
+          })}
         </ScrollView>
-        <View style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "center", paddingBottom: 20}}>
+        <View
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            paddingBottom: 20,
+          }}
+        >
           <TouchableOpacity style={styles.button} onPress={toggleList}>
-            <Text style={styles.buttonText}>{isFullList ? "Voltar ao mapa" : "Ver lista completa"}</Text>
+            <Text style={styles.buttonText}>
+              {isFullList ? "Voltar ao mapa" : "Ver lista completa"}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -182,73 +341,80 @@ export default function CloseByUnitsComponent(): JSX.Element {
 const styles = StyleSheet.create({
   container: {
     height: "100%",
-    width: '100%',
+    maxHeight: 800,
+    width: "100%",
+  },
+  card: {
+    backgroundColor: colors.white,
+    padding: 10,
+    borderRadius: 10,
+    shadowColor: "black",
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 5,
+    width: Dimensions.get("window").width * 0.9,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  cardText: {
+    fontSize: 14,
+    color: "gray",
+  },
+  distance: {
+    color: colors.blue_dark2,
+    fontWeight: "500",
   },
   mapContainer: {
-    flex: 0.50,
+    flex: 0.5,
   },
   map: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
+    width: "100%",
+    height: "100%",
   },
   listContainer: {
-    flex: 0.50,
-    position: 'relative',
-    backgroundColor: colors.blue,
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
+    flex: 0.7,
+    backgroundColor: colors.gray_light3,
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   list: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 10,
-    width: Dimensions.get('window').width * 0.95,
-    maxWidth: 600,
-    gap: 12
-  },
-  listItem: {
-    fontSize: 14,
-    paddingBottom: 10,
-    paddingLeft: 8,
-    paddingRight: 8,
-    backgroundColor: '#fff',
-    width: '100%',
+    padding: 20,
+    gap: 15,
   },
   hidden: {
-    display: 'none',
+    display: "none",
   },
   fullScreen: {
     flex: 1,
   },
-  openListFloatingButton: {
-    position: 'absolute',
-    bottom: 12,
-    right: 12,
-    backgroundColor: 'black',
-    padding: 12,
-    borderRadius: 30,
-  },
-  closeListFloatingButton: {
-    position: 'absolute',
-    bottom: 12,
-    right: 12,
-    backgroundColor: 'black',
-    padding: 10,
-    borderRadius: 30,
-  },
   button: {
     backgroundColor: colors.green,
-    paddingVertical: 10,
-    paddingHorizontal: 30,
+    padding: 15,
     borderRadius: 10,
     marginTop: 15,
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
+  },
+  openListFloatingButton: {
+    position: "absolute",
+    bottom: 12,
+    right: 12,
+    backgroundColor: colors.blue,
+    padding: 12,
+    borderRadius: 30,
+  },
+  closeListFloatingButton: {
+    position: "absolute",
+    bottom: 12,
+    right: 12,
+    backgroundColor: colors.blue,
+    padding: 10,
+    borderRadius: 30,
   },
 });

@@ -14,21 +14,22 @@ import {
 } from "react-native";
 import { GreenButton, HeaderSimple, SafeAreaView } from "../components";
 import Menu from "../components/Menu";
-import { useAuth } from "../contexts/auth.context";
 import colors from "../styles/colors";
 import fonts from "../styles/fonts";
 import { TextInputMask } from 'react-native-masked-text';
+import { IAppointment } from "../interfaces/appointment.interface";
+import { AppointmentMessage } from "../messages/appointment.message";
 
 export function AppointmentRegister() {
-  const { user } = useAuth();
   const navigation = useNavigation();
   const [menuVisible, setMenuVisible] = useState(false);
-  const [appointmentData, setAppointmentData] = useState({
-    local: "",
-    doctor: "",
-    dateConsulta: "",
-    dateLembrete: "",
-  });
+  const appointment: IAppointment = {
+    local: '',
+    doctor: '',
+    consultDate: '',
+    rememberDate: ''
+  }; 
+  const [appointmentData, setAppointmentData] = useState(appointment);
 
   const openMenu = () => {
     setMenuVisible(true);
@@ -50,23 +51,9 @@ export function AppointmentRegister() {
   };
 
   const handleCreateAppointment = () => {
-    Alert.alert(
-      "Dados da Consulta",
-      `Local: ${appointmentData.local}\nMédico(a): ${appointmentData.doctor}\nData da Consulta: ${appointmentData.dateConsulta}\nData do Lembrete: ${appointmentData.dateLembrete}`,
-      [
-        {
-          text: "OK",
-          onPress: () => {
-            setAppointmentData({
-              local: "",
-              doctor: "",
-              dateConsulta: "",
-              dateLembrete: "",
-            });
-          },
-        },
-      ]
-    );
+    AppointmentMessage(appointmentData, () => {
+      setAppointmentData(appointment)
+    })
   };
 
   return (
@@ -118,7 +105,7 @@ export function AppointmentRegister() {
                 options={{
                   format: 'DD/MM/YYYY'
                 }}
-                value={appointmentData.dateConsulta}
+                value={appointmentData.consultDate}
                 onChangeText={(text) => handleInputChange("dateConsulta", text)}
               />
             </View>
@@ -132,7 +119,7 @@ export function AppointmentRegister() {
                 options={{
                   format: 'DD/MM/YYYY'
                 }}
-                value={appointmentData.dateLembrete}
+                value={appointmentData.rememberDate}
                 onChangeText={(text) => handleInputChange("dateLembrete", text)}
               />
             </View>

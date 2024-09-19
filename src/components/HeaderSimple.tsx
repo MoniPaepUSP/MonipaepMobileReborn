@@ -12,7 +12,9 @@ export function HeaderSimple({titleScreen}: HeaderProps){
     const navigation = useNavigation()
     
     function handleGoBack(){
-        navigation.goBack()
+        if (navigation.canGoBack()) {
+            navigation.goBack();
+        }
     }
     return(
         <View>

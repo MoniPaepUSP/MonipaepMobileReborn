@@ -8,16 +8,10 @@ import Menu from '../components/Menu';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import Modal from 'react-native-modal';
+import MenuHandlerComponent from '../components/MenuHandlerComponent';
 
 export function CloseByUnits(): JSX.Element {
   const drawerRef = useRef(null);
-  const [menuVisible, setMenuVisible] = useState(false);
-  function openMenu(): void {
-    setMenuVisible(true);
-  }
-  function closeMenu(): void {
-    setMenuVisible(false);
-  }
   
   return (
     <DrawerLayout
@@ -36,36 +30,12 @@ export function CloseByUnits(): JSX.Element {
             style={styles.container}
             accessible={true}
           >
-            <View style={styles.bodyUp} accessible={true}>
-              <TouchableOpacity onPress={openMenu}>
-                <MaterialIcons
-                  style={styles.icons}
-                  name="menu"
-                  size={24}
-                  color="black"
-                />
-              </TouchableOpacity>
-              <View style={styles.textAPP} accessible={true}>
-                <Text style={styles.appName}>MoniPaEp</Text>
-              </View>
-            </View>
+            <MenuHandlerComponent/>
             <View style={styles.bodyDown}>
               <CloseByUnitsComponent />
             </View>
           </View>
         </ScrollView>
-        <View>
-                <Modal
-                    isVisible={menuVisible}
-                    animationIn="slideInLeft"
-                    animationOut="slideOutLeft"
-                    onBackdropPress={closeMenu}
-                    backdropOpacity={0.3}
-                    style={styles.modalLeft}
-                >
-                    <Menu onCloseMenu={closeMenu} />
-                </Modal>
-            </View>
       </SafeAreaView>
     </DrawerLayout>
   )

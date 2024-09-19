@@ -34,6 +34,10 @@ import {
 export function SignUp() {
   const { register, signed } = useAuth();
 
+  // Password
+  const [showPasswordText, setShowPasswordText] = useState(false);
+  const [showPasswordConfirmText, setShowPasswordConfirmText] = useState(false);
+
   //Seting useState and useRef to email
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isEmailFilled, setIsEmailFilled] = useState(false);
@@ -226,7 +230,7 @@ export function SignUp() {
 
     try { 
       
-      const response = register(email, name, cpf, phone, workAddress, homeAddress, neighborhood, houseNumber, isHealthPlanSelected, date, password, isAllowMessageSelected, gender)
+      const response = await register(email, name, cpf, phone, workAddress, homeAddress, neighborhood, houseNumber, isHealthPlanSelected, date, password, isAllowMessageSelected, gender)
       commonSucessAlert(signUpSuccessMessage, () => {});
 
       return response;
@@ -244,9 +248,7 @@ export function SignUp() {
     >
       <ScrollView scrollEnabled={true}>
         <HeaderWithOutMenu titleScreen="Cadastro" />
-        <KeyboardAvoidingView
-          style={styles.container}
-        >
+        <KeyboardAvoidingView style={styles.container}>
           <View style={styles.container}>
             <View style={styles.warning}>
               <Text style={styles.warningText}>* Obrigatório </Text>
@@ -901,7 +903,7 @@ export function SignUp() {
                 style={styles.input}
                 value={password}
                 textContentType="newPassword"
-                secureTextEntry={true}
+                secureTextEntry={showPasswordText}
                 onBlur={() =>
                   signupHandler.handleInputPasswordBlur(
                     setIsPasswordFocused,
@@ -921,10 +923,13 @@ export function SignUp() {
                 }
                 ref={passwordRef}
               />
+              {/* TODO: Change icon within the secure state */}
+
               <MaterialIcons
-                name="lock"
+                name="remove-red-eye"
                 size={24}
                 color="gray"
+                onPress={() => setShowPasswordText(!showPasswordText)}
                 style={[
                   styles.Icon,
                   (isPasswordFocused || isPasswordFilled) && {
@@ -951,7 +956,7 @@ export function SignUp() {
                 style={styles.input}
                 value={confirmPassword}
                 textContentType="password"
-                secureTextEntry={true}
+                secureTextEntry={showPasswordConfirmText}
                 onBlur={() =>
                   signupHandler.handleInputConfirmPasswordBlur(
                     setIsConfirmPasswordFocused,
@@ -974,9 +979,12 @@ export function SignUp() {
                 ref={passwordRef}
               />
               <MaterialIcons
-                name="lock-outline"
+                name="remove-red-eye"
                 size={24}
                 color="gray"
+                onPress={() =>
+                  setShowPasswordConfirmText(!showPasswordConfirmText)
+                }
                 style={[
                   styles.Icon,
                   (isConfirmPasswordFocused || isConfirmPasswordFilled) && {
