@@ -1,48 +1,29 @@
-import React, { useState, useRef } from 'react';
-import { Dimensions, StyleSheet, Text, View, ScrollView, TouchableOpacity, } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import { Dimensions, StyleSheet, View, ScrollView } from 'react-native';
 import { BlueButton, HeaderSimple, SafeAreaView } from '../components';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import ConditionCard from '../components/ConditionCard';
 import SymptomCard from '../components/SymptomCard';
 import { useNavigation } from "@react-navigation/native";
-import Menu from '../components/Menu';
-import Modal from 'react-native-modal';
+import { IConditionsProps, ISymptomCardProps } from '../interfaces/conditions.interface';
+import MenuHandlerComponent from '../components/MenuHandlerComponent';
 
-interface ConditionsProps {
-  condition: string;
-}
-
-interface SymptomCardProps {
-  symptom: string;
-}
 
 export function HealthConditions() {
   const navigation = useNavigation();
-  const [conditions, setConditions] = useState<ConditionsProps[]>([
-    { condition: 'Diabetes Tipo 2' },
-    { condition: 'Alergia a Amendoim' }
+  const [conditions, setConditions] = useState<IConditionsProps[]>([
+    { condition: "Diabetes Tipo 2" },
+    { condition: "Alergia a Amendoim" },
   ]);
-  const [symptoms, setSymptoms] = useState<SymptomCardProps[]>([
-    { symptom: 'Febre alta e constante' },
-    { symptom: 'Dor nas articulações' }
+  const [symptoms, setSymptoms] = useState<ISymptomCardProps[]>([
+    { symptom: "Febre alta e constante" },
+    { symptom: "Dor nas articulações" },
+    { symptom: "Dor nas articulações" },
   ]);
-  const drawerRef = useRef(null);
-  const [menuVisible, setMenuVisible] = useState(false);
-
+  
   function handleCondition() {
-    navigation.navigate('ConditionInsert' as never);
-  }
-
-  // Function to open the drawer
-  function openMenu() {
-    setMenuVisible(true);
-  }
-
-  // Function to close the drawer
-  function closeMenu() {
-    setMenuVisible(false);
+    navigation.navigate('ConditionInsertPage' as never);
   }
 
   return (
@@ -50,19 +31,7 @@ export function HealthConditions() {
         <HeaderSimple titleScreen="Condições e Sintomas" />
         <ScrollView contentContainerStyle={styles.scrollViewContainer}>
           <View style={styles.container}>
-            <View style={styles.bodyUp} accessible={true}>
-              <TouchableOpacity onPress={openMenu}>
-              <MaterialIcons
-                style={styles.icons}
-                name="menu"
-                size={24}
-                color="black"
-              />
-              </TouchableOpacity>
-              <View style={styles.textAPP} accessible={true}>
-                <Text style={styles.appName}>MoniPaEp</Text>
-              </View>
-            </View>
+            <MenuHandlerComponent/>
             <View style={styles.conditionsContainer}>
               {conditions.map((item, index) => (
                 <View key={index} style={styles.condition}>
@@ -90,18 +59,6 @@ export function HealthConditions() {
             onPress={handleCondition}
           />
         </View>
-        <View>
-                <Modal
-                    isVisible={menuVisible}
-                    animationIn="slideInLeft"
-                    animationOut="slideOutLeft"
-                    onBackdropPress={closeMenu}
-                    backdropOpacity={0.3}
-                    style={styles.modalLeft}
-                >
-                    <Menu onCloseMenu={closeMenu} />
-                </Modal>
-            </View>
       </SafeAreaView>
   );
 }

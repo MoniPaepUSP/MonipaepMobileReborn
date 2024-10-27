@@ -41,6 +41,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     isAllowMessageSelected: boolean,
     gender: string
   ) {
+    const parts = birthdate.split("/");
+    birthdate = `${parts[2]}-${parts[1]}-${parts[0]}`;
     const response = await api.post("/patients/signup", {
       email: email,
       name: name,
@@ -58,7 +60,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     });
 
     console.log(response);
-    
+
     setUser(response.data.patient);
     saveTokens(response.data.token, response.data.refreshToken);
     api.defaults.headers["Authorization"] = `Bearer ${response.data.token}`;
@@ -73,7 +75,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, refreshToken, token, signOut, login, register, signed: !!user }}
+      value={{
+        user,
+        refreshToken,
+        token,
+        signOut,
+        login,
+        register,
+        signed: !!user,
+      }}
     >
       {children}
     </AuthContext.Provider>

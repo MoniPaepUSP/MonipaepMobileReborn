@@ -17,6 +17,7 @@ import Menu from "../components/Menu";
 import Modal from 'react-native-modal';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
+import { GenericInformationModal } from '../components/GenericInformationModal';
 
 export function Home() {
     const navigation = useNavigation();
@@ -62,18 +63,7 @@ export function Home() {
     }
 
     async function Data() {
-        //const patientId = await getUser()
-        //const token = await getAccessToken()
-        //const refreshToken = await getRefreshToken()
-        /*
-        console.log("Exibindo UseContext")
-        console.log(user)
-        console.log(token)
-        console.log(refreshToken)
-        console.log("Signed: "+signed)
-        */
-
-        //navigation.navigate('Symptoms')
+        navigation.navigate("Notification" as never);
     }
 
     function handleConfig() {
@@ -88,12 +78,10 @@ export function Home() {
         navigation.navigate('FrequentQuestions' as never);
     }
 
-    // Function to open the drawer
     function openMenu() {
         setMenuVisible(true);
     }
 
-    // Function to close the drawer
     function closeMenu() {
         setMenuVisible(false);
     }
@@ -129,7 +117,7 @@ export function Home() {
                     <MaterialIcons style={styles.icons} name="menu" size={24} color="black" />
                 </TouchableOpacity>
                 <ChatButton
-                    accessibilityLabel="Botão. Clique para visualizar mensagens do médico"
+                    accessibilityLabel="Botão. Clique para visualizar as notificações"
                     title="Notificações"
                     onPress={Data}
                 />
@@ -146,26 +134,7 @@ export function Home() {
                     pagingEnabled
                     showsHorizontalScrollIndicator={false}
                 />
-                <Modal
-                    isVisible={showPopup}
-                    animationIn="slideInUp"
-                    onBackdropPress={closeModal}
-                    backdropOpacity={0.3}
-                >
-                    <View style={styles.modalContainer}>
-                        <View style={styles.modalContent}>
-                            <Text style={styles.modalText}>
-                                Atualize os seus registros antes de obter um encaminhamento!
-                            </Text>
-                            <TouchableOpacity  style={styles.button}
-                                accessibilityLabel="Botão para fechar o pop up"
-                                onPress={closeModal}
-                            >
-                                <Text style={styles.buttonText}>OK</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
+                <GenericInformationModal description={"Teste"}/>
             </View>
             <View
                 accessible={true}

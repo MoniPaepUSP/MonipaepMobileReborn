@@ -93,10 +93,10 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
               <Text style={styles.menuText}>Minhas Consultas</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
+            {/* <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
               <Octicons name="gear" size={24} color="black" />
               <Text style={styles.menuText}>Configurações</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity style={styles.menuItemSair} onPress={handleLogout}>
               <AntDesign name="logout" size={24} color="black" />
@@ -154,10 +154,10 @@ const Menu = ({ onCloseMenu, independent }: MenuProps) => {
           <Text style={styles.menuText}>Minhas Consultas</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.menuItem} onPress={handleConfig}>
+        {/* <TouchableOpacity style={styles.menuItem} onPress={handleConfig}>
           <Octicons name="gear" size={24} color="black" />
           <Text style={styles.menuText}>Configurações</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity style={styles.menuItemSair} onPress={handleLogout}>
           <AntDesign name="logout" size={24} color="black" />
@@ -173,6 +173,7 @@ const styles = StyleSheet.create({
     width: '70%',
     backgroundColor: '#fff',
     marginTop: windowHeight * 0.068,
+    height: '100%'
   },
   menuContent: {
     flexDirection: 'column',

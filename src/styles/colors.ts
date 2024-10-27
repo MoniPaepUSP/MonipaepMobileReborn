@@ -11,6 +11,7 @@ export default{
     gray: '#808189',
     gray_light1: '#eaeaeb',
     gray_light2: '#c6c7ca',
+    gray_light3: 'rgba(208, 209, 214, .2)',
     gray_dark1: '#6f7078',
     gray_dark2: '#262629',
     gray_dark3: '#0d0d0e',

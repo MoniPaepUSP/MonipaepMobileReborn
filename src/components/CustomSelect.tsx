@@ -34,7 +34,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ label, selectedValue, onVal
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-    width: Dimensions.get('window').width*0.88,
+    width: Dimensions.get('window').width*0.9,
     marginBottom: 10, // Margem inferior para separação visual
   },
   label: {

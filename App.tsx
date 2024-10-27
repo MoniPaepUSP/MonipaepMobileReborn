@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { AuthProvider } from "./src/contexts/auth.context";
 import Routes from './src/routes';
-import AppLoading from "expo-app-loading";
+import * as SplashScreen from 'expo-splash-screen';
 import {
   Inter_100Thin,
   Inter_200ExtraLight,
@@ -16,6 +16,9 @@ import {
   Inter_900Black,
   useFonts,
 } from "@expo-google-fonts/inter";
+import { useEffect, useState } from 'react';
+
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
 
@@ -31,8 +34,17 @@ export default function App() {
     Inter_900Black,
   });
 
-  if (!fontsLoaded) {
-    return <AppLoading />;
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    if (fontsLoaded) {
+      setIsReady(true);
+      SplashScreen.hideAsync(); // Hide the splash screen after fonts are loaded
+    }
+  }, [fontsLoaded]); // Add fontsLoaded as a dependency to trigger the effect when fonts are loaded
+
+  if (!fontsLoaded || !isReady) {
+    return null; // Keep showing the splash screen until fonts are loaded and the app is ready
   }
 
   return (

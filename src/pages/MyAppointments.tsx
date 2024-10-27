@@ -1,8 +1,4 @@
-// MyAppointments.js
-import { MaterialIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useRef, useState } from "react";
-import Modal from 'react-native-modal';
+import React from "react";
 import {
   Dimensions,
   StyleSheet,
@@ -12,52 +8,35 @@ import {
   ScrollView,
   Alert, // Importar ScrollView
 } from "react-native";
-import {
-  GreenButton,
-  HeaderSimple,
-  SafeAreaView,
-} from "../components";
-import Menu from "../components/Menu";
-import { useAuth } from "../contexts/auth.context";
+import { HeaderSimple, SafeAreaView } from "../components";
 import colors from "../styles/colors";
-import fonts from "../styles/fonts";
-import AppointmentItem from "../components/AppointmentItem"; 
+import AppointmentItem from "../components/AppointmentItem";
+import MenuHandlerComponent from "../components/MenuHandlerComponent";
+
+// TODO: Add modal to change or cancel the appointment
 
 export function MyAppointments() {
-  const { user, refreshToken, token } = useAuth();
-  const [menuVisible, setMenuVisible] = useState(false);
-  const navigation = useNavigation();
-
-  const openMenu = () => {
-    setMenuVisible(true);
-  }
-
-  const closeMenu = () => {
-    setMenuVisible(false);
-  }
-
-  const handleAppointmentRegister = () => {
-    navigation.navigate("AppointmentRegister" as never);
-  }
 
   const handleAppointmentChange = (appointment) => {
     Alert.alert(
       "Informações da Consulta",
-      `Local: ${appointment.local}\nMédico(a): ${appointment.doctor}\nData da Consulta: ${appointment.dateConsulta}\nData do Lembrete: ${appointment.dateLembrete}`,
+      `Local: ${appointment.local}\nMédico(a): ${appointment.doctor}\nData da Consulta: ${appointment.dateConsulta}\nData do Lembrete: ${appointment.dateLembrete}`
     );
   };
 
   const appointments = [
     {
       id: 1,
-      local: "R. Dr. João Navarro Siquerolli, s/n - Parque Santa Felicia Jardim, São Carlos - SP, 13563-714",
+      local:
+        "R. Dr. João Navarro Siquerolli, s/n - Parque Santa Felicia Jardim, São Carlos - SP, 13563-714",
       doctor: "Doutora Simone",
       dateConsulta: "12/05/2020",
       dateLembrete: "10/05",
     },
     {
       id: 2,
-      local: "R. Dr. João Navarro Siquerolli, s/n - Parque Santa Felicia Jardim, São Carlos - SP, 13563-714",
+      local:
+        "R. Dr. João Navarro Siquerolli, s/n - Parque Santa Felicia Jardim, São Carlos - SP, 13563-714",
       doctor: "Doutora Simone Cópia",
       dateConsulta: "13/05/2020",
       dateLembrete: "11/05",
@@ -68,19 +47,7 @@ export function MyAppointments() {
     <SafeAreaView style={styles.safeArea}>
       <HeaderSimple titleScreen="Atualizar Sintomas" />
       <View style={styles.container}>
-        <View style={styles.bodyUp}>
-          <TouchableOpacity onPress={openMenu}>
-            <MaterialIcons
-              style={styles.icons}
-              name="menu"
-              size={24}
-              color="black"
-            />
-          </TouchableOpacity>
-          <View style={styles.textAPP}>
-            <Text style={styles.appName}>MoniPaEp</Text>
-          </View>
-        </View>
+        <MenuHandlerComponent />
         <ScrollView style={styles.scrollView}>
           {appointments.map((appointment, index) => (
             <View key={appointment.id}>
@@ -88,31 +55,13 @@ export function MyAppointments() {
                 appointment={appointment}
                 onPress={handleAppointmentChange}
               />
-              {index < appointments.length - 1 && <View style={styles.divider} />}
+              {index < appointments.length - 1 && (
+                <View style={styles.divider} />
+              )}
             </View>
           ))}
         </ScrollView>
       </View>
-
-      <View style={styles.bottom}>
-        <GreenButton
-          accessibilityLabel="Botão de Cadastrar Consulta. Pressione para cadastrar uma nova consulta"
-          title="Cadastrar Consulta"
-          onPress={handleAppointmentRegister}
-        />
-      </View>
-      <View>
-                <Modal
-                    isVisible={menuVisible}
-                    animationIn="slideInLeft"
-                    animationOut="slideOutLeft"
-                    onBackdropPress={closeMenu}
-                    backdropOpacity={0.3}
-                    style={styles.modalLeft}
-                >
-                    <Menu onCloseMenu={closeMenu} />
-                </Modal>
-            </View>
     </SafeAreaView>
   );
 }
@@ -125,24 +74,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
     paddingHorizontal: 16,
-  },
-  bodyUp: {
-    width: '100%',
-    justifyContent: 'center',
-    paddingBottom: 15,
-  },
-  icons: {
-    paddingHorizontal: 10,
-    paddingVertical: 20
-  },
-  appName: {
-    fontFamily: fonts.appName,
-    fontWeight: 'bold',
-    fontSize: 32,
-    color: colors.blue,
-  },
-  textAPP: {
-    alignItems: "center",
   },
   bottom: {
     position: "absolute",
@@ -164,7 +95,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   modalLeft: {
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
     margin: 0,
-},
+  },
 });

@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useRef, useState } from "react";
-import Modal from 'react-native-modal';
+import Modal from "react-native-modal";
 import {
   Dimensions,
   StyleSheet,
@@ -10,7 +10,7 @@ import {
   View,
   FlatList,
   Alert,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import {
   GreenButton,
@@ -18,12 +18,12 @@ import {
   SafeAreaView,
   Symptom,
 } from "../components";
-import  Menu  from "../components/Menu";
+import Menu from "../components/Menu";
 import { useAuth } from "../contexts/auth.context";
 import api from "../services/api";
 import colors from "../styles/colors";
 import fonts from "../styles/fonts";
-
+import { useSearchSymptom } from "../hooks/condition.hook";
 interface SymptomsProps {
   symptom: string;
 }
@@ -38,20 +38,12 @@ export function Symptoms() {
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
   const [menuVisible, setMenuVisible] = useState(false);
   const navigation = useNavigation();
+  const { symptoms: searchSymptoms, loading } = useSearchSymptom(search);
 
   useEffect(() => {
-    async function fetchSymptoms() {
-      const response = await api.get("/symptom", {
-        params: { symptom: search },
-      });
-      setSymptoms(response.data.symptoms);
-    }
-    fetchSymptoms();
-  }, [search]);
+    setSymptoms(searchSymptoms);
+  }, [searchSymptoms]);
 
-//   function handleProfile() {
-//     navigation.navigate("Profile");
-//   }
 
   // Function to open the drawer
   function openMenu() {
@@ -78,10 +70,6 @@ export function Symptoms() {
     setSearch(value);
   }
 
-  function handleSeach() {
-    //console.log(search)
-  }
-
   function handleSymptomSelection(title: string) {
     if (selectedSymptoms.includes(title)) {
       setSelectedSymptoms(
@@ -93,11 +81,10 @@ export function Symptoms() {
       setSelectedSymptoms([...selectedSymptoms, title]);
     }
   }
-  
 
   async function handleSymptom() {
     try {
-      await api.post("/symptomoccurrenceSeveral", {
+      const response = await api.post("/symptomoccurrenceSeveral", {
         patient_id: user?.id,
         symptoms: selectedSymptoms,
       });
@@ -111,7 +98,7 @@ export function Symptoms() {
           },
         ]
       );
-      console.log("Sintomas submetidos");
+      console.log(response + "asdasdasdasd");
     } catch (error) {
       Alert.alert(
         "Erro na atualização de sintomas",
@@ -181,17 +168,17 @@ export function Symptoms() {
         />
       </View>
       <View>
-                <Modal
-                    isVisible={menuVisible}
-                    animationIn="slideInLeft"
-                    animationOut="slideOutLeft"
-                    onBackdropPress={closeMenu}
-                    backdropOpacity={0.3}
-                    style={styles.modalLeft}
-                >
-                    <Menu onCloseMenu={closeMenu} />
-                </Modal>
-            </View>
+        <Modal
+          isVisible={menuVisible}
+          animationIn="slideInLeft"
+          animationOut="slideOutLeft"
+          onBackdropPress={closeMenu}
+          backdropOpacity={0.3}
+          style={styles.modalLeft}
+        >
+          <Menu onCloseMenu={closeMenu} />
+        </Modal>
+      </View>
     </SafeAreaView>
   );
 }
@@ -260,7 +247,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width * 0.9,
   },
   modalLeft: {
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
     margin: 0,
-},
+  },
 });
