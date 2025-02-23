@@ -50,7 +50,7 @@ export default function App() {
   return (
     <AuthProvider>
       <SafeAreaProvider>
-        <NavigationContainer independent={true}>
+        <NavigationContainer>
           <Routes />
         </NavigationContainer>
       </SafeAreaProvider>

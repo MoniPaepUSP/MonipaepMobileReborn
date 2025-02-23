@@ -1,6 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
-import { Platform, ScrollView } from "react-native";
+import { Platform, ScrollView, StatusBar } from "react-native";
 import {
   Alert,
   Dimensions,
@@ -105,18 +105,22 @@ export function Login() {
     <SafeAreaView
       accessible={true}
       accessibilityLabel="Página de Login, insira seus dados para entrar na sua conta"
+      style={{ flexGrow: 1, justifyContent: "center" }}
     >
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <StatusBar />
+      <ScrollView contentContainerStyle={{ flex: 1 }}>
         <KeyboardAvoidingView
-          style={styles.container}
+          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
           behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
-          <View style={styles.header}>
-            <Text style={styles.welcome}>Bem-Vindo ao</Text>
-            <Text style={styles.appName}>MoniPaEp</Text>
-          </View>
 
           <View style={styles.container}>
+
+            <View style={styles.header}>
+              <Text style={styles.welcome}>Bem-Vindo ao</Text>
+              <Text style={styles.appName}>MoniPaEp</Text>
+            </View>
+
             <View style={styles.warning}>
               <Text style={styles.warningText}>* Obrigatório </Text>
             </View>
@@ -129,6 +133,7 @@ export function Login() {
               <TextInputMask
                 accessible={true}
                 placeholder="Digite seu CPF"
+                placeholderTextColor={colors.gray}
                 type={"cpf"}
                 value={cpf}
                 style={styles.input}
@@ -176,6 +181,7 @@ export function Login() {
               <TextInput
                 accessible={true}
                 placeholder="Digite sua senha"
+                placeholderTextColor={colors.gray}
                 style={styles.input}
                 value={password}
                 textContentType="newPassword"
@@ -249,18 +255,15 @@ export function Login() {
 
 const styles = StyleSheet.create({
   header: {
-    //flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: Dimensions.get("window").height * 0.1,
+    padding: 50,
   },
   container: {
-    //flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: Dimensions.get("window").height * 0.03,
   },
   welcome: {
     fontFamily: fonts.welcome,
@@ -278,7 +281,7 @@ const styles = StyleSheet.create({
   },
   warningText: {
     fontFamily: fonts.text,
-    fontSize: 8,
+    fontSize: 10,
     color: colors.red,
   },
   inputField: {
@@ -289,7 +292,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderBottomWidth: 1,
     borderColor: colors.gray,
-    padding: 10,
   },
   Icon: {
     padding: 10,
@@ -299,7 +301,7 @@ const styles = StyleSheet.create({
     width: "70%",
     fontFamily: fonts.text,
     fontSize: 16,
-    //textAlign: 'center'
+    padding: 15,
   },
   label: {
     fontFamily: fonts.generic,
@@ -319,7 +321,7 @@ const styles = StyleSheet.create({
   },
   textAndLink: {
     flexDirection: "row",
-    padding: 70,
+    padding: 40,
   },
   text: {
     fontFamily: fonts.generic,
