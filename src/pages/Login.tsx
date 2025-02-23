@@ -43,7 +43,7 @@ export function Login() {
   const [isPasswordFilled, setIsPasswordFilled] = useState(false);
   const [password, setPassword] = useState<string>("");
   const passwordRef = useRef(null);
-  
+
   const [visible, setVisible] = useState<boolean>(false);
 
   const handleForgotPasswordModal = () => {
@@ -75,7 +75,7 @@ export function Login() {
       const response = await login(cpf, password);
 
       //TODO: Lidar com o login corretamente, gerar o token de sucesso apos achar o usuario talvez seja melhor
-      commonSucessAlert(loginMessages.loginSuccessMessage, () => {});
+      commonSucessAlert(loginMessages.loginSuccessMessage, () => { });
 
       return response;
     } catch (error) {
@@ -93,162 +93,158 @@ export function Login() {
     }
   }
 
-    function handleSignUp() {
-      navigation.navigate('SignUp' as never);
-    }
+  function handleSignUp() {
+    navigation.navigate('SignUp' as never);
+  }
 
-    function isMobileDevice(){
-      return Platform.OS === 'ios' || Platform.OS === 'android'
-    }
+  function isMobileDevice() {
+    return Platform.OS === 'ios' || Platform.OS === 'android'
+  }
 
-    return (
-      <SafeAreaView
-        accessible={true}
-        accessibilityLabel="Página de Login, insira seus dados para entrar na sua conta"
-      >
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <KeyboardAvoidingView
-            style={styles.container}
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-          >
-            <TouchableWithoutFeedback
-              onPress={isMobileDevice() ? Keyboard.dismiss : null}
+  return (
+    <SafeAreaView
+      accessible={true}
+      accessibilityLabel="Página de Login, insira seus dados para entrar na sua conta"
+    >
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+        >
+          <View style={styles.header}>
+            <Text style={styles.welcome}>Bem-Vindo ao</Text>
+            <Text style={styles.appName}>MoniPaEp</Text>
+          </View>
+
+          <View style={styles.container}>
+            <View style={styles.warning}>
+              <Text style={styles.warningText}>* Obrigatório </Text>
+            </View>
+            <View
+              style={[
+                styles.inputField,
+                (isCPFFocused || isCPFFilled) && { borderColor: colors.blue },
+              ]}
             >
-              <View style={styles.header}>
-                <Text style={styles.welcome}>Bem-Vindo ao</Text>
-                <Text style={styles.appName}>MoniPaEp</Text>
+              <TextInputMask
+                accessible={true}
+                placeholder="Digite seu CPF"
+                type={"cpf"}
+                value={cpf}
+                style={styles.input}
+                onBlur={() =>
+                  loginHandlers.handleInputCPFBlur(
+                    setIsCPFFocused,
+                    setIsCPFFilled,
+                    setCPF,
+                    cpf
+                  )
+                }
+                onFocus={() =>
+                  loginHandlers.handleInputCPFFocus(setIsCPFFocused)
+                }
+                onChangeText={(value: string) =>
+                  loginHandlers.handleInputCPFChange(
+                    setIsCPFFilled,
+                    setCPF,
+                    value
+                  )
+                }
+                ref={cpfRef}
+              />
+              <MaterialIcons
+                name="person-outline"
+                size={24}
+                color="gray"
+                style={[
+                  styles.Icon,
+                  (isCPFFocused || isCPFFilled) && { color: colors.blue },
+                ]}
+              />
+            </View>
+            <View style={styles.warning}>
+              <Text style={styles.warningText}>* Obrigatório </Text>
+            </View>
+            <View
+              style={[
+                styles.inputField,
+                (isPasswordFocused || isPasswordFilled) && {
+                  borderColor: colors.blue,
+                },
+              ]}
+            >
+              <TextInput
+                accessible={true}
+                placeholder="Digite sua senha"
+                style={styles.input}
+                value={password}
+                textContentType="newPassword"
+                secureTextEntry={showPasswordText}
+                onBlur={() =>
+                  loginHandlers.handleInputPasswordBlur(
+                    setIsPasswordFocused,
+                    setIsPasswordFilled,
+                    password
+                  )
+                }
+                onFocus={() =>
+                  loginHandlers.handleInputPasswordFocus(setIsPasswordFocused)
+                }
+                onChangeText={(value: string) =>
+                  loginHandlers.handleInputPasswordChange(
+                    setIsPasswordFilled,
+                    setPassword,
+                    value
+                  )
+                }
+              />
+              {/* TODO: Change icon within the secure state */}
+              <MaterialIcons
+                name="remove-red-eye"
+                size={24}
+                color="gray"
+                onPress={() => setShowPasswordText(!showPasswordText)}
+                style={[
+                  styles.Icon,
+                  (isPasswordFocused || isPasswordFilled) && {
+                    color: colors.blue,
+                  },
+                ]}
+              />
+            </View>
+            <View style={styles.footer}>
+              <TouchableOpacity
+                accessible={true}
+                accessibilityLabel="Botão. Clique caso tenha esquecido a senha"
+                onPress={handleForgotPasswordModal}
+              >
+                <Text style={styles.textLink}>Esqueceu sua senha?</Text>
+              </TouchableOpacity>
+              <View style={styles.button}>
+                <BlueButton
+                  accessible={true}
+                  accessibilityLabel="Botão. Clique para efetuar o login"
+                  title="Entrar"
+                  onPress={Check}
+                />
               </View>
-
-              <View style={styles.container}>
-                <View style={styles.warning}>
-                  <Text style={styles.warningText}>* Obrigatório </Text>
-                </View>
-                <View
-                  style={[
-                    styles.inputField,
-                    (isCPFFocused || isCPFFilled) && { borderColor: colors.blue },
-                  ]}
+              <View style={styles.textAndLink}>
+                <Text style={styles.text}>Não possui uma conta? </Text>
+                <TouchableOpacity
+                  accessible={true}
+                  accessibilityLabel="Botão. Clique para criar conta"
+                  onPress={handleSignUp}
                 >
-                  <TextInputMask
-                    accessible={true}
-                    placeholder="Digite seu CPF"
-                    type={"cpf"}
-                    value={cpf}
-                    style={styles.input}
-                    onBlur={() =>
-                      loginHandlers.handleInputCPFBlur(
-                        setIsCPFFocused,
-                        setIsCPFFilled,
-                        setCPF,
-                        cpf
-                      )
-                    }
-                    onFocus={() =>
-                      loginHandlers.handleInputCPFFocus(setIsCPFFocused)
-                    }
-                    onChangeText={(value: string) =>
-                      loginHandlers.handleInputCPFChange(
-                        setIsCPFFilled,
-                        setCPF,
-                        value
-                      )
-                    }
-                    ref={cpfRef}
-                  />
-                  <MaterialIcons
-                    name="person-outline"
-                    size={24}
-                    color="gray"
-                    style={[
-                      styles.Icon,
-                      (isCPFFocused || isCPFFilled) && { color: colors.blue },
-                    ]}
-                  />
-                </View>
-                <View style={styles.warning}>
-                  <Text style={styles.warningText}>* Obrigatório </Text>
-                </View>
-                <View
-                  style={[
-                    styles.inputField,
-                    (isPasswordFocused || isPasswordFilled) && {
-                      borderColor: colors.blue,
-                    },
-                  ]}
-                >
-                  <TextInput
-                    accessible={true}
-                    placeholder="Digite sua senha"
-                    style={styles.input}
-                    value={password}
-                    textContentType="newPassword"
-                    secureTextEntry={showPasswordText}
-                    onBlur={() =>
-                      loginHandlers.handleInputPasswordBlur(
-                        setIsPasswordFocused,
-                        setIsPasswordFilled,
-                        password
-                      )
-                    }
-                    onFocus={() =>
-                      loginHandlers.handleInputPasswordFocus(setIsPasswordFocused)
-                    }
-                    onChangeText={(value: string) =>
-                      loginHandlers.handleInputPasswordChange(
-                        setIsPasswordFilled,
-                        setPassword,
-                        value
-                      )
-                    }
-                  />
-                  {/* TODO: Change icon within the secure state */}
-                  <MaterialIcons
-                    name="remove-red-eye"
-                    size={24}
-                    color="gray"
-                    onPress={() => setShowPasswordText(!showPasswordText)}
-                    style={[
-                      styles.Icon,
-                      (isPasswordFocused || isPasswordFilled) && {
-                        color: colors.blue,
-                      },
-                    ]}
-                  />
-                </View>
-                <View style={styles.footer}>
-                  <TouchableOpacity
-                    accessible={true}
-                    accessibilityLabel="Botão. Clique caso tenha esquecido a senha"
-                    onPress={handleForgotPasswordModal}
-                  >
-                    <Text style={styles.textLink}>Esqueceu sua senha?</Text>
-                  </TouchableOpacity>
-                  <View style={styles.button}>
-                    <BlueButton
-                      accessible={true}
-                      accessibilityLabel="Botão. Clique para efetuar o login"
-                      title="Entrar"
-                      onPress={Check}
-                    />
-                  </View>
-                  <View style={styles.textAndLink}>
-                    <Text style={styles.text}>Não possui uma conta? </Text>
-                    <TouchableOpacity
-                      accessible={true}
-                      accessibilityLabel="Botão. Clique para criar conta"
-                      onPress={handleSignUp}
-                    >
-                      <Text style={styles.textLink}>Cadastre-se</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
+                  <Text style={styles.textLink}>Cadastre-se</Text>
+                </TouchableOpacity>
               </View>
-            </TouchableWithoutFeedback>
-          </KeyboardAvoidingView>
-        </ScrollView>
-        <ForgotPasswordCpfModal visible={visible} onClose={() => setVisible(false)} />
-      </SafeAreaView>
-    );
+            </View>
+          </View>
+        </KeyboardAvoidingView>
+      </ScrollView>
+      <ForgotPasswordCpfModal visible={visible} onClose={() => setVisible(false)} />
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -336,5 +332,5 @@ const styles = StyleSheet.create({
   modalLeft: {
     justifyContent: 'flex-start',
     margin: 0,
-},
+  },
 });
